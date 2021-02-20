@@ -1,16 +1,15 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
-class SignIn extends StatefulWidget {
+class Register extends StatefulWidget {
   final Function toggleView;
-  SignIn({this.toggleView});
-
+  Register({this.toggleView});
   @override
-  _SignInState createState() => _SignInState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _SignInState extends State<SignIn> {
+class _RegisterState extends State<Register> {
+  final _formKey = GlobalKey<FormState>();
+
   String email;
   String password;
 
@@ -21,7 +20,7 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         backgroundColor: Colors.teal[400],
         elevation: 0.0,
-        title: Text('Sign in to SaZa'),
+        title: Text('Sign up to SaZa'),
         actions: <Widget>[
           FlatButton.icon(
             icon: Icon(
@@ -29,7 +28,7 @@ class _SignInState extends State<SignIn> {
               color: Colors.white,
             ),
             label: Text(
-              'Register',
+              'Sign In',
               style: TextStyle(color: Colors.white),
             ),
             onPressed: () {
@@ -38,13 +37,14 @@ class _SignInState extends State<SignIn> {
           ),
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: Center(
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(left: 20, right: 20, top: 150),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Form(
+                key: _formKey,
                 child: Column(
                   children: <Widget>[
                     SizedBox(
@@ -58,8 +58,11 @@ class _SignInState extends State<SignIn> {
                       ),
                       onChanged: (val) {
                         setState(() {
-                          email = val;
+                          email = val.trim();
                         });
+                      },
+                      validator: (val) {
+                        return val.trim().isEmpty ? 'Enter email' : null;
                       },
                     ),
                     SizedBox(
@@ -74,8 +77,32 @@ class _SignInState extends State<SignIn> {
                       ),
                       onChanged: (val) {
                         setState(() {
-                          password = val;
+                          password = val.trim();
                         });
+                      },
+                      validator: (val) {
+                        return val.trim().length < 5
+                            ? 'Enter password 5+ charactor long'
+                            : null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    TextFormField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Conform Password',
+                        isDense: true,
+                      ),
+                      // onChanged: (val) {
+                      //   setState(() {
+                      //     password = val.trim();
+                      //   });
+                      // },
+                      validator: (val) {
+                        return val != password ? 'Password is not same' : null;
                       },
                     ),
                     SizedBox(
@@ -84,10 +111,12 @@ class _SignInState extends State<SignIn> {
                     RaisedButton(
                       color: Colors.purple[400],
                       child: Text(
-                        'Sign in',
+                        'Sign up',
                         style: TextStyle(color: Colors.white),
                       ),
-                      onPressed: () async {},
+                      onPressed: () async {
+                        if (_formKey.currentState.validate()) {}
+                      },
                     ),
                   ],
                 ),
