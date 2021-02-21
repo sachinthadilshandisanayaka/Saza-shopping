@@ -18,39 +18,9 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.teal[300],
-      // appBar: AppBar(
-      //   backgroundColor: Colors.teal[400],
-      //   elevation: 0.0,
-      //   title: Text(
-      //     'Sign In',
-      //     style: TextStyle(
-      //       letterSpacing: 2.0,
-      //       fontFamily: 'Baloo2',
-      //       fontWeight: FontWeight.bold,
-      //     ),
-      //   ),
-      //   actions: <Widget>[
-      //     FlatButton.icon(
-      //       icon: Icon(
-      //         Icons.person,
-      //         color: Colors.white,
-      //       ),
-      //       label: Text(
-      //         'Register',
-      //         style: TextStyle(
-      //           color: Colors.white,
-      //           fontFamily: 'Baloo2',
-      //         ),
-      //       ),
-      //       onPressed: () {
-      //         widget.toggleView();
-      //       },
-      //     ),
-      //   ],
-      // ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20, top: 100),
+          padding: EdgeInsets.only(left: 20, right: 20, top: 120),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -119,6 +89,9 @@ class _SignInState extends State<SignIn> {
                       height: 5.0,
                     ),
                     FlatButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
                       onPressed: () {
                         widget.toggleView();
                       },
