@@ -17,33 +17,56 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal[50],
-      appBar: AppBar(
-        backgroundColor: Colors.teal[400],
-        elevation: 0.0,
-        title: Text('Sign in to SaZa'),
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(
-              Icons.person,
-              color: Colors.white,
-            ),
-            label: Text(
-              'Register',
-              style: TextStyle(color: Colors.white),
-            ),
-            onPressed: () {
-              widget.toggleView();
-            },
-          ),
-        ],
-      ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: Center(
+      backgroundColor: Colors.teal[300],
+      // appBar: AppBar(
+      //   backgroundColor: Colors.teal[400],
+      //   elevation: 0.0,
+      //   title: Text(
+      //     'Sign In',
+      //     style: TextStyle(
+      //       letterSpacing: 2.0,
+      //       fontFamily: 'Baloo2',
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //   ),
+      //   actions: <Widget>[
+      //     FlatButton.icon(
+      //       icon: Icon(
+      //         Icons.person,
+      //         color: Colors.white,
+      //       ),
+      //       label: Text(
+      //         'Register',
+      //         style: TextStyle(
+      //           color: Colors.white,
+      //           fontFamily: 'Baloo2',
+      //         ),
+      //       ),
+      //       onPressed: () {
+      //         widget.toggleView();
+      //       },
+      //     ),
+      //   ],
+      // ),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(left: 20, right: 20, top: 100),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Text(
+                'Sign In',
+                style: TextStyle(
+                  color: Colors.white,
+                  letterSpacing: 2.0,
+                  fontFamily: 'Baloo2',
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
               Form(
                 child: Column(
                   children: <Widget>[
@@ -81,13 +104,25 @@ class _SignInState extends State<SignIn> {
                     SizedBox(
                       height: 30.0,
                     ),
-                    RaisedButton(
-                      color: Colors.purple[400],
-                      child: Text(
-                        'Sign in',
-                        style: TextStyle(color: Colors.white),
+                    SizedBox(
+                      width: double.infinity,
+                      child: RaisedButton(
+                        color: Colors.blue[400],
+                        child: Text(
+                          'Sign in',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () async {},
                       ),
-                      onPressed: () async {},
+                    ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        widget.toggleView();
+                      },
+                      child: Text('Create a new account'),
                     ),
                   ],
                 ),
