@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:sazashopping/services/auth.dart';
+import 'package:sazashopping/shared/constant.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -13,6 +15,10 @@ class SignIn extends StatefulWidget {
 class _SignInState extends State<SignIn> {
   String email;
   String password;
+  String _error;
+
+  final _formKey = GlobalKey<FormState>();
+  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +44,17 @@ class _SignInState extends State<SignIn> {
                 height: 20.0,
               ),
               Form(
+                key: _formKey,
                 child: Column(
                   children: <Widget>[
                     SizedBox(
                       height: 10.0,
                     ),
                     TextFormField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Email',
-                        isDense: true,
-                      ),
+                      validator: (val) =>
+                          val.isEmpty ? 'Enter the Email' : null,
+                      decoration:
+                          textinputDecoration.copyWith(labelText: 'Email'),
                       onChanged: (val) {
                         setState(() {
                           email = val;
@@ -59,12 +65,11 @@ class _SignInState extends State<SignIn> {
                       height: 10.0,
                     ),
                     TextFormField(
+                      validator: (val) =>
+                          val.isEmpty ? 'Enter the Password' : null,
                       obscureText: true,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                        isDense: true,
-                      ),
+                      decoration:
+                          textinputDecoration.copyWith(labelText: 'Password'),
                       onChanged: (val) {
                         setState(() {
                           password = val;
@@ -82,7 +87,21 @@ class _SignInState extends State<SignIn> {
                           'Sign in',
                           style: TextStyle(color: Colors.white),
                         ),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()) {
+                            try {
+                              dynamic result = await _auth
+                                  .signInWithEmailAndPassword(email, password);
+                              print('User id : ' + result);
+                            } catch (e) {
+                              setState(() {
+                                _error = e.message;
+                                // _visible = true;
+                                print(_error);
+                              });
+                            }
+                          }
+                        },
                       ),
                     ),
                     SizedBox(
