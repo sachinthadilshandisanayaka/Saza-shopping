@@ -63,23 +63,23 @@ class _SignInState extends State<SignIn> {
             backgroundColor: Colors.teal[300],
             body: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.only(top: 100.0),
+              padding: EdgeInsets.only(top: 140),
               child: Column(
                 children: <Widget>[
                   slideTeansition(),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Container(
-                    padding: EdgeInsets.only(
-                        left: 20,
-                        right: 20,
-                        top: MediaQuery.of(context).padding.top * 0.3),
+                    padding: EdgeInsets.only(left: 20, right: 20, top: 20),
                     decoration: BoxDecoration(
+                        color: Colors.teal[300],
                         borderRadius: BorderRadius.circular(
                           20,
                         ),
                         boxShadow: [
-                          new BoxShadow(
+                          BoxShadow(
                             blurRadius: 7,
-                            color: Colors.black,
                             offset: Offset(1, 1),
                           )
                         ]),

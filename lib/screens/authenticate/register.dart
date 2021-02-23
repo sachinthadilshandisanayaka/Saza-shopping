@@ -1,6 +1,4 @@
-import 'dart:async';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:sazashopping/services/auth.dart';
 import 'package:auto_size_text/auto_size_text.dart';
@@ -17,14 +15,24 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
+  Animation<Offset> _offsetAnimation;
 
   @override
   void initState() {
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 150),
+      duration: const Duration(seconds: 3),
+    )..repeat(reverse: true);
+    _offsetAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: Offset(0.5, 0.0),
+    ).animate(
+      CurvedAnimation(
+        curve: Curves.elasticIn,
+        parent: _animationController,
+      ),
     );
-    Timer(Duration(milliseconds: 200), () => _animationController.forward());
+    // Timer(Duration(seconds: 6), () => _animationController.forward());
     super.initState();
   }
 
@@ -45,30 +53,33 @@ class _RegisterState extends State<Register>
 
   Widget slideTeansition() {
     if (_error != null) {
-      return Container(
-        padding: EdgeInsets.all(10.0),
-        color: Colors.amber,
-        child: Row(
-          children: <Widget>[
-            Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Icon(Icons.error_outline)),
-            Expanded(
-              child: AutoSizeText(
-                _error,
-                maxLines: 4,
+      return SlideTransition(
+        position: _offsetAnimation,
+        child: Container(
+          padding: EdgeInsets.all(10.0),
+          color: Colors.amber,
+          child: Row(
+            children: <Widget>[
+              Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Icon(Icons.error_outline)),
+              Expanded(
+                child: AutoSizeText(
+                  _error,
+                  maxLines: 4,
+                ),
               ),
-            ),
-            IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                setState(() {
-                  _error = null;
-                  // _visible = false;
-                });
-              },
-            ),
-          ],
+              IconButton(
+                icon: Icon(Icons.close),
+                onPressed: () {
+                  setState(() {
+                    _error = null;
+                    // _visible = false;
+                  });
+                },
+              ),
+            ],
+          ),
         ),
       );
     }
@@ -85,7 +96,7 @@ class _RegisterState extends State<Register>
             backgroundColor: Colors.teal[300],
             body: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.only(top: 60.0),
+              padding: EdgeInsets.only(top: 100.0),
               child: Column(
                 children: <Widget>[
                   slideTeansition(),
@@ -120,10 +131,21 @@ class _RegisterState extends State<Register>
                   //   ),
                   // ),
                   SizedBox(
-                    height: 0.0,
+                    height: 20.0,
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 90),
+                    padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                    decoration: BoxDecoration(
+                        color: Colors.teal[300],
+                        borderRadius: BorderRadius.circular(
+                          20,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 7,
+                            offset: Offset(1, 1),
+                          )
+                        ]),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
