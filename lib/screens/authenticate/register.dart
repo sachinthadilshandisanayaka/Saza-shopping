@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/services/auth.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/loading.dart';
 
@@ -238,6 +239,11 @@ class _RegisterState extends State<Register>
                                         dynamic result = await _auth
                                             .registerWithEmailAndPassword(
                                                 email, password);
+                                        await DataBaseService().updateItem(
+                                            'Long Shirt',
+                                            '200',
+                                            10,
+                                            'cotten');
                                         print('User id : ' + result);
                                       } catch (e) {
                                         setState(() {

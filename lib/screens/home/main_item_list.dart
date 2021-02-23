@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:sazashopping/models/mainItem.dart';
 
 class MainItemList extends StatefulWidget {
   @override
@@ -10,12 +10,9 @@ class MainItemList extends StatefulWidget {
 class _MainItemListState extends State<MainItemList> {
   @override
   Widget build(BuildContext context) {
-    final mainItemList = Provider.of<QuerySnapshot>(context);
+    final mainItemList = Provider.of<List<MainItems>>(context);
     // print(mainItemList);
-
-    for (var doc in mainItemList.docs) {
-      print(doc.data());
-    }
+    print(mainItemList);
 
     return Container();
   }

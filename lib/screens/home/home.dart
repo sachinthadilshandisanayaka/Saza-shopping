@@ -1,10 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/home/main_item_list.dart';
 import 'package:sazashopping/screens/home/menus/constants.dart';
 import 'package:sazashopping/services/auth.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sazashopping/services/database.dart';
 
 class Home extends StatelessWidget {
@@ -12,7 +12,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<QuerySnapshot>.value(
+    return StreamProvider<List<MainItems>>.value(
       value: DataBaseService().shopItems,
       child: SafeArea(
         child: Scaffold(
