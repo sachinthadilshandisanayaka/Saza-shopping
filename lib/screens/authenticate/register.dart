@@ -46,35 +46,29 @@ class _RegisterState extends State<Register>
   Widget slideTeansition() {
     if (_error != null) {
       return Container(
-        child: SlideTransition(
-          position: Tween<Offset>(begin: Offset(-1, 0), end: Offset.zero)
-              .animate(_animationController),
-          child: Container(
-            padding: EdgeInsets.all(10.0),
-            color: Colors.amber,
-            child: Row(
-              children: <Widget>[
-                Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Icon(Icons.error_outline)),
-                Expanded(
-                  child: AutoSizeText(
-                    _error,
-                    maxLines: 4,
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.close),
-                  onPressed: () {
-                    setState(() {
-                      _error = null;
-                      // _visible = false;
-                    });
-                  },
-                ),
-              ],
+        padding: EdgeInsets.all(10.0),
+        color: Colors.amber,
+        child: Row(
+          children: <Widget>[
+            Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Icon(Icons.error_outline)),
+            Expanded(
+              child: AutoSizeText(
+                _error,
+                maxLines: 4,
+              ),
             ),
-          ),
+            IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                setState(() {
+                  _error = null;
+                  // _visible = false;
+                });
+              },
+            ),
+          ],
         ),
       );
     }

@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:sazashopping/services/auth.dart';
 import 'package:sazashopping/shared/constant.dart';
@@ -26,30 +25,28 @@ class _SignInState extends State<SignIn> {
   Widget slideTeansition() {
     if (_error != null) {
       return Container(
-        child: Container(
-          padding: EdgeInsets.all(10.0),
-          color: Colors.amber,
-          child: Row(
-            children: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Icon(Icons.error_outline)),
-              Expanded(
-                child: AutoSizeText(
-                  _error,
-                  maxLines: 4,
-                ),
+        padding: EdgeInsets.all(10.0),
+        color: Colors.amber,
+        child: Row(
+          children: <Widget>[
+            Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Icon(Icons.error_outline)),
+            Expanded(
+              child: AutoSizeText(
+                _error,
+                maxLines: 4,
               ),
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  setState(() {
-                    _error = null;
-                  });
-                },
-              ),
-            ],
-          ),
+            ),
+            IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () {
+                setState(() {
+                  _error = null;
+                });
+              },
+            ),
+          ],
         ),
       );
     }
@@ -71,7 +68,21 @@ class _SignInState extends State<SignIn> {
                 children: <Widget>[
                   slideTeansition(),
                   Container(
-                    padding: EdgeInsets.only(left: 20, right: 20, top: 70),
+                    padding: EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: MediaQuery.of(context).padding.top * 0.3),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          20,
+                        ),
+                        boxShadow: [
+                          new BoxShadow(
+                            blurRadius: 7,
+                            color: Colors.black,
+                            offset: Offset(1, 1),
+                          )
+                        ]),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
