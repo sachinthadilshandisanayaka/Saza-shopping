@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
+import 'package:sazashopping/screens/home/item_tile.dart';
 
 class MainItemList extends StatefulWidget {
   @override
@@ -10,10 +11,14 @@ class MainItemList extends StatefulWidget {
 class _MainItemListState extends State<MainItemList> {
   @override
   Widget build(BuildContext context) {
-    final mainItemList = Provider.of<List<MainItems>>(context);
+    final shopItems = Provider.of<List<MainItems>>(context);
     // print(mainItemList);
-    print(mainItemList);
 
-    return Container();
+    return ListView.builder(
+      itemCount: shopItems.length,
+      itemBuilder: (context, index) {
+        return ItemTile(items: shopItems[index]);
+      },
+    );
   }
 }
