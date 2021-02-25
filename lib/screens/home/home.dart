@@ -16,30 +16,89 @@ class Home extends StatelessWidget {
       value: DataBaseService().shopItems,
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.teal[50],
+          backgroundColor: Colors.blue[50],
           appBar: AppBar(
-            title: Text(
-              'Saza Shopping',
-              style: TextStyle(
-                color: Colors.white,
+            backgroundColor: Colors.blue,
+            title: Padding(
+              padding: EdgeInsets.only(top: 10.0, bottom: 8.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  color: Colors.blue,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.8),
+                        spreadRadius: 1,
+                        blurRadius: 6,
+                        offset: Offset(0, 1)),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Container(
+                      child: IconButton(
+                        icon: Icon(Icons.bar_chart_rounded),
+                        onPressed: () {},
+                      ),
+                    ),
+                    Container(
+                      child: Text(
+                        "Saza Shopping",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    Container(
+                      child: PopupMenuButton<String>(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10.0),
+                              topLeft: Radius.circular(5.0)),
+                        ),
+                        onSelected: (action) async {
+                          if (action == Constants.logout) {
+                            await _auth.signOut();
+                          }
+                        },
+                        itemBuilder: (BuildContext context) {
+                          return Constants.choices.map((String choise) {
+                            return PopupMenuItem<String>(
+                              value: choise,
+                              child: Text(choise),
+                            );
+                          }).toList();
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-            backgroundColor: Colors.teal[400],
-            elevation: 0.0,
-            actions: [
-              PopupMenuButton<String>(
-                onSelected: choiseAction,
-                itemBuilder: (BuildContext context) {
-                  return Constants.choices.map((String choise) {
-                    return PopupMenuItem<String>(
-                      value: choise,
-                      child: Text(choise),
-                    );
-                  }).toList();
-                },
-              ),
-            ],
           ),
+          // AppBar(
+          //   title: Text(
+          //     'Saza Shopping',
+          //     style: TextStyle(
+          //       color: Colors.white,
+          //     ),
+          //   ),
+          //   backgroundColor: Colors.teal[400],
+          //   elevation: 0.0,
+          //   actions: [
+          //     PopupMenuButton<String>(
+          //       onSelected: choiseAction,
+          //       itemBuilder: (BuildContext context) {
+          //         return Constants.choices.map((String choise) {
+          //           return PopupMenuItem<String>(
+          //             value: choise,
+          //             child: Text(choise),
+          //           );
+          //         }).toList();
+          //       },
+          //     ),
+          //   ],
+          // ),
           body: MainItemList(),
         ),
       ),
