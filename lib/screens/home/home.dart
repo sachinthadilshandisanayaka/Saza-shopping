@@ -49,6 +49,12 @@ class Home extends StatelessWidget {
                       ),
                     ),
                     Container(
+                      child: IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: () {},
+                      ),
+                    ),
+                    Container(
                       child: PopupMenuButton<String>(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
@@ -76,29 +82,6 @@ class Home extends StatelessWidget {
               ),
             ),
           ),
-          // AppBar(
-          //   title: Text(
-          //     'Saza Shopping',
-          //     style: TextStyle(
-          //       color: Colors.white,
-          //     ),
-          //   ),
-          //   backgroundColor: Colors.teal[400],
-          //   elevation: 0.0,
-          //   actions: [
-          //     PopupMenuButton<String>(
-          //       onSelected: choiseAction,
-          //       itemBuilder: (BuildContext context) {
-          //         return Constants.choices.map((String choise) {
-          //           return PopupMenuItem<String>(
-          //             value: choise,
-          //             child: Text(choise),
-          //           );
-          //         }).toList();
-          //       },
-          //     ),
-          //   ],
-          // ),
           body: MainItemList(),
         ),
       ),
