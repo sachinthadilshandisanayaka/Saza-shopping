@@ -45,21 +45,25 @@ class _MainItemListState extends State<MainItemList> {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Widget ShirtContaioner() {
     return Container(
       child: Text('image'),
     );
   }
+  // ignore: non_constant_identifier_names
   Widget TrouserContaioner() {
     return Container(
       child: Text('image'),
     );
   }
+  // ignore: non_constant_identifier_names
   Widget WatchContaioner() {
     return Container(
       child: Text('image'),
     );
   }
+   // ignore: non_constant_identifier_names
    Widget ShoesContaioner() {
     return Container(
       child: Text('image'),
