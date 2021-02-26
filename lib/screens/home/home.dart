@@ -49,32 +49,34 @@ class Home extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: IconButton(
-                        icon: Icon(Icons.search),
-                        onPressed: () {},
-                      ),
-                    ),
-                    Container(
-                      child: PopupMenuButton<String>(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10.0),
-                              topLeft: Radius.circular(5.0)),
-                        ),
-                        onSelected: (action) async {
-                          if (action == Constants.logout) {
-                            await _auth.signOut();
-                          }
-                        },
-                        itemBuilder: (BuildContext context) {
-                          return Constants.choices.map((String choise) {
-                            return PopupMenuItem<String>(
-                              value: choise,
-                              child: Text(choise),
-                            );
-                          }).toList();
-                        },
+                      child: Row(
+                        children: <Widget>[
+                          IconButton(
+                            icon: Icon(Icons.search),
+                            onPressed: () {},
+                          ),
+                          PopupMenuButton<String>(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10.0),
+                                  topLeft: Radius.circular(5.0)),
+                            ),
+                            onSelected: (action) async {
+                              if (action == Constants.logout) {
+                                await _auth.signOut();
+                              }
+                            },
+                            itemBuilder: (BuildContext context) {
+                              return Constants.choices.map((String choise) {
+                                return PopupMenuItem<String>(
+                                  value: choise,
+                                  child: Text(choise),
+                                );
+                              }).toList();
+                            },
+                          ),
+                        ],
                       ),
                     )
                   ],

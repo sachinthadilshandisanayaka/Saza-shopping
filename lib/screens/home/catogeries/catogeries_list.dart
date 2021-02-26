@@ -38,10 +38,72 @@ class CategeriesList extends StatelessWidget {
       height: 160.0,
       child: ListView(
         scrollDirection: Axis.horizontal,
+        physics: BouncingScrollPhysics(),
         children: <Widget>[
-          
+          imageAndDetailSection(),
+          SizedBox(
+            width: 20.0,
+          ),
+          imageAndDetailSection(),
+          SizedBox(
+            width: 20.0,
+          ),
+          imageAndDetailSection(),
+          SizedBox(
+            width: 20.0,
+          ),
+          imageAndDetailSection(),
+          SizedBox(
+            width: 20.0,
+          ),
+          imageAndDetailSection(),
+          SizedBox(
+            width: 20.0,
+          ),
+          imageAndDetailSection(),
+          SizedBox(
+            width: 20.0,
+          ),
+          imageAndDetailSection(),
+          SizedBox(
+            width: 20.0,
+          ),
         ],
       ),
+    );
+  }
+
+  Widget imageAndDetailSection() {
+    return Column(
+      children: <Widget>[
+        Container(
+          height: 100,
+          width: 100,
+          decoration: new BoxDecoration(
+            image: DecorationImage(
+              image: new AssetImage('assets/watch.jpg'),
+              fit: BoxFit.cover,
+            ),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+        Text('Hooded T'),
+        SizedBox(
+          height: 10.0,
+        ),
+        Row(
+          children: <Widget>[
+            Text('290'),
+            Icon(
+              Icons.money,
+              size: 10.0,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

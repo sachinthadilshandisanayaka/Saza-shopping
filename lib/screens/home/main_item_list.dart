@@ -19,6 +19,7 @@ class _MainItemListState extends State<MainItemList> {
     return Container(
       child: ListView(
         scrollDirection: Axis.vertical,
+        physics: BouncingScrollPhysics(),
         children: <Widget>[
           SizedBox(
             height: 10.0,
@@ -28,15 +29,15 @@ class _MainItemListState extends State<MainItemList> {
             height: 20.0,
           ),
           CategeriesList(),
-           SizedBox(
+          SizedBox(
             height: 20.0,
           ),
-          TrouserContaioner(),
-           SizedBox(
+          CategeriesList(),
+          SizedBox(
             height: 20.0,
           ),
-          WatchContaioner(),
-           SizedBox(
+          CategeriesList(),
+          SizedBox(
             height: 20.0,
           ),
           ShoesContaioner(),
@@ -51,20 +52,23 @@ class _MainItemListState extends State<MainItemList> {
       child: Text('image'),
     );
   }
+
   // ignore: non_constant_identifier_names
   Widget TrouserContaioner() {
     return Container(
       child: Text('image'),
     );
   }
+
   // ignore: non_constant_identifier_names
   Widget WatchContaioner() {
     return Container(
       child: Text('image'),
     );
   }
-   // ignore: non_constant_identifier_names
-   Widget ShoesContaioner() {
+
+  // ignore: non_constant_identifier_names
+  Widget ShoesContaioner() {
     return Container(
       child: Text('image'),
     );

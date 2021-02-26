@@ -13,7 +13,7 @@ class _OfferItemsState extends State<OfferItems> {
     return Container(
       height: 200.0,
       child: Image(
-        image: AssetImage('file:///D:/practices/Flutter/test.webp'),
+        image: AssetImage('assets/watch.jpg'),
         fit: BoxFit.cover,
       ),
     );
