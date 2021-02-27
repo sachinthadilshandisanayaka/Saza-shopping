@@ -3,9 +3,13 @@ import 'package:sazashopping/models/mainItem.dart';
 
 class DataBaseService {
   final String uid;
-  DataBaseService({this.uid});
+  final String itemtype;
+  DataBaseService({this.uid, this.itemtype});
 
   final CollectionReference sazaCollection =
+      FirebaseFirestore.instance.collection('mainItems');
+
+  final CollectionReference sazaItems =
       FirebaseFirestore.instance.collection('mainItems');
 
   Future updateItem(
@@ -17,8 +21,7 @@ class DataBaseService {
       'material': material
     });
   }
-
-  // item list from datbase
+  // item list from database
 
   List<MainItems> _itemListFromSnapShot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
@@ -32,7 +35,15 @@ class DataBaseService {
 
   // get items stream
 
-  Stream<List<MainItems>> get shopItems {
-    return sazaCollection.snapshots().map(_itemListFromSnapShot);
+  Stream<List<MainItems>> get dynamicItem {
+    return sazaCollection
+        .doc(uid)
+        .collection(itemtype)
+        .snapshots()
+        .map(_itemListFromSnapShot);
+  }
+
+  Stream<QuerySnapshot> get shopItems {
+    return sazaCollection.snapshots();
   }
 }
