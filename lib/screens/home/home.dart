@@ -18,15 +18,16 @@ class Home extends StatelessWidget {
       value: DataBaseService(uid: _user.uid).shopItems,
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.blue[50],
+          backgroundColor: Colors.blueGrey[100],
           appBar: AppBar(
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.blueGrey[100],
+            elevation: 0,
             title: Padding(
               padding: EdgeInsets.only(top: 10.0, bottom: 8.0),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
-                  color: Colors.blue,
+                  color: Colors.blueGrey[200],
                   boxShadow: [
                     BoxShadow(
                         color: Colors.black.withOpacity(0.8),
@@ -42,12 +43,6 @@ class Home extends StatelessWidget {
                       child: IconButton(
                         icon: Icon(Icons.menu_rounded),
                         onPressed: () {},
-                      ),
-                    ),
-                    Container(
-                      child: Text(
-                        "Saza Shopping",
-                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                     Container(

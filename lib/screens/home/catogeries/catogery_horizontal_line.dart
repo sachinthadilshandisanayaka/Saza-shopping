@@ -14,14 +14,32 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
   Widget build(BuildContext context) {
     final shopItems = Provider.of<List<MainItems>>(context);
     return Container(
-      height: 160.0,
+      height: 180.0,
+      color: Colors.white,
       child: ListView.builder(
         itemCount: shopItems.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.all(5),
         physics: BouncingScrollPhysics(),
         itemBuilder: (context, index) {
-          return ImageAdnDataDislpay(shopItem: shopItems[index]);
+          return Card(
+            shadowColor: Colors.white,
+            margin: EdgeInsets.only(left: 8, right: 8),
+            child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black.withOpacity(0.8),
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                        offset: Offset(0, 1)),
+                  ],
+                ),
+                child: ImageAdnDataDislpay(shopItem: shopItems[index])),
+          );
         },
       ),
     );

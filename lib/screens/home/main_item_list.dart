@@ -1,6 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import 'package:sazashopping/screens/home/catogeries/offer_item.dart';
 import 'package:sazashopping/screens/home/homeItemNames/nameConstant.dart';
 import 'package:sazashopping/screens/home/item_tile.dart';
@@ -14,12 +14,12 @@ class MainItemList extends StatefulWidget {
 }
 
 class _MainItemListState extends State<MainItemList> {
-  final nameContant = NameContant.dbName;
   @override
   Widget build(BuildContext context) {
-    final shopItems = Provider.of<QuerySnapshot>(context);
-    print(shopItems);
-    print(nameContant[0]);
+    final nameContant = NameContant.dbName;
+    // final shopItems = Provider.of<QuerySnapshot>(context);
+    // print(shopItems);
+    // print(nameContant[0]);
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Column(
@@ -36,7 +36,10 @@ class _MainItemListState extends State<MainItemList> {
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 print("hello + " + nameContant[index]);
-                return ItemTile(itemname: nameContant[index]);
+                return Card(
+                    color: Colors.white,
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: ItemTile(itemname: nameContant[index]));
               },
             ),
           ),
