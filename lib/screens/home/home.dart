@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
                   children: <Widget>[
                     Container(
                       child: IconButton(
-                        icon: Icon(Icons.bar_chart_rounded),
+                        icon: Icon(Icons.menu_rounded),
                         onPressed: () {},
                       ),
                     ),
