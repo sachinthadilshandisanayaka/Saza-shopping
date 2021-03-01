@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
@@ -34,7 +33,12 @@ class _ItemTileState extends State<ItemTile> {
               child: labelTopItem(),
             ),
             Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.only(
+                bottom: 10,
+                top: 10,
+                left: 5,
+                right: 5,
+              ),
               child: CatogeriesHorizontalTile(),
             ),
           ],
