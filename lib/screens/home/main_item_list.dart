@@ -12,9 +12,7 @@ class _MainItemListState extends State<MainItemList> {
   @override
   Widget build(BuildContext context) {
     final nameContant = NameContant.dbName;
-    // final shopItems = Provider.of<QuerySnapshot>(context);
-    // print(shopItems);
-    // print(nameContant[0]);
+
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
       child: Column(
@@ -30,7 +28,6 @@ class _MainItemListState extends State<MainItemList> {
               shrinkWrap: true,
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                // print("hello + " + nameContant[index]);
                 return Card(
                     color: Colors.white,
                     margin: EdgeInsets.only(bottom: 20),

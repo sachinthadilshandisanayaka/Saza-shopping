@@ -12,7 +12,8 @@ class CatogeriesHorizontalTile extends StatefulWidget {
 class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
   @override
   Widget build(BuildContext context) {
-    final shopItems = Provider.of<List<MainItems>>(context);
+    
+    final shopItems =  Provider.of<List<MainItems>>(context);
     return Container(
       height: 180.0,
       color: Colors.white,

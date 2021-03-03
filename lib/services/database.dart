@@ -40,7 +40,7 @@ class DataBaseService {
         .doc(uid)
         .collection(itemtype)
         .snapshots()
-        .map(_itemListFromSnapShot);
+        .map((d) => _itemListFromSnapShot(d));
   }
 
   Stream<QuerySnapshot> get shopItems {

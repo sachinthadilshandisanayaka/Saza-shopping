@@ -3,21 +3,28 @@ import 'package:flutter/material.dart';
 class ProcessDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AlertDialog alert = AlertDialog(
-      content: new Row(
-        children: [
-          CircularProgressIndicator(),
-          Container(
-              margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
-        ],
+    return Dialog(
+      child: Container(
+        padding: EdgeInsets.all(30),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50.0), color: Colors.white),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              'Loging out...',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CircularProgressIndicator(
+              backgroundColor: Colors.white,
+            ),
+          ],
+        ),
       ),
-    );
-    showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
     );
   }
 }

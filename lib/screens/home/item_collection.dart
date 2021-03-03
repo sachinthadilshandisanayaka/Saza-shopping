@@ -24,27 +24,27 @@ class _ItemTileState extends State<ItemTile> {
           DataBaseService(uid: user.uid, itemtype: widget.itemname).dynamicItem,
       child: Material(
         color: Colors.white,
-        elevation: 5,
-        shadowColor: Colors.black,
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: labelTopItem(),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                bottom: 10,
-                top: 10,
-                left: 5,
-                right: 5,
+          elevation: 5,
+          shadowColor: Colors.black,
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: labelTopItem(),
               ),
-              child: CatogeriesHorizontalTile(),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: 10,
+                  top: 10,
+                  left: 5,
+                  right: 5,
+                ),
+                child: CatogeriesHorizontalTile(),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
   }
 
   Widget labelTopItem() {
