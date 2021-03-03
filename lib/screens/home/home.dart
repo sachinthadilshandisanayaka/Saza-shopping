@@ -5,82 +5,71 @@ import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/home/main_item_list.dart';
 import 'package:sazashopping/screens/home/menus/constants.dart';
 import 'package:sazashopping/screens/home/searchBar/searchDelegate.dart';
-import 'package:sazashopping/services/auth.dart';
+import 'package:sazashopping/screens/home/showDialog/customDialog.dart';
+// import 'package:sazashopping/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/services/database.dart';
 
 class Home extends StatelessWidget {
-  final AuthService _auth = AuthService();
-
+  // final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<Users>(context);
     return StreamProvider<QuerySnapshot>.value(
       value: DataBaseService(uid: _user.uid).shopItems,
       child: SafeArea(
+        top: false,
         child: Scaffold(
           backgroundColor: Colors.blueGrey[100],
           appBar: AppBar(
             backgroundColor: Colors.blueGrey[100],
             elevation: 0,
-            title: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FittedBox(
-                  fit: BoxFit.contain,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                    child: Container(
-                      height: 40,
-                      padding: EdgeInsets.only(left: 20, right: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(90),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                              color: Colors.black.withOpacity(0.8),
-                              spreadRadius: 1,
-                              blurRadius: 4,
-                              offset: Offset(0, 1)),
-                        ],
-                      ),
-                      child: FittedBox(
-                        fit: BoxFit.fill,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[
-                            TextButton(
-                              child: Text(
-                                'Search you wish...',
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w100,
-                                    fontSize: 15),
-                              ),
-                              onPressed: () {
-                                showSearch(
-                                    context: context, delegate: DataSearch());
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.search,
+            centerTitle: true,
+            title: FittedBox(
+              fit: BoxFit.contain,
+              child: Padding(
+                padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: Container(
+                  height: 40,
+                  padding: EdgeInsets.only(left: 20, right: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(90),
+                    color: Colors.white,
+                  ),
+                  child: FittedBox(
+                    fit: BoxFit.fill,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: <Widget>[
+                        TextButton(
+                          child: Text(
+                            'Search you wish...',
+                            style: TextStyle(
                                 color: Colors.black,
-                              ),
-                              onPressed: () {
-                                showSearch(
-                                    context: context, delegate: DataSearch());
-                              },
-                            ),
-                          ],
+                                fontWeight: FontWeight.w100,
+                                fontSize: 15),
+                          ),
+                          onPressed: () {
+                            showSearch(
+                                context: context, delegate: DataSearch());
+                          },
                         ),
-                      ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            showSearch(
+                                context: context, delegate: DataSearch());
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
             actions: <Widget>[
               PopupMenuButton<String>(
@@ -92,7 +81,31 @@ class Home extends StatelessWidget {
                 ),
                 onSelected: (action) async {
                   if (action == Constants.logout) {
-                    await _auth.signOut();
+                    showGeneralDialog(
+                        barrierColor: Colors.black.withOpacity(0.5),
+                        transitionBuilder: (context, a1, a2, widget) {
+                          return Transform.scale(
+                            scale: a1.value,
+                            child: Opacity(
+                              opacity: a1.value,
+                              child: CustomDialog(
+                                description:
+                                    'Do you want log out from this account',
+                                title: 'Log out',
+                              ),
+                            ),
+                          );
+                        },
+                        transitionDuration: Duration(milliseconds: 200),
+                        barrierDismissible: true,
+                        barrierLabel: '',
+                        context: context,
+                        pageBuilder: (context, animation1, animation2) =>
+                            CustomDialog(
+                              description:
+                                  'Do you want log out from this account',
+                              title: 'Log out',
+                            ));
                   }
                 },
                 itemBuilder: (BuildContext context) {
@@ -111,11 +124,5 @@ class Home extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void choiseAction(String action) async {
-    if (action == Constants.logout) {
-      await _auth.signOut();
-    }
   }
 }
