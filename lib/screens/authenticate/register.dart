@@ -4,7 +4,6 @@ import 'package:sazashopping/services/auth.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/loading.dart';
-import 'package:sizer/sizer.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -103,36 +102,6 @@ class _RegisterState extends State<Register>
                   child: Column(
                     children: <Widget>[
                       slideTeansition(),
-                      // AnimatedOpacity(
-                      //   duration: const Duration(milliseconds: 200),
-                      //   opacity: _visible ? 1.0 : 0.0,
-                      //   curve: Curves.linearToEaseOut,
-                      //   child: Container(
-                      //     color: Colors.amber,
-                      //     child: Row(
-                      //       children: <Widget>[
-                      //         Padding(
-                      //             padding: const EdgeInsets.only(right: 5.0),
-                      //             child: Icon(Icons.error_outline)),
-                      //         Expanded(
-                      //           child: AutoSizeText(
-                      //             _error,
-                      //             maxLines: 3,
-                      //           ),
-                      //         ),
-                      //         IconButton(
-                      //           icon: Icon(Icons.close),
-                      //           onPressed: () {
-                      //             setState(() {
-                      //               _error = '';
-                      //               _visible = false;
-                      //             });
-                      //           },
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
                       SizedBox(
                         height: 20.0,
                       ),

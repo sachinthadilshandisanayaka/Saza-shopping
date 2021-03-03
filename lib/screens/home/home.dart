@@ -8,6 +8,7 @@ import 'package:sazashopping/screens/home/searchBar/searchDelegate.dart';
 import 'package:sazashopping/screens/home/showDialog/customDialog.dart';
 // import 'package:sazashopping/services/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:sazashopping/screens/home/showDialog/newDialog.dart';
 import 'package:sazashopping/services/database.dart';
 
 class Home extends StatelessWidget {
@@ -81,31 +82,15 @@ class Home extends StatelessWidget {
                 ),
                 onSelected: (action) async {
                   if (action == Constants.logout) {
-                    showGeneralDialog(
-                        barrierColor: Colors.black.withOpacity(0.5),
-                        transitionBuilder: (context, a1, a2, widget) {
-                          return Transform.scale(
-                            scale: a1.value,
-                            child: Opacity(
-                              opacity: a1.value,
-                              child: CustomDialog(
-                                description:
-                                    'Do you want log out from this account',
-                                title: 'Log out',
-                              ),
-                            ),
-                          );
-                        },
-                        transitionDuration: Duration(milliseconds: 200),
-                        barrierDismissible: true,
-                        barrierLabel: '',
+                    showNewDialog(
                         context: context,
-                        pageBuilder: (context, animation1, animation2) =>
-                            CustomDialog(
-                              description:
-                                  'Do you want log out from this account',
-                              title: 'Log out',
-                            ));
+                        builder: (BuildContext context) {
+                          return CustomDialog(
+                            description:
+                                'Do you want log out from this account',
+                            title: 'Log out',
+                          );
+                        });
                   }
                 },
                 itemBuilder: (BuildContext context) {
