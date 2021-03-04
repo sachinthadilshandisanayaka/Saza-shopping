@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ProcessDialog extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext processcontext) {
     return Dialog(
       child: Container(
         padding: EdgeInsets.all(30),

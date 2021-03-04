@@ -3,12 +3,7 @@ import 'package:sazashopping/screens/home/catogeries/offer_item.dart';
 import 'package:sazashopping/screens/home/homeItemNames/nameConstant.dart';
 import 'package:sazashopping/screens/home/item_collection.dart';
 
-class MainItemList extends StatefulWidget {
-  @override
-  _MainItemListState createState() => _MainItemListState();
-}
-
-class _MainItemListState extends State<MainItemList> {
+class MainItemList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final nameContant = NameContant.dbName;

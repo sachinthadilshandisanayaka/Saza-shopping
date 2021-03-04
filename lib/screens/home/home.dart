@@ -6,13 +6,11 @@ import 'package:sazashopping/screens/home/main_item_list.dart';
 import 'package:sazashopping/screens/home/menus/constants.dart';
 import 'package:sazashopping/screens/home/searchBar/searchDelegate.dart';
 import 'package:sazashopping/screens/home/showDialog/customDialog.dart';
-// import 'package:sazashopping/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/screens/home/showDialog/newDialog.dart';
 import 'package:sazashopping/services/database.dart';
 
 class Home extends StatelessWidget {
-  // final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<Users>(context);

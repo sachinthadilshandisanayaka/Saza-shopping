@@ -45,7 +45,7 @@ class _CustomDialogState extends State<CustomDialog> {
                   setState(() {
                     _loading = true;
                   });
-
+                  
                   try {
                     await _auth.signOut();
                     setState(() {
