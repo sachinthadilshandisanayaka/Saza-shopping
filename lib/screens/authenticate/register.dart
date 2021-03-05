@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/services/auth.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:sazashopping/shared/clipPath.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/loading.dart';
 
@@ -32,7 +33,6 @@ class _RegisterState extends State<Register>
         parent: _animationController,
       ),
     );
-    // Timer(Duration(seconds: 6), () => _animationController.forward());
     super.initState();
   }
 
@@ -49,7 +49,6 @@ class _RegisterState extends State<Register>
   String password;
   String _error;
   bool _loading = false;
-  // bool _visible = false;
 
   Widget slideTeansition() {
     if (_error != null) {
@@ -74,7 +73,6 @@ class _RegisterState extends State<Register>
                 onPressed: () {
                   setState(() {
                     _error = null;
-                    // _visible = false;
                   });
                 },
               ),
@@ -94,27 +92,49 @@ class _RegisterState extends State<Register>
         ? Loading()
         : SafeArea(
             child: Scaffold(
-              backgroundColor: Colors.teal[300],
+              backgroundColor: Colors.teal[50],
               body: SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.only(top: 100.0),
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      slideTeansition(),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                child: Column(
+                  children: <Widget>[
+                    Stack(
+                      children: <Widget>[
+                        ClipPath(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: 200,
+                            color: Colors.teal[400],
+                          ),
+                          clipper: CustomClipPath(),
+                        ),
+                        Positioned(
+                          bottom: 8,
+                          left: MediaQuery.of(context).size.width * 0.35,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            backgroundImage: AssetImage('assets/saza.png'),
+                            radius: 50,
+                          ),
+                        ),
+                      ],
+                    ),
+                    slideTeansition(),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 15.0, right: 15.0, bottom: 10),
+                      child: Container(
+                        padding: EdgeInsets.only(left: 20, right: 20, top: 0),
                         decoration: BoxDecoration(
-                            color: Colors.teal[300],
+                            color: Colors.teal[50],
                             borderRadius: BorderRadius.circular(
                               20,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                blurRadius: 7,
+                                blurRadius: 1,
                                 offset: Offset(1, 1),
                               )
                             ]),
@@ -124,11 +144,18 @@ class _RegisterState extends State<Register>
                             Text(
                               'Sign Up',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 letterSpacing: 2.0,
                                 fontFamily: 'Baloo2',
                                 fontSize: 40,
                                 fontWeight: FontWeight.bold,
+                                shadows: <Shadow>[
+                                  Shadow(
+                                    offset: Offset(1.0, 1.0),
+                                    blurRadius: 7.0,
+                                    color: Colors.white,
+                                  )
+                                ],
                               ),
                             ),
                             SizedBox(
@@ -193,8 +220,9 @@ class _RegisterState extends State<Register>
                                   SizedBox(
                                     width: double.infinity,
                                     child: RaisedButton(
+                                      padding: EdgeInsets.all(15),
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
+                                        borderRadius: BorderRadius.circular(5),
                                       ),
                                       color: Colors.purpleAccent,
                                       child: Text(
@@ -232,7 +260,12 @@ class _RegisterState extends State<Register>
                                     onPressed: () {
                                       widget.toggleView();
                                     },
-                                    child: Text('Login to the account'),
+                                    child: Text(
+                                      'Login to the account',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -240,8 +273,8 @@ class _RegisterState extends State<Register>
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

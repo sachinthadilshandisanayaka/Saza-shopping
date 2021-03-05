@@ -23,23 +23,27 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
         padding: EdgeInsets.all(5),
         physics: BouncingScrollPhysics(),
         itemBuilder: (context, index) {
-          return Card(
-            shadowColor: Colors.white,
-            margin: EdgeInsets.only(left: 8, right: 8),
-            child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.black.withOpacity(0.8),
-                        spreadRadius: 1,
-                        blurRadius: 2,
-                        offset: Offset(0, 1)),
-                  ],
-                ),
-                child: ImageAdnDataDislpay(shopItem: shopItems[index])),
-          );
+          return shopItems.length == null
+              ? CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.teal[200]),
+                )
+              : Card(
+                  shadowColor: Colors.white,
+                  margin: EdgeInsets.only(left: 8, right: 8),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black.withOpacity(0.8),
+                              spreadRadius: 1,
+                              blurRadius: 2,
+                              offset: Offset(0, 1)),
+                        ],
+                      ),
+                      child: ImageAdnDataDislpay(shopItem: shopItems[index])),
+                );
         },
       ),
     );
