@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/services/auth.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:sazashopping/shared/errorMessageShow.dart';
 import 'package:sazashopping/shared/clipPath.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/loading.dart';
@@ -13,35 +13,7 @@ class Register extends StatefulWidget {
   _RegisterState createState() => _RegisterState();
 }
 
-class _RegisterState extends State<Register>
-    with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<Offset> _offsetAnimation;
-
-  @override
-  void initState() {
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 3),
-    )..repeat(reverse: true);
-    _offsetAnimation = Tween<Offset>(
-      begin: Offset.zero,
-      end: Offset(0.5, 0.0),
-    ).animate(
-      CurvedAnimation(
-        curve: Curves.elasticIn,
-        parent: _animationController,
-      ),
-    );
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
-  }
-
+class _RegisterState extends State<Register> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
@@ -49,42 +21,6 @@ class _RegisterState extends State<Register>
   String password;
   String _error;
   bool _loading = false;
-
-  Widget slideTeansition() {
-    if (_error != null) {
-      return SlideTransition(
-        position: _offsetAnimation,
-        child: Container(
-          padding: EdgeInsets.all(10.0),
-          color: Colors.amber,
-          child: Row(
-            children: <Widget>[
-              Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Icon(Icons.error_outline)),
-              Expanded(
-                child: AutoSizeText(
-                  _error,
-                  maxLines: 4,
-                ),
-              ),
-              IconButton(
-                icon: Icon(Icons.close),
-                onPressed: () {
-                  setState(() {
-                    _error = null;
-                  });
-                },
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-    return SizedBox(
-      height: 0,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +39,7 @@ class _RegisterState extends State<Register>
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             height: 200,
-                            color: Colors.teal[400],
+                            color: Colors.blueGrey,
                           ),
                           clipper: CustomClipPath(),
                         ),
@@ -118,7 +54,9 @@ class _RegisterState extends State<Register>
                         ),
                       ],
                     ),
-                    slideTeansition(),
+                    ErrorMessages(
+                      message: _error,
+                    ),
                     SizedBox(
                       height: 10.0,
                     ),
@@ -224,7 +162,7 @@ class _RegisterState extends State<Register>
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(5),
                                       ),
-                                      color: Colors.purpleAccent,
+                                      color: Colors.blueGrey,
                                       child: Text(
                                         'Sign up',
                                         style: TextStyle(color: Colors.white),
