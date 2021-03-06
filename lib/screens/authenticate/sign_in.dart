@@ -81,20 +81,7 @@ class _SignInState extends State<SignIn> {
                           children: <Widget>[
                             Text(
                               'Sign In',
-                              style: TextStyle(
-                                color: Colors.black,
-                                letterSpacing: 2.0,
-                                fontFamily: 'Baloo2',
-                                fontSize: 40,
-                                fontWeight: FontWeight.bold,
-                                shadows: <Shadow>[
-                                  Shadow(
-                                    offset: Offset(1.0, 1.0),
-                                    blurRadius: 7.0,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
+                              style: signPageMainTagDecoration,
                             ),
                             SizedBox(
                               height: 20.0,
