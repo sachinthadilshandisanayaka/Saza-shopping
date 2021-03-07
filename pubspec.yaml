@@ -64,6 +64,9 @@ flutter:
     - family: Baloo2
       fonts:
         - asset: fonts/Baloo2-Regular.ttf
+    - family: CrimsonText
+      fonts:
+        - asset: fonts/CrimsonText-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

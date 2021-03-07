@@ -5,6 +5,7 @@ import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/home/catogeries/catogery_horizontal_line.dart';
 import 'package:sazashopping/services/database.dart';
+import 'package:sazashopping/shared/constant.dart';
 
 class ItemTile extends StatelessWidget {
   final String itemname;
@@ -16,10 +17,11 @@ class ItemTile extends StatelessWidget {
     return StreamProvider<List<MainItems>>.value(
       value: DataBaseService(uid: user.uid, itemtype: itemname).dynamicItem,
       child: Material(
-        color: Colors.white,
-        elevation: 5,
-        shadowColor: Colors.black,
+        color: backgroudColor, // here
+        elevation: 0,
+        // shadowColor: Colors.black,
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(8.0),
@@ -27,7 +29,6 @@ class ItemTile extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(
-                bottom: 10,
                 top: 10,
                 left: 5,
                 right: 5,
@@ -44,7 +45,12 @@ class ItemTile extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(itemname),
+        Text(
+          itemname.toUpperCase(),
+          style: TextStyle(
+            fontFamily: 'Baloo2',
+          ),
+        ),
         Text(
           'MORE',
           style: TextStyle(
