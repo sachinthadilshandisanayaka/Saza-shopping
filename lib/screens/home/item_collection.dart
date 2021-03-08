@@ -19,17 +19,17 @@ class ItemTile extends StatelessWidget {
       child: Material(
         color: backgroudColor, // here
         elevation: 0,
-        // shadowColor: Colors.black,
+        shadowColor: Colors.white,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(8.0),
+            Container(
+              margin: EdgeInsets.only(left: 10, right: 5),
               child: labelTopItem(),
             ),
             Padding(
               padding: EdgeInsets.only(
-                top: 10,
+                top: 5,
                 left: 5,
                 right: 5,
               ),
@@ -49,12 +49,15 @@ class ItemTile extends StatelessWidget {
           itemname.toUpperCase(),
           style: TextStyle(
             fontFamily: 'Baloo2',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1,
           ),
         ),
         Text(
           'MORE',
           style: TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w300,
           ),
         ),
       ],

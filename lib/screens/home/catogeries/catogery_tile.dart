@@ -11,46 +11,48 @@ class ImageAdnDataDislpay extends StatelessWidget {
     return FittedBox(
       fit: BoxFit.fitWidth,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: 100,
+            height: 110,
             width: 110,
             decoration: new BoxDecoration(
               image: DecorationImage(
                 image: new AssetImage('assets/watch.jpg'),
                 fit: BoxFit.cover,
               ),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8),
-                topRight: Radius.circular(8),
-              ),
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Text(
-            shopItem.name,
-            style: TextStyle(
-              fontFamily: 'CrimsonText',
-              shadows: <Shadow>[
-                Shadow(
-                  offset: Offset(0.0, 1),
-                  blurRadius: 8.0,
-                  color: Colors.black45,
-                )
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  shopItem.name,
+                  style: TextStyle(
+                    fontFamily: 'Baloo2',
+                    fontWeight: FontWeight.w100,
+                    fontSize: 11,
+                    // shadows: <Shadow>[
+                    //   Shadow(
+                    //     offset: Offset(0.0, 1),
+                    //     blurRadius: 10.0,
+                    //     color: Colors.black45,
+                    //   )
+                    // ],
+                  ),
+                ),
+                Text(
+                  "LKR" + shopItem.price,
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontFamily: 'Baloo2',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
-            ),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Text(
-            'price : ' + shopItem.price,
-            style: TextStyle(
-              fontFamily: 'CrimsonText',
-              fontWeight: FontWeight.w300,
-              fontSize: 10,
             ),
           ),
         ],

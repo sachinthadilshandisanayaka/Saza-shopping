@@ -9,12 +9,9 @@ class OfferItems extends StatefulWidget {
 class _OfferItemsState extends State<OfferItems> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 200.0,
-      child: Image(
-        image: AssetImage('assets/watch.jpg'),
-        fit: BoxFit.cover,
-      ),
+    return Image(
+      image: AssetImage('assets/watch.jpg'),
+      fit: BoxFit.fitWidth,
     );
   }
 }

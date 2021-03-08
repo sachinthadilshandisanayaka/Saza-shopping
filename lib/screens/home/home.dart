@@ -20,7 +20,7 @@ class Home extends StatelessWidget {
       child: SafeArea(
         top: false,
         child: Scaffold(
-          backgroundColor: backgroudColor, // here
+          backgroundColor: appBarColor, // here
           appBar: AppBar(
             backgroundColor: appBarColor,
             elevation: 0,

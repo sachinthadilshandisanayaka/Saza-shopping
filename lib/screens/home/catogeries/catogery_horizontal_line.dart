@@ -21,7 +21,6 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
         itemCount: shopItems.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.all(5),
         physics: BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           return shopItems.length == 0
@@ -29,15 +28,15 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.teal[200]),
                 )
               : Container(
-                  padding: EdgeInsets.only(bottom: 12),
-                  margin: EdgeInsets.only(left: 6, right: 6, bottom: 6),
+                  padding: EdgeInsets.only(bottom: 4),
+                  margin: EdgeInsets.only(left: 6, right: 10, bottom: 6),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(12),
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.5),
-                        blurRadius: 2,
+                        blurRadius: 7,
                         offset: Offset(0, 5),
                       ),
                     ],
