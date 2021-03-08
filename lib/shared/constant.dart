@@ -29,5 +29,3 @@ const signPageMainTagDecoration = TextStyle(
     )
   ],
 );
-
-const backgroudColor = Colors.white;

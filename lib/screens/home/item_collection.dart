@@ -5,7 +5,7 @@ import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/home/catogeries/catogery_horizontal_line.dart';
 import 'package:sazashopping/services/database.dart';
-import 'package:sazashopping/shared/constant.dart';
+import 'package:sazashopping/shared/colors.dart';
 
 class ItemTile extends StatelessWidget {
   final String itemname;

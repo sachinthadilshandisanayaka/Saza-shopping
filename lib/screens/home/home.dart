@@ -9,7 +9,7 @@ import 'package:sazashopping/screens/home/showDialog/customDialog.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/screens/home/showDialog/newDialog.dart';
 import 'package:sazashopping/services/database.dart';
-import 'package:sazashopping/shared/constant.dart';
+import 'package:sazashopping/shared/colors.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -22,7 +22,7 @@ class Home extends StatelessWidget {
         child: Scaffold(
           backgroundColor: backgroudColor, // here
           appBar: AppBar(
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: appBarColor,
             elevation: 0,
             centerTitle: true,
             title: Container(
@@ -40,10 +40,19 @@ class Home extends StatelessWidget {
                     child: Text(
                       'search you wish...',
                       style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w300,
-                          fontFamily: 'Ballo2',
-                          fontSize: 15),
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w200,
+                        fontFamily: 'Ballo2',
+                        fontSize: 12,
+                        letterSpacing: 2,
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(0.0, 0.3),
+                            blurRadius: 2.0,
+                            color: Colors.black45,
+                          )
+                        ],
+                      ),
                     ),
                     onPressed: () {
                       showSearch(context: context, delegate: DataSearch());
@@ -51,9 +60,9 @@ class Home extends StatelessWidget {
                   ),
                   IconButton(
                     icon: Icon(
-                      Icons.search,
+                      Icons.search_rounded,
                       color: Colors.black,
-                      size: 20,
+                      size: 25,
                     ),
                     onPressed: () {
                       showSearch(context: context, delegate: DataSearch());
