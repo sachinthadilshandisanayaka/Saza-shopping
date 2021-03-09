@@ -29,11 +29,7 @@ class MainItemList extends StatelessWidget {
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    return Card(
-                        color: Colors.white,
-                        shadowColor: Colors.white,
-                        borderOnForeground: false,
-                        margin: EdgeInsets.only(bottom: 5),
+                    return Container(
                         child: ItemTile(itemname: nameContant[index]));
                   },
                 ),

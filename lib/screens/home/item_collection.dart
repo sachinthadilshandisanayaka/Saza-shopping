@@ -24,15 +24,11 @@ class ItemTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(left: 10, right: 5),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: labelTopItem(),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                top: 5,
-                left: 5,
-                right: 5,
-              ),
+              padding: EdgeInsets.all(5),
               child: CatogeriesHorizontalTile(),
             ),
           ],

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
+import 'package:sazashopping/shared/colors.dart';
 
 class ImageAdnDataDislpay extends StatelessWidget {
   final MainItems shopItem;
@@ -14,7 +15,7 @@ class ImageAdnDataDislpay extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: 110,
+            height: 140,
             width: 110,
             decoration: new BoxDecoration(
               image: DecorationImage(
@@ -25,31 +26,25 @@ class ImageAdnDataDislpay extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 8.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   shopItem.name,
                   style: TextStyle(
-                    fontFamily: 'Baloo2',
+                    fontFamily: 'Montserrat',
                     fontWeight: FontWeight.w100,
                     fontSize: 11,
-                    // shadows: <Shadow>[
-                    //   Shadow(
-                    //     offset: Offset(0.0, 1),
-                    //     blurRadius: 10.0,
-                    //     color: Colors.black45,
-                    //   )
-                    // ],
                   ),
                 ),
                 Text(
                   "LKR" + shopItem.price,
                   style: TextStyle(
-                    color: Colors.blue,
-                    fontFamily: 'Baloo2',
-                    fontWeight: FontWeight.w500,
+                    color: appBarColor,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
                   ),
                 ),
               ],

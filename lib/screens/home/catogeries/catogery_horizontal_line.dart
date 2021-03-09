@@ -15,7 +15,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
   Widget build(BuildContext context) {
     final shopItems = Provider.of<List<MainItems>>(context) ?? [];
     return Container(
-      height: 210.0,
+      height: 220.0,
       color: backgroudColor, // here
       child: ListView.builder(
         itemCount: shopItems.length,
@@ -29,15 +29,15 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
                 )
               : Container(
                   padding: EdgeInsets.only(bottom: 4),
-                  margin: EdgeInsets.only(left: 6, right: 10, bottom: 6),
+                  margin: EdgeInsets.only(left: 6, right: 10, bottom: 12),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
-                        blurRadius: 7,
-                        offset: Offset(0, 5),
+                        color: itemShadowColor,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
                       ),
                     ],
                   ),
