@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class DataSearch extends SearchDelegate<String> {
@@ -69,7 +68,7 @@ class DataSearch extends SearchDelegate<String> {
           // onTap: () {
           //   showResults(context);
           // },
-          leading: Icon(Icons.storefront_sharp),
+          leading: Icon(Icons.history),
           title: RichText(
             text: TextSpan(
               text: suggetionList[index].substring(0, query.length),

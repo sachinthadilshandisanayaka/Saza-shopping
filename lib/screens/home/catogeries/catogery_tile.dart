@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/shared/colors.dart';
+import 'package:sazashopping/shared/string.dart';
 
 class ImageAdnDataDislpay extends StatelessWidget {
   final MainItems shopItem;
@@ -39,7 +40,7 @@ class ImageAdnDataDislpay extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "LKR" + shopItem.price,
+                  srilankaRuppes + shopItem.price,
                   style: TextStyle(
                     color: appBarColor,
                     fontFamily: 'Montserrat',

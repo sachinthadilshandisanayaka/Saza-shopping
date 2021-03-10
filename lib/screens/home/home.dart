@@ -2,9 +2,9 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/user.dart';
+import 'package:sazashopping/screens/home/home_title.dart';
 import 'package:sazashopping/screens/home/main_item_list.dart';
 import 'package:sazashopping/screens/home/menus/constants.dart';
-import 'package:sazashopping/screens/home/searchBar/searchDelegate.dart';
 import 'package:sazashopping/screens/home/showDialog/customDialog.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/screens/home/showDialog/newDialog.dart';
@@ -25,52 +25,7 @@ class Home extends StatelessWidget {
             backgroundColor: appBarColor,
             elevation: 0,
             centerTitle: true,
-            title: Container(
-              height: 40,
-              padding: EdgeInsets.only(left: 20, right: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: Colors.white,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  TextButton(
-                    child: Text(
-                      'search you wish...',
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w200,
-                        fontFamily: 'Ballo2',
-                        fontSize: 12,
-                        letterSpacing: 2,
-                        shadows: <Shadow>[
-                          Shadow(
-                            offset: Offset(0.0, 0.3),
-                            blurRadius: 2.0,
-                            color: Colors.black45,
-                          )
-                        ],
-                      ),
-                    ),
-                    onPressed: () {
-                      showSearch(context: context, delegate: DataSearch());
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.search_rounded,
-                      color: Colors.black,
-                      size: 25,
-                    ),
-                    onPressed: () {
-                      showSearch(context: context, delegate: DataSearch());
-                    },
-                  ),
-                ],
-              ),
-            ),
+            title: HomeTitle(),
             actions: <Widget>[
               PopupMenuButton<String>(
                 shape: RoundedRectangleBorder(
