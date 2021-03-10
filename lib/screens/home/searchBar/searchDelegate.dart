@@ -2,7 +2,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class DataSearch extends SearchDelegate<String> {
-  final dataList = [
+  static const historyLenth = 10;
+  List<String> dataList = [
     "Apple",
     "Banana",
     "Cat",
@@ -19,12 +20,33 @@ class DataSearch extends SearchDelegate<String> {
     "Doll",
   ];
 
-  final recentData = [
+  List<String> recentData = [
     "Banana",
     "Cat",
     "Bag",
     "Shoe",
   ];
+
+  void addSearchTerm(String term) {
+    if (recentData.contains(term)) {
+      putSerchTermFirst(term);
+      return;
+    }
+    recentData.add(term);
+    if (recentData.length > historyLenth) {
+      recentData.removeRange(0, recentData.length - historyLenth);
+    }
+    print(dataList.toString());
+  }
+
+  void deleteSearchTerm(String term) {
+    recentData.removeWhere((i) => i == term);
+  }
+
+  void putSerchTermFirst(String term) {
+    deleteSearchTerm(term);
+    addSearchTerm(term);
+  }
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -52,8 +74,11 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    throw UnimplementedError();
+    return Container(
+      child: Center(
+        child: Text(query),
+      ),
+    );
   }
 
   @override
@@ -65,9 +90,10 @@ class DataSearch extends SearchDelegate<String> {
     return ListView.builder(
       itemBuilder: (context, index) {
         return ListTile(
-          // onTap: () {
-          //   showResults(context);
-          // },
+          onTap: () {
+            addSearchTerm(query);
+            showResults(context);
+          },
           leading: Icon(Icons.history),
           title: RichText(
             text: TextSpan(
