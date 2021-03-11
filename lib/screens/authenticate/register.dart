@@ -48,7 +48,7 @@ class _RegisterState extends State<Register> {
                           left: MediaQuery.of(context).size.width * 0.35,
                           child: CircleAvatar(
                             backgroundColor: Colors.white,
-                            backgroundImage: AssetImage('assets/saza.png'),
+                            backgroundImage: AssetImage('assets/splash.png'),
                             radius: 50,
                           ),
                         ),
