@@ -36,8 +36,8 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
                     boxShadow: [
                       BoxShadow(
                         color: itemShadowColor,
-                        blurRadius: 5,
-                        offset: Offset(0, 3),
+                        blurRadius: 6,
+                        offset: Offset(0, 4),
                       ),
                     ],
                   ),
