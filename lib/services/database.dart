@@ -12,10 +12,11 @@ class DataBaseService {
   final CollectionReference sazaItems =
       FirebaseFirestore.instance.collection('mainItems');
 
-  Future updateItem(
-      String name, String price, int quantity, String material) async {
+  Future updateItem(String name, String image, String price, int quantity,
+      String material) async {
     return await sazaCollection.doc(uid).set({
       'name': name,
+      'image': image,
       'price': price,
       'quantity': quantity,
       'material': material
@@ -26,7 +27,9 @@ class DataBaseService {
   List<MainItems> _itemListFromSnapShot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return MainItems(
+          itemId: doc.id ?? '',
           name: doc.data()['name'] ?? '',
+          image: doc.data()['image'] ?? '',
           price: doc.data()['price'] ?? '',
           quantity: doc.data()['quantity'] ?? 0,
           material: doc.data()['material'] ?? '');
@@ -46,4 +49,5 @@ class DataBaseService {
   Stream<QuerySnapshot> get shopItems {
     return sazaCollection.snapshots();
   }
+
 }

@@ -18,7 +18,10 @@ class MainItemList extends StatelessWidget {
           decoration: BoxDecoration(color: backgroudColor),
           child: Column(
             children: [
-              OfferItems(),
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.30,
+                  child: OfferItems()), // offer
               SizedBox(
                 height: 10.0,
               ),

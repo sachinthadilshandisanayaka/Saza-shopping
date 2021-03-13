@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
+import 'package:sazashopping/screens/home/retrievImage/getItemImages.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/string.dart';
 
@@ -16,15 +17,19 @@ class ImageAdnDataDislpay extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: 140,
-            width: 110,
-            decoration: new BoxDecoration(
-              image: DecorationImage(
-                image: new AssetImage('assets/watch.jpg'),
-                fit: BoxFit.cover,
-              ),
-              borderRadius: BorderRadius.circular(12),
+            height: 170,
+            width: 140,
+            child: RetrievImageFromDataBase(
+              image: this.shopItem.image,
+              id: this.shopItem.itemId,
             ),
+            // decoration: new BoxDecoration(
+            //   image: DecorationImage(
+            //     image: new AssetImage('assets/watch.jpg'),
+            //     fit: BoxFit.cover,
+            //   ),
+            //   borderRadius: BorderRadius.circular(12),
+            // ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

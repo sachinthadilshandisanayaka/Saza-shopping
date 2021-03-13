@@ -15,7 +15,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
   Widget build(BuildContext context) {
     final shopItems = Provider.of<List<MainItems>>(context) ?? [];
     return Container(
-      height: 220.0,
+      height: 250.0,
       color: backgroudColor, // here
       child: ListView.builder(
         itemCount: shopItems.length,
