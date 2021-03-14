@@ -8,7 +8,7 @@ import 'package:sazashopping/shared/colors.dart';
 class MainItemList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final nameContant = NameContant.dbName;
+    final nameContant = NameContant.dbName ?? null;
 
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
