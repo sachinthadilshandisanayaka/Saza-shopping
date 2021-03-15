@@ -93,7 +93,8 @@ class _MainItemListState extends State<MainItemList> {
                           child: Text(
                             'already have not new items',
                             style: TextStyle(fontWeight: FontWeight.w300),
-                          ),
+                          ), 
+                          
                         ),
                       );
                     } else if (index == nameContact.length) {

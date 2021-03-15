@@ -36,7 +36,7 @@ Widget _buildNewTransition(
   return ScaleTransition(
     scale: CurvedAnimation(
       parent: animation,
-      curve: Curves.bounceOut,
+      curve: Curves.easeIn,
       reverseCurve: Curves.easeInOut,
     ),
     child: child,
