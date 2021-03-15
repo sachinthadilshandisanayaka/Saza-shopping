@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/screens/home/catogeries/offer_item.dart';
 import 'package:sazashopping/screens/home/homeItemNames/nameConstant.dart';
@@ -5,10 +6,25 @@ import 'package:sazashopping/screens/home/item_collection.dart';
 import 'package:sazashopping/shared/clipPath/messageClipPath.dart';
 import 'package:sazashopping/shared/colors.dart';
 
-class MainItemList extends StatelessWidget {
+class MainItemList extends StatefulWidget {
+  @override
+  _MainItemListState createState() => _MainItemListState();
+}
+
+class _MainItemListState extends State<MainItemList> {
+  List<String> nameContact;
+  StreamController _streamController;
+
+  @override
+  void initState() {
+    super.initState();
+    _streamController = StreamController<List<String>>.broadcast();
+    
+  }
+
   @override
   Widget build(BuildContext context) {
-    final nameContant = NameContant.dbName ?? null;
+    nameContact = NameContant.dbName ?? null;
 
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
@@ -27,13 +43,13 @@ class MainItemList extends StatelessWidget {
               ),
               Container(
                 child: ListView.builder(
-                  itemCount: nameContant.length,
+                  itemCount: nameContact.length,
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return Container(
-                        child: ItemTile(itemname: nameContant[index]));
+                        child: ItemTile(itemname: nameContact[index]));
                   },
                 ),
               ),

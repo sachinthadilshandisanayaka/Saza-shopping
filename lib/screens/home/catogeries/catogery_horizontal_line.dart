@@ -11,14 +11,42 @@ class CatogeriesHorizontalTile extends StatefulWidget {
 }
 
 class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
+  ScrollController _scrollController = ScrollController();
+  List<MainItems> getListItems;
+  int maxLegnth = 4;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.maxScrollExtent ==
+          _scrollController.offset) {
+        _getMoreData();
+      }
+    });
+  }
+
+  _getMoreData() {
+    setState(() {
+      maxLegnth += maxLegnth;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final shopItems = Provider.of<List<MainItems>>(context) ?? [];
+    setState(() {
+      getListItems = shopItems;
+    });
+
     return Container(
       height: 250.0,
       color: backgroudColor, // here
       child: ListView.builder(
-        itemCount: shopItems.length,
+        controller: _scrollController,
+        itemCount: shopItems.length > 5
+            ? shopItems.sublist(0, 4).length
+            : shopItems.length,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         physics: BouncingScrollPhysics(),

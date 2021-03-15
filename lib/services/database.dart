@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sazashopping/models/mainItem.dart';
-
 class DataBaseService {
   final String uid;
   final String itemtype;
@@ -49,5 +48,4 @@ class DataBaseService {
   Stream<QuerySnapshot> get shopItems {
     return sazaCollection.snapshots();
   }
-
 }
