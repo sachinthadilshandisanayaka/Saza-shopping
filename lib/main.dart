@@ -19,7 +19,9 @@ class MyApp extends StatelessWidget {
       value: AuthService().user, // auth.dart
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Wrapper(),
+        home: Scaffold(
+          body: Wrapper(),
+        ),
       ),
     );
   }

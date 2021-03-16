@@ -9,21 +9,27 @@ class RetrievImageFromDataBase extends StatelessWidget {
   Future<Widget> _getImage(
       BuildContext context, String imageName, String imageId) async {
     Image image;
-    await FireStorageService.loadImage(context, imageName, imageId)
-        .then((value) {
-      print(value.toString());
-      if (value == null) {
-        image = Image.asset(
-          'assets/defaultImage.png',
-          fit: BoxFit.scaleDown,
-        );
-      } else {
-        image = Image.network(
-          value.toString(),
-          fit: BoxFit.scaleDown,
-        );
-      }
-    });
+    try {
+      await FireStorageService.loadImage(context, imageName, imageId)
+          .then((value) {
+        if (value == null) {
+          image = Image.asset(
+            'assets/defaultImage.png',
+            fit: BoxFit.scaleDown,
+          );
+        } else {
+          image = Image.network(
+            value.toString(),
+            fit: BoxFit.scaleDown,
+          );
+        }
+      });
+    } catch (e) {
+      image = Image.asset(
+        'assets/defaultImage.png',
+        fit: BoxFit.scaleDown,
+      );
+    }
     return image;
   }
 

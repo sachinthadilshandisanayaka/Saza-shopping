@@ -48,7 +48,6 @@ class _MainItemListState extends State<MainItemList> {
 
   _getMoreData() {
     if (_length <= maxLength) {
-      print('na na');
       for (int i = _length; i < _length + 1; i++) {
         setState(() {
           nameContact.add(NameContant.dbName[i]);
@@ -92,9 +91,11 @@ class _MainItemListState extends State<MainItemList> {
                         child: Center(
                           child: Text(
                             'already have not new items',
-                            style: TextStyle(fontWeight: FontWeight.w300),
-                          ), 
-                          
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 10,
+                            ),
+                          ),
                         ),
                       );
                     } else if (index == nameContact.length) {

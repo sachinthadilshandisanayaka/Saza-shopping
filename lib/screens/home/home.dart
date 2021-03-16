@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/home/home_title.dart';
 import 'package:sazashopping/screens/home/main_item_list.dart';
@@ -59,7 +60,59 @@ class Home extends StatelessWidget {
             ],
           ),
           drawer: Drawer(),
-          body: MainItemList(),
+          body: Builder(
+            builder: (BuildContext context) {
+              return OfflineBuilder(
+                connectivityBuilder: (BuildContext context,
+                    ConnectivityResult connectivity, Widget child) {
+                  final bool connected =
+                      connectivity != ConnectivityResult.none;
+                      
+                  return Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      child,
+                      Positioned(
+                        left: 0.0,
+                        right: 0.0,
+                        height: 32.0,
+                        child: AnimatedContainer(
+                          duration: const Duration(seconds: 1),
+                          curve: Curves.bounceInOut,
+                          color: connected ? null : Colors.red,
+                          child: connected
+                              ? null
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      'OFFLINE',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    SizedBox(
+                                      width: 8.0,
+                                    ),
+                                    SizedBox(
+                                      width: 12.0,
+                                      height: 12.0,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2.0,
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                Colors.white),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                child: MainItemList(),
+              );
+            },
+          ),
         ),
       ),
     );
