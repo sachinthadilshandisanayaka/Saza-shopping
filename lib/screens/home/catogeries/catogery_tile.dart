@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/home/retrievImage/getItemImages.dart';
@@ -23,13 +22,6 @@ class ImageAdnDataDislpay extends StatelessWidget {
               image: this.shopItem.image,
               id: this.shopItem.itemId,
             ),
-            // decoration: new BoxDecoration(
-            //   image: DecorationImage(
-            //     image: new AssetImage('assets/watch.jpg'),
-            //     fit: BoxFit.cover,
-            //   ),
-            //   borderRadius: BorderRadius.circular(12),
-            // ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),

@@ -29,7 +29,7 @@ class ItemTile extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.all(5),
-              child: CatogeriesHorizontalTile(),
+              child: CatogeriesHorizontalTile(type: itemname, uid: user.uid),
             ),
           ],
         ),

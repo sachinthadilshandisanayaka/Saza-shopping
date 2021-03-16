@@ -49,12 +49,12 @@ dev_dependencies:
 #   android: true
 #   ios: true
 
-#   flutter_launcher_icons: "^0.8.0"
-# flutter_icons:
-#   android: "launcher_icon"
-#   ios: true
-#   image_path: "assets/icon.png"
-#   adaptive_icon_background: "#009688"
+  flutter_launcher_icons: "^0.8.0"
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon.png"
+  adaptive_icon_background: "#009688"
 
 
 dependency_overrides:
