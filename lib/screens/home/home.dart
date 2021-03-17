@@ -62,7 +62,7 @@ class Home extends StatelessWidget {
           drawer: Drawer(),
           body: Builder(
             builder: (BuildContext context) {
-              return OfflineBuilder(
+              return OfflineBuilder (
                 connectivityBuilder: (BuildContext context,
                     ConnectivityResult connectivity, Widget child) {
                   final bool connected =

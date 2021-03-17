@@ -15,7 +15,8 @@ class ItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
     return StreamProvider<List<MainItems>>.value(
-      value: DataBaseService(uid: user.uid, itemtype: itemname).dynamicItem,
+      value:
+          DataBaseService(uid: user.uid, itemtype: itemname).dynamicItemlenght,
       child: Material(
         color: backgroudColor, // here
         elevation: 0,

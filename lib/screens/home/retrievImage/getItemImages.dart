@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/services/fireStrore.dart';
 
@@ -48,9 +49,7 @@ class RetrievImageFromDataBase extends StatelessWidget {
           return Center(
             child: FittedBox(
               fit: BoxFit.contain,
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.teal[200]),
-              ),
+              child: CupertinoActivityIndicator(),
             ),
           );
         }

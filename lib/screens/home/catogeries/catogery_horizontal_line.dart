@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/home/catogeries/catogery_tile.dart';
 import 'package:sazashopping/services/database.dart';
@@ -18,8 +18,8 @@ class CatogeriesHorizontalTile extends StatefulWidget {
 class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
   ScrollController _scrollController = ScrollController();
   List<MainItems> getListItems;
-  int maxLegnth = 3;
-  int limitLength;
+  int loadedDataLenght = 3;
+  bool moreDataAvalible = true;
 
   @override
   void initState() {
@@ -28,7 +28,9 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _getMoreData();
+        if (moreDataAvalible) {
+          _getMoreData();
+        }
       }
     });
   }
@@ -41,18 +43,20 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
 
   _getMoreData() {
     setState(() {
-      maxLegnth += 3;
+      loadedDataLenght += 3;
     });
-    print(maxLegnth.toString());
   }
 
   @override
   Widget build(BuildContext context) {
-    // final shopItems = Provider.of<List<MainItems>>(context) ?? [];
+    final allShopItems = Provider.of<List<MainItems>>(context) ?? [];
+    final allShopItemMaximLenght = allShopItems.length;
 
     return StreamBuilder(
       stream: DataBaseService(
-                  uid: widget.uid, itemtype: widget.type, limit: maxLegnth)
+                  uid: widget.uid,
+                  itemtype: widget.type,
+                  limit: loadedDataLenght)
               .dynamicItem ??
           null,
       builder: (context, snapshot) {
@@ -68,13 +72,21 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
               scrollDirection: Axis.horizontal,
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                if (getListItems.isEmpty) {
-                  return Center(
-                    child: Text('No more'),
+                if (index == allShopItemMaximLenght) {
+                  moreDataAvalible = false;
+                  return SizedBox(
+                    width: 2,
                   );
                 } else if (index == getListItems.length) {
-                  print("data" + getListItems.toString());
-                  return CupertinoActivityIndicator();
+                  return SizedBox(
+                    width: 30,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Colors.teal[200]),
+                      ),
+                    ),
+                  );
                 }
                 return Container(
                   padding: EdgeInsets.only(bottom: 4),
