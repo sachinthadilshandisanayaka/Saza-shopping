@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_offline/flutter_offline.dart';
+import 'package:sazashopping/error_ui/onlineCheck.dart';
 import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/home/home_title.dart';
 import 'package:sazashopping/screens/home/main_item_list.dart';
@@ -12,7 +13,17 @@ import 'package:sazashopping/screens/home/showDialog/newDialog.dart';
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  bool connected;
+  _setState(bool state) {
+    connected = state;
+  }
+
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<Users>(context);
@@ -62,54 +73,31 @@ class Home extends StatelessWidget {
           drawer: Drawer(),
           body: Builder(
             builder: (BuildContext context) {
-              return OfflineBuilder (
+              return OfflineBuilder(
                 connectivityBuilder: (BuildContext context,
                     ConnectivityResult connectivity, Widget child) {
-                  final bool connected =
-                      connectivity != ConnectivityResult.none;
-                      
+                  if (connectivity != ConnectivityResult.none) {
+                    _setState(true);
+                  } else {
+                    _setState(false);
+                  }
                   return Stack(
                     fit: StackFit.expand,
                     children: [
-                      child,
+                      MainItemList(
+                        connetion: connected,
+                      ),
                       Positioned(
                         left: 0.0,
                         right: 0.0,
                         height: 32.0,
-                        child: AnimatedContainer(
-                          duration: const Duration(seconds: 1),
-                          curve: Curves.bounceInOut,
-                          color: connected ? null : Colors.red,
-                          child: connected
-                              ? null
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      'OFFLINE',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                    SizedBox(
-                                      width: 8.0,
-                                    ),
-                                    SizedBox(
-                                      width: 12.0,
-                                      height: 12.0,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 2.0,
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                                Colors.white),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                        ),
+                        child:
+                            ConnectionCheckAndShowInTop(connection: connected),
                       ),
                     ],
                   );
                 },
-                child: MainItemList(),
+                child: MainItemList(connetion: connected),
               );
             },
           ),

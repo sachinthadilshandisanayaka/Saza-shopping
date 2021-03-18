@@ -1,5 +1,5 @@
-import 'dart:ui';
 
+import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/screens/home/catogeries/offer_item.dart';
@@ -9,6 +9,8 @@ import 'package:sazashopping/shared/clipPath/messageClipPath.dart';
 import 'package:sazashopping/shared/colors.dart';
 
 class MainItemList extends StatefulWidget {
+  final bool connetion;
+  MainItemList({this.connetion});
   @override
   _MainItemListState createState() => _MainItemListState();
 }
@@ -17,20 +19,13 @@ class _MainItemListState extends State<MainItemList> {
   List<String> nameContact;
   int _length = 2;
   int maxLength;
-
-  // Stream<List<String>> stream;
-  // StreamController _streamController;
   ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-
     maxLength = NameContant.dbName.length;
     nameContact = NameContant.dbName.sublist(0, 2);
-    // _streamController = StreamController<List<String>>.broadcast();
-    // stream = _streamController.stream;
-    // _streamController.add(NameContant.dbName ?? null);
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -63,7 +58,16 @@ class _MainItemListState extends State<MainItemList> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return
+        //  !widget.connetion
+        //     ? Container(
+        //     color: Colors.white,
+        //         child: Center(
+        //           child: Text('no connetion'),
+        //         ),
+        //       )
+        //     :
+        SingleChildScrollView(
       controller: _scrollController,
       physics: BouncingScrollPhysics(),
       child: ClipPath(

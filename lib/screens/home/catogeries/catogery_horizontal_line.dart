@@ -79,7 +79,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
                   );
                 } else if (index == getListItems.length) {
                   return SizedBox(
-                    width: 30,
+                    width: 40,
                     child: Center(
                       child: CircularProgressIndicator(
                         valueColor:
