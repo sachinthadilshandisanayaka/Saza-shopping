@@ -1,8 +1,6 @@
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_offline/flutter_offline.dart';
-import 'package:sazashopping/error_ui/onlineCheck.dart';
 import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/home/home_title.dart';
 import 'package:sazashopping/screens/home/main_item_list.dart';
@@ -13,16 +11,9 @@ import 'package:sazashopping/screens/home/showDialog/newDialog.dart';
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
 
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  bool connected;
-  _setState(bool state) {
-    connected = state;
-  }
+class Home extends StatelessWidget {
+  final bool connected;
+  Home({this.connected});
 
   @override
   Widget build(BuildContext context) {
@@ -71,36 +62,39 @@ class _HomeState extends State<Home> {
             ],
           ),
           drawer: Drawer(),
-          body: Builder(
-            builder: (BuildContext context) {
-              return OfflineBuilder(
-                connectivityBuilder: (BuildContext context,
-                    ConnectivityResult connectivity, Widget child) {
-                  if (connectivity != ConnectivityResult.none) {
-                    _setState(true);
-                  } else {
-                    _setState(false);
-                  }
-                  return Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      MainItemList(
-                        connetion: connected,
-                      ),
-                      Positioned(
-                        left: 0.0,
-                        right: 0.0,
-                        height: 32.0,
-                        child:
-                            ConnectionCheckAndShowInTop(connection: connected),
-                      ),
-                    ],
-                  );
-                },
-                child: MainItemList(connetion: connected),
-              );
-            },
+          body: MainItemList(
+            connetion: connected,
           ),
+          // Builder(
+          //   builder: (BuildContext context) {
+          //     return OfflineBuilder(
+          //       connectivityBuilder: (BuildContext context,
+          //           ConnectivityResult connectivity, Widget child) {
+          //         if (connectivity != ConnectivityResult.none) {
+          //           _setState(true);
+          //         } else {
+          //           _setState(false);
+          //         }
+          //         return Stack(
+          //           fit: StackFit.expand,
+          //           children: [
+          //             MainItemList(
+          //               connetion: connected,
+          //             ),
+          //             Positioned(
+          //               left: 0.0,
+          //               right: 0.0,
+          //               height: 32.0,
+          //               child:
+          //                   ConnectionCheckAndShowInTop(connection: connected),
+          //             ),
+          //           ],
+          //         );
+          //       },
+          //       child: MainItemList(connetion: connected),
+          //     );
+          //   },
+          // ),
         ),
       ),
     );
