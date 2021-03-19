@@ -28,7 +28,7 @@ class _ErrorMessagesState extends State<ErrorMessages>
       end: Offset(0.1, 0.0),
     ).animate(
       CurvedAnimation(
-        curve: Curves.elasticInOut,
+        curve: Curves.bounceIn,
         parent: _animationController,
       ),
     );

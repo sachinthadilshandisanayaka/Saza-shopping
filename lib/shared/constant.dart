@@ -18,7 +18,7 @@ const textinputDecoration = InputDecoration(
 const signPageMainTagDecoration = TextStyle(
   color: Colors.black,
   letterSpacing: 2.0,
-  fontFamily: 'Baloo2',
+  fontFamily: 'Montserrat',
   fontSize: 40,
   fontWeight: FontWeight.bold,
   shadows: <Shadow>[

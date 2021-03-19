@@ -45,7 +45,7 @@ class ItemTile extends StatelessWidget {
         Text(
           itemname.toUpperCase(),
           style: TextStyle(
-            fontFamily: 'Baloo2',
+            fontFamily: 'Cinzel',
             fontSize: 20,
             fontWeight: FontWeight.bold,
             letterSpacing: 1,
@@ -54,6 +54,7 @@ class ItemTile extends StatelessWidget {
         Text(
           'MORE',
           style: TextStyle(
+            fontFamily: 'Cinzel',
             fontWeight: FontWeight.w300,
           ),
         ),
