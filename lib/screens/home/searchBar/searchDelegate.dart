@@ -86,6 +86,7 @@ class DataSearch extends SearchDelegate<String> {
     final suggetionList = query.isEmpty
         ? recentData
         : dataList.where((i) => i.startsWith(query)).toList();
+    final icon = query.isEmpty ? Icons.history : Icons.search;
 
     return ListView.builder(
       itemBuilder: (context, index) {
@@ -94,7 +95,7 @@ class DataSearch extends SearchDelegate<String> {
             addSearchTerm(query);
             showResults(context);
           },
-          leading: Icon(Icons.history),
+          leading: Icon(icon),
           title: RichText(
             text: TextSpan(
               text: suggetionList[index].substring(0, query.length),
