@@ -5,6 +5,7 @@ import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/home/catogeries/catogery_tile.dart';
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
+import 'package:sazashopping/shared/double.dart';
 
 class CatogeriesHorizontalTile extends StatefulWidget {
   final String type;
@@ -20,6 +21,8 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
   List<MainItems> getListItems;
   int loadedDataLenght = 3;
   bool moreDataAvalible = true;
+
+  final double itemMaxLength = homeScrollItemMaxCount;
 
   @override
   void initState() {
@@ -50,7 +53,9 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
   @override
   Widget build(BuildContext context) {
     final allShopItems = Provider.of<List<MainItems>>(context) ?? [];
-    final allShopItemMaximLenght = allShopItems.length;
+    final itemDisplayMaxLenght = allShopItems.length < itemMaxLength
+        ? allShopItems.length
+        : itemMaxLength;
 
     return StreamBuilder(
       stream: DataBaseService(
@@ -72,7 +77,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
               scrollDirection: Axis.horizontal,
               physics: BouncingScrollPhysics(),
               itemBuilder: (context, index) {
-                if (index == allShopItemMaximLenght) {
+                if (index == itemDisplayMaxLenght) {
                   moreDataAvalible = false;
                   return SizedBox(
                     width: 2,

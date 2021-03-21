@@ -1,0 +1,1 @@
+const double homeScrollItemMaxCount = 10;
