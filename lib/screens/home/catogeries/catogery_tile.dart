@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
+import 'package:sazashopping/screens/home/retrievImage/getImageUrl.dart';
 import 'package:sazashopping/screens/home/retrievImage/getItemImages.dart';
 import 'package:sazashopping/screens/single_item_show/selectedItemDisplay.dart';
 import 'package:sazashopping/shared/colors.dart';
@@ -18,6 +19,9 @@ class ImageAdnDataDislpay extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => SelectedItemDisplay(
                       mainItems: this.shopItem,
+                      imageUrl: getImageUrl(context, this.shopItem.image,
+                              this.shopItem.itemId)
+                          .toString(),
                     )));
       },
       child: FittedBox(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
-import 'package:sazashopping/screens/home/retrievImage/getItemImages.dart';
 import 'package:sazashopping/shared/colors.dart';
 
 class SelectedItemDisplay extends StatelessWidget {
   final MainItems mainItems;
-  SelectedItemDisplay({this.mainItems});
+  final String imageUrl;
+  SelectedItemDisplay({@required this.mainItems, @required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,7 @@ class SelectedItemDisplay extends StatelessWidget {
                   fit: BoxFit.contain,
                   child: Hero(
                     tag: mainItems,
-                    child: RetrievImageFromDataBase(
-                      image: this.mainItems.image,
-                      id: this.mainItems.itemId,
-                    ),
+                    child: Image.network(this.imageUrl),
                   ),
                 ),
               ),
