@@ -7,6 +7,13 @@ class RetrievImageFromDataBase extends StatelessWidget {
   final String id;
   RetrievImageFromDataBase({@required this.image, this.id});
 
+  _getDefaultImage() {
+    return Image.asset(
+      'assets/defaultImage.png',
+      fit: BoxFit.scaleDown,
+    );
+  }
+
   Future<Widget> _getImage(
       BuildContext context, String imageName, String imageId) async {
     Image image;
@@ -14,22 +21,19 @@ class RetrievImageFromDataBase extends StatelessWidget {
       await FireStorageService.loadImage(context, imageName, imageId)
           .then((value) {
         if (value == null) {
-          image = Image.asset(
-            'assets/defaultImage.png',
-            fit: BoxFit.scaleDown,
-          );
+          image = _getDefaultImage();
         } else {
           image = Image.network(
             value.toString(),
+            loadingBuilder: (context, child, progress) {
+              return progress == null ? child : LinearProgressIndicator();
+            },
             fit: BoxFit.scaleDown,
           );
         }
       });
     } catch (e) {
-      image = Image.asset(
-        'assets/defaultImage.png',
-        fit: BoxFit.scaleDown,
-      );
+      image = _getDefaultImage();
     }
     return image;
   }
@@ -49,7 +53,7 @@ class RetrievImageFromDataBase extends StatelessWidget {
           return Center(
             child: FittedBox(
               fit: BoxFit.contain,
-              child: CupertinoActivityIndicator(),
+              child: _getDefaultImage(),
             ),
           );
         }

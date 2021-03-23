@@ -13,6 +13,7 @@ class Wrapper extends StatefulWidget {
 
 class _WrapperState extends State<Wrapper> {
   bool connected;
+
   _setState(bool state) {
     connected = state;
   }
@@ -40,6 +41,7 @@ class _WrapperState extends State<Wrapper> {
           } else {
             _setState(false);
           }
+
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -55,11 +57,5 @@ class _WrapperState extends State<Wrapper> {
           );
         },
         child: _checkAuth(connected));
-
-    // if (user == null) {
-    //   return Authenticate();
-    // } else {
-    //   return Home();
-    // }
   }
 }

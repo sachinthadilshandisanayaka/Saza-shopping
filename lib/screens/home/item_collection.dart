@@ -25,7 +25,7 @@ class ItemTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.only(left: 10, right: 0),
               child: labelTopItem(),
             ),
             Padding(
@@ -41,22 +41,41 @@ class ItemTile extends StatelessWidget {
   Widget labelTopItem() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
           itemname.toUpperCase(),
           style: TextStyle(
-            fontFamily: 'Cinzel',
-            fontSize: 20,
+            fontFamily: 'CormorantGaramond',
+            fontSize: 22,
+            color: appBarColor,
             fontWeight: FontWeight.bold,
+            shadows: [
+              Shadow(
+                color: itemShadowColor,
+                blurRadius: 8,
+                offset: Offset(0, 4),
+              )
+            ],
             letterSpacing: 1,
           ),
         ),
-        Text(
-          'MORE',
-          style: TextStyle(
-            fontFamily: 'Cinzel',
-            fontWeight: FontWeight.w300,
+        TextButton(
+          onPressed: () {
+            print('selected');
+          },
+          child: Row(
+            children: [
+              Text(
+                'MORE',
+                style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.bold),
+              ),
+              Icon(Icons.arrow_right),
+            ],
           ),
+          style: TextButton.styleFrom(primary: Colors.black),
         ),
       ],
     );

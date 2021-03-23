@@ -9,6 +9,7 @@ class FireStorageService extends ChangeNotifier {
     if (image.isEmpty || image == null) {
       return null;
     }
+
     return await FirebaseStorage.instance
         .ref()
         .child('sellItems')
