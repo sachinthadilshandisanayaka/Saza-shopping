@@ -105,7 +105,9 @@ class _MainItemListState extends State<MainItemList> {
                       return CupertinoActivityIndicator();
                     }
                     return Container(
-                        child: ItemTile(itemname: nameContact[index]));
+                        child: ItemTile(
+                            itemname: nameContact[index],
+                            connection: widget.connetion));
                   },
                 ),
               ),

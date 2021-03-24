@@ -1,28 +1,30 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:sazashopping/error_ui/defaultLoseConnectionScreen.dart';
 import 'package:sazashopping/models/mainItem.dart';
-import 'package:sazashopping/screens/home/retrievImage/getImageUrl.dart';
 import 'package:sazashopping/screens/home/retrievImage/getItemImages.dart';
-import 'package:sazashopping/screens/single_item_show/selectedItemDisplay.dart';
-import 'package:sazashopping/shared/colors.dart';
+import 'package:sazashopping/screens/secondPage/selectedItemDisplay.dart';
+import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/string.dart';
 
 class ImageAdnDataDislpay extends StatelessWidget {
   final MainItems shopItem;
-  ImageAdnDataDislpay({this.shopItem});
+  final bool connetion;
+  ImageAdnDataDislpay({@required this.shopItem, @required this.connetion});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => SelectedItemDisplay(
-                      mainItems: this.shopItem,
-                      imageUrl: getImageUrl(context, this.shopItem.image,
-                              this.shopItem.itemId)
-                          .toString(),
-                    )));
+        if (connetion) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => SelectedItemDisplay(
+                        mainItems: this.shopItem,
+                      )));
+        } else {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => NoConnection()));
+        }
       },
       child: FittedBox(
         fit: BoxFit.fitWidth,
@@ -30,8 +32,8 @@ class ImageAdnDataDislpay extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              height: 170,
-              width: 140,
+              height: 200,
+              width: 160,
               child: Hero(
                 tag: shopItem,
                 child: RetrievImageFromDataBase(
@@ -47,20 +49,11 @@ class ImageAdnDataDislpay extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     shopItem.name,
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w100,
-                      fontSize: 11,
-                    ),
+                    style: itemTileNameDecoration,
                   ),
                   Text(
                     srilankaRuppes + ' ' + shopItem.price,
-                    style: TextStyle(
-                      color: appBarColor,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 13,
-                    ),
+                    style: itemTilePriceShowDecoration,
                   ),
                 ],
               ),

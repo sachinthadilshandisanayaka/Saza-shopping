@@ -6,11 +6,13 @@ import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/home/catogeries/catogery_horizontal_line.dart';
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
+import 'package:sazashopping/shared/constant.dart';
 
 class ItemTile extends StatelessWidget {
   final String itemname;
+  final bool connection;
 
-  ItemTile({this.itemname});
+  ItemTile({@required this.itemname, @required this.connection});
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<Users>(context);
@@ -30,7 +32,11 @@ class ItemTile extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.all(5),
-              child: CatogeriesHorizontalTile(type: itemname, uid: user.uid),
+              child: CatogeriesHorizontalTile(
+                type: itemname,
+                uid: user.uid,
+                connection: this.connection,
+              ),
             ),
           ],
         ),
@@ -45,20 +51,7 @@ class ItemTile extends StatelessWidget {
       children: <Widget>[
         Text(
           itemname.toUpperCase(),
-          style: TextStyle(
-            fontFamily: 'CormorantGaramond',
-            fontSize: 22,
-            color: appBarColor,
-            fontWeight: FontWeight.bold,
-            shadows: [
-              Shadow(
-                color: itemShadowColor,
-                blurRadius: 8,
-                offset: Offset(0, 4),
-              )
-            ],
-            letterSpacing: 1,
-          ),
+          style: itemsTypeNameDecoration,
         ),
         TextButton(
           onPressed: () {
@@ -69,8 +62,7 @@ class ItemTile extends StatelessWidget {
               Text(
                 'MORE',
                 style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontWeight: FontWeight.bold),
+                    fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
               ),
               Icon(Icons.arrow_right),
             ],

@@ -10,7 +10,9 @@ import 'package:sazashopping/shared/double.dart';
 class CatogeriesHorizontalTile extends StatefulWidget {
   final String type;
   final String uid;
-  CatogeriesHorizontalTile({@required this.type, this.uid});
+  final bool connection;
+  CatogeriesHorizontalTile(
+      {@required this.type, @required this.uid, @required this.connection});
   @override
   _CatogeriesHorizontalTileState createState() =>
       _CatogeriesHorizontalTileState();
@@ -68,7 +70,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
         if (snapshot.hasData) {
           getListItems = snapshot.data;
           return Container(
-            height: 250.0,
+            height: 280.0,
             color: backgroudColor, // here
             child: ListView.builder(
               controller: _scrollController,
@@ -109,6 +111,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
                   ),
                   child: ImageAdnDataDislpay(
                     shopItem: getListItems[index],
+                    connetion: widget.connection,
                   ),
                 );
               },

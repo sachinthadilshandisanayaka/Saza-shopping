@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:sazashopping/shared/colors.dart';
 
 const textinputDecoration = InputDecoration(
   border: OutlineInputBorder(),
@@ -28,4 +29,32 @@ const signPageMainTagDecoration = TextStyle(
       color: Colors.white,
     )
   ],
+);
+
+var itemTilePriceShowDecoration = TextStyle(
+  color: appBarColor,
+  fontFamily: 'Montserrat',
+  fontWeight: FontWeight.w600,
+  fontSize: 13,
+);
+
+const itemTileNameDecoration = TextStyle(
+  fontFamily: 'Montserrat',
+  fontWeight: FontWeight.w100,
+  fontSize: 11,
+);
+
+var itemsTypeNameDecoration = TextStyle(
+  fontFamily: 'CormorantGaramond',
+  fontSize: 22,
+  color: appBarColor,
+  fontWeight: FontWeight.bold,
+  shadows: [
+    Shadow(
+      color: itemShadowColor,
+      blurRadius: 8,
+      offset: Offset(0, 4),
+    )
+  ],
+  letterSpacing: 1,
 );
