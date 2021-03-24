@@ -13,6 +13,7 @@ class RetrievImageFromDataBase extends StatelessWidget {
       future: getImageUrl(context, this.image, this.id),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
+          print('image url : ' + snapshot.data.toString());
           return FittedBox(
             fit: BoxFit.contain,
             child: Image.network(

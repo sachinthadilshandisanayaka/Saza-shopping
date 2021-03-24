@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/error_ui/defaultLoseConnectionScreen.dart';
 import 'package:sazashopping/models/mainItem.dart';
-import 'package:sazashopping/screens/home/retrievImage/getItemImages.dart';
 import 'package:sazashopping/screens/secondPage/selectedItemDisplay.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/string.dart';
@@ -36,9 +35,12 @@ class ImageAdnDataDislpay extends StatelessWidget {
               width: 160,
               child: Hero(
                 tag: shopItem,
-                child: RetrievImageFromDataBase(
-                  image: this.shopItem.image,
-                  id: this.shopItem.itemId,
+                child: Image.network(
+                  this.shopItem.image,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, progress) {
+                    return progress == null ? child : LinearProgressIndicator();
+                  },
                 ),
               ),
             ),

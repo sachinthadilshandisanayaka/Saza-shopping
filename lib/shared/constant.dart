@@ -58,3 +58,11 @@ var itemsTypeNameDecoration = TextStyle(
   ],
   letterSpacing: 1,
 );
+
+var defaultBoxDecoration = BoxDecoration(color: Colors.white, boxShadow: [
+  BoxShadow(
+    color: itemShadowColor,
+    blurRadius: 3,
+    offset: Offset(0, 0.1),
+  )
+]);
