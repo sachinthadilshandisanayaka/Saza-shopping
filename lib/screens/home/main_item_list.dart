@@ -57,16 +57,7 @@ class _MainItemListState extends State<MainItemList> {
 
   @override
   Widget build(BuildContext context) {
-    return
-        //  !widget.connetion
-        //     ? Container(
-        //     color: Colors.white,
-        //         child: Center(
-        //           child: Text('no connetion'),
-        //         ),
-        //       )
-        //     :
-        SingleChildScrollView(
+    return SingleChildScrollView(
       controller: _scrollController,
       physics: BouncingScrollPhysics(),
       child: ClipPath(

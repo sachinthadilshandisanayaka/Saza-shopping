@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/shared/clipPath/messageClipPath.dart';
 import 'package:sazashopping/shared/colors.dart';
-import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/string.dart';
 
 class SelectedItemDisplay extends StatelessWidget {
@@ -15,16 +14,19 @@ class SelectedItemDisplay extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Scaffold(
-        backgroundColor: appBarColor,
+        backgroundColor: secondAppBarColor,
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: appBarColor,
-          actions: [],
-          centerTitle: true,
-          title: Text(
-            this.mainItems.name,
-            style: TextStyle(fontFamily: 'Montserrat'),
-          ),
+          backgroundColor: secondAppBarColor,
+          actions: <Widget>[
+            Container(
+              margin: EdgeInsets.only(right: 5),
+              child: IconButton(
+                icon: Icon(Icons.shopping_bag_outlined),
+                onPressed: () {},
+              ),
+            )
+          ],
         ),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -56,109 +58,142 @@ class SelectedItemDisplay extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            flex: 4,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  // decoration: defaultBoxDecoration,
-                                  child: Text(
-                                    this.mainItems.name,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Montserrat'),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  // decoration: defaultBoxDecoration,
-                                  child: Text(
-                                    'Material :' + this.mainItems.material,
-                                    style: TextStyle(fontFamily: 'Montserrat'),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  decoration: defaultBoxDecoration,
-                                  child: Text(
-                                    srilankaRuppes + ' ' + this.mainItems.price,
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.redAccent,
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  // decoration: defaultBoxDecoration,
-                                  child: Text(
-                                    quantityAvilable +
-                                        ': ' +
-                                        this.mainItems.quantity.toString(),
-                                    style: TextStyle(fontFamily: 'Montserrat'),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                              ],
-                            ),
+                  Container(
+                    padding: EdgeInsets.only(
+                        top: 20, bottom: 20.0, left: 5.0, right: 5.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          // decoration: defaultBoxDecoration,
+                          child: Text(
+                            this.mainItems.name,
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat'),
                           ),
-                          Expanded(
-                            flex: 1,
-                            child: Column(
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(50),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: itemShadowColor,
-                                          blurRadius: 5,
-                                          offset: Offset(0, 2),
-                                        ),
-                                      ]),
-                                  child: IconButton(
-                                    icon: Icon(Icons.add_shopping_cart_rounded),
-                                    onPressed: () {},
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(
+                              left: 10, right: 10.0, bottom: 10.0, top: 0),
+                          // decoration: defaultBoxDecoration,
+                          child: Text(
+                            this.mainItems.quantity.toString() + ' avalible',
+                            style: TextStyle(fontFamily: 'Montserrat'),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
                                 Text(
-                                  'Add Cart',
+                                  'Price',
                                   style: TextStyle(
                                     fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                Text(
+                                  srilankaRuppes + ' ' + this.mainItems.price,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: appBarColor,
+                                  ),
+                                ),
+                              ]),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          // decoration: defaultBoxDecoration,
+                          child: Text(
+                            'Material'
+                                    ' : ' +
+                                this.mainItems.material,
+                            style: TextStyle(fontFamily: 'Montserrat'),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Center(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      child: OutlinedButton.icon(
+                        icon: Icon(
+                          Icons.shopping_cart_rounded,
+                          color: Colors.amber[700],
+                        ),
+                        label: Text(
+                          "Add to basket",
+                          style: TextStyle(
+                            color: Colors.amber[700],
+                            letterSpacing: 2,
+                            fontFamily: 'OpenSands',
+                            fontSize: 15,
+                          ),
+                        ),
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.all(12),
+                          side:
+                              BorderSide(width: 2.0, color: Colors.amber[700]),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Center(
+                    child: Container(
+                        width: MediaQuery.of(context).size.width * 0.95,
+                        child: RaisedButton(
+                          padding: EdgeInsets.all(13),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          color: appBarColor,
+                          onPressed: () {},
+                          child: Text(
+                            'Buy',
+                            style: TextStyle(
+                              color: Colors.white,
+                              letterSpacing: 2,
+                              fontFamily: 'OpenSands',
+                              fontSize: 15,
+                              shadows: [
+                                Shadow(
+                                    color: Colors.black45,
+                                    blurRadius: 3,
+                                    offset: Offset(0, 1))
                               ],
                             ),
                           ),
-                        ],
-                      )),
+                        )),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
                 ],
               ),
             ),

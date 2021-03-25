@@ -65,7 +65,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
                   itemtype: widget.type,
                   limit: loadedDataLenght)
               .dynamicItem ??
-          null,
+          [],
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           getListItems = snapshot.data;
@@ -85,6 +85,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
                     width: 2,
                   );
                 } else if (index == getListItems.length) {
+                  moreDataAvalible = true;
                   return SizedBox(
                     width: 40,
                     child: Center(
@@ -96,6 +97,8 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
                   );
                 }
                 return Container(
+                  width: 180,
+                  height: 270,
                   padding: EdgeInsets.only(bottom: 4),
                   margin: EdgeInsets.only(left: 6, right: 10, bottom: 12),
                   decoration: BoxDecoration(
@@ -119,7 +122,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
           );
         }
         return Container(
-          height: 200,
+          height: 250,
           width: MediaQuery.of(context).size.width,
           child: CupertinoActivityIndicator(),
         );

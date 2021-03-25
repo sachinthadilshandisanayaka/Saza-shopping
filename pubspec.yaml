@@ -102,6 +102,10 @@ flutter:
     - family: CormorantGaramond
       fonts:
         - asset: fonts/CormorantGaramond-Regular.ttf
+    - family: OpenSands
+      fonts:
+        - asset: fonts/OpenSands-Regular.ttf
+
   #       - asset: fonts/CormorantGaramond-Regular.ttf
   #         weight: 700
   #

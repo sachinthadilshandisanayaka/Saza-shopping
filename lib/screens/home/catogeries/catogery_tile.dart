@@ -32,26 +32,31 @@ class ImageAdnDataDislpay extends StatelessWidget {
           children: <Widget>[
             Container(
               height: 200,
-              width: 160,
+              width: 180,
               child: Hero(
                 tag: shopItem,
                 child: Image.network(
                   this.shopItem.image,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitWidth,
                   loadingBuilder: (context, child, progress) {
                     return progress == null ? child : LinearProgressIndicator();
                   },
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            Container(
+              height: 70,
+              width: 180,
+              padding: const EdgeInsets.only(left: 10.0, top: 25.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
                     shopItem.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: itemTileNameDecoration,
+                    softWrap: false,
                   ),
                   Text(
                     srilankaRuppes + ' ' + shopItem.price,
