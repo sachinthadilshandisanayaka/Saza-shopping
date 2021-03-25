@@ -31,6 +31,49 @@ const signPageMainTagDecoration = TextStyle(
   ],
 );
 
+const itemnameStyle = TextStyle(
+  fontSize: 24,
+  fontWeight: FontWeight.bold,
+  fontFamily: 'Montserrat',
+);
+
+const itemdefaultStyle = TextStyle(
+  fontFamily: 'Montserrat',
+);
+
+var cartButtonStyle = TextStyle(
+  color: Colors.amber[700],
+  letterSpacing: 2,
+  fontFamily: 'OpenSans',
+  fontSize: 15,
+);
+
+var buybuttonStyle = TextStyle(
+  color: Colors.white,
+  letterSpacing: 2,
+  fontFamily: 'OpenSans',
+  fontSize: 15,
+  shadows: [Shadow(color: Colors.black45, blurRadius: 3, offset: Offset(0, 1))],
+);
+
+var carElevatedStryle = ElevatedButton.styleFrom(
+  padding: EdgeInsets.all(12),
+  side: BorderSide(
+    width: 2.0,
+    color: Colors.amber[700],
+  ),
+  shape: RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(20.0),
+  ),
+);
+
+const itemPriceStyle = TextStyle(
+  fontSize: 20,
+  fontFamily: 'Montserrat',
+  fontWeight: FontWeight.bold,
+  color: Colors.teal,
+);
+
 var itemTilePriceShowDecoration = TextStyle(
   color: appBarColor,
   fontFamily: 'Montserrat',

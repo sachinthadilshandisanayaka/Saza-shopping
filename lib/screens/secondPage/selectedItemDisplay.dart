@@ -4,6 +4,7 @@ import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/shared/clipPath/messageClipPath.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/string.dart';
+import 'package:sazashopping/shared/constant.dart';
 
 class SelectedItemDisplay extends StatelessWidget {
   final MainItems mainItems;
@@ -70,10 +71,7 @@ class SelectedItemDisplay extends StatelessWidget {
                           // decoration: defaultBoxDecoration,
                           child: Text(
                             this.mainItems.name,
-                            style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat'),
+                            style: itemnameStyle,
                           ),
                         ),
                         Container(
@@ -82,7 +80,7 @@ class SelectedItemDisplay extends StatelessWidget {
                           // decoration: defaultBoxDecoration,
                           child: Text(
                             this.mainItems.quantity.toString() + ' avalible',
-                            style: TextStyle(fontFamily: 'Montserrat'),
+                            style: itemdefaultStyle,
                           ),
                         ),
                         SizedBox(
@@ -95,18 +93,11 @@ class SelectedItemDisplay extends StatelessWidget {
                               children: <Widget>[
                                 Text(
                                   'Price',
-                                  style: TextStyle(
-                                    fontFamily: 'Montserrat',
-                                  ),
+                                  style: itemdefaultStyle,
                                 ),
                                 Text(
                                   srilankaRuppes + ' ' + this.mainItems.price,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontFamily: 'Montserrat',
-                                    fontWeight: FontWeight.bold,
-                                    color: appBarColor,
-                                  ),
+                                  style: itemPriceStyle,
                                 ),
                               ]),
                         ),
@@ -117,10 +108,8 @@ class SelectedItemDisplay extends StatelessWidget {
                           padding: EdgeInsets.all(10),
                           // decoration: defaultBoxDecoration,
                           child: Text(
-                            'Material'
-                                    ' : ' +
-                                this.mainItems.material,
-                            style: TextStyle(fontFamily: 'Montserrat'),
+                            material + ' : ' + this.mainItems.material,
+                            style: itemdefaultStyle,
                           ),
                         ),
                         SizedBox(
@@ -141,23 +130,11 @@ class SelectedItemDisplay extends StatelessWidget {
                           color: Colors.amber[700],
                         ),
                         label: Text(
-                          "Add to basket",
-                          style: TextStyle(
-                            color: Colors.amber[700],
-                            letterSpacing: 2,
-                            fontFamily: 'OpenSands',
-                            fontSize: 15,
-                          ),
+                          addtobasket,
+                          style: cartButtonStyle,
                         ),
                         onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(12),
-                          side:
-                              BorderSide(width: 2.0, color: Colors.amber[700]),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                        ),
+                        style: carElevatedStryle,
                       ),
                     ),
                   ),
@@ -170,24 +147,15 @@ class SelectedItemDisplay extends StatelessWidget {
                         child: RaisedButton(
                           padding: EdgeInsets.all(13),
                           shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                          ),
                           color: appBarColor,
                           onPressed: () {},
                           child: Text(
-                            'Buy',
-                            style: TextStyle(
-                              color: Colors.white,
-                              letterSpacing: 2,
-                              fontFamily: 'OpenSands',
-                              fontSize: 15,
-                              shadows: [
-                                Shadow(
-                                    color: Colors.black45,
-                                    blurRadius: 3,
-                                    offset: Offset(0, 1))
-                              ],
-                            ),
+                            buy,
+                            style: buybuttonStyle,
                           ),
                         )),
                   ),
