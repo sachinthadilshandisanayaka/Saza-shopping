@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:sazashopping/screens/home/showDialog/processDialog.dart';
 import 'package:sazashopping/services/auth.dart';
@@ -45,12 +44,13 @@ class _CustomDialogState extends State<CustomDialog> {
                   setState(() {
                     _loading = true;
                   });
-                  
+
                   try {
                     await _auth.signOut();
                     setState(() {
                       _loading = false;
                     });
+                    Navigator.pop(context);
                   } catch (e) {
                     print(e.toString());
                   }

@@ -7,6 +7,7 @@ import 'package:sazashopping/screens/home/catogeries/catogery_horizontal_line.da
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
+import 'package:sazashopping/routes/thirdPageRoute.dart';
 
 class ItemTile extends StatelessWidget {
   final String itemname;
@@ -28,7 +29,7 @@ class ItemTile extends StatelessWidget {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(left: 10, right: 0),
-              child: labelTopItem(),
+              child: labelTopItem(context, user.uid, itemname),
             ),
             Padding(
               padding: EdgeInsets.all(5),
@@ -44,7 +45,7 @@ class ItemTile extends StatelessWidget {
     );
   }
 
-  Widget labelTopItem() {
+  Widget labelTopItem(BuildContext context, String uid, String itemname) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,15 +58,25 @@ class ItemTile extends StatelessWidget {
           onPressed: () {
             print('selected');
           },
-          child: Row(
-            children: [
-              Text(
-                'MORE',
-                style: TextStyle(
-                    fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
-              ),
-              Icon(Icons.arrow_right),
-            ],
+          child: TextButton(
+            onPressed: () {
+              Navigator.of(context).push(createThirdPageRoute(uid, itemname));
+            },
+            child: Row(
+              children: [
+                Text(
+                  'MORE',
+                  style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
+                ),
+                Icon(
+                  Icons.arrow_right,
+                  color: Colors.black,
+                ),
+              ],
+            ),
           ),
           style: TextButton.styleFrom(primary: Colors.black),
         ),
