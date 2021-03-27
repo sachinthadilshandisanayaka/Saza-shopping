@@ -19,7 +19,7 @@ class _SelectedMoreItemsState extends State<SelectedMoreItems> {
 
   List<MainItems> getListItems;
 
-  int loadedDataLenght = 7;
+  int loadedDataLenght = 10;
 
   bool moreDataAvalible = true;
 
@@ -45,7 +45,7 @@ class _SelectedMoreItemsState extends State<SelectedMoreItems> {
 
   _getMoreData() {
     setState(() {
-      loadedDataLenght += 3;
+      loadedDataLenght += 10;
     });
   }
 
@@ -75,6 +75,12 @@ class _SelectedMoreItemsState extends State<SelectedMoreItems> {
                     scrollDirection: Axis.vertical,
                     itemCount: getListItems.length + 1,
                     itemBuilder: (context, index) {
+                      if (itemDisplayMaxLenght == index) {
+                        return Container(
+                            child: Center(
+                          child: Text('No items'),
+                        ));
+                      }
                       return Container(
                         child: Text(
                           getListItems[index].toString(),
