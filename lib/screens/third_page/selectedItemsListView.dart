@@ -80,6 +80,16 @@ class _SelectedMoreItemsState extends State<SelectedMoreItems> {
                             child: Center(
                           child: Text('No items'),
                         ));
+                      } else if (getListItems.length == index) {
+                        return SizedBox(
+                          width: 40,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.teal[200]),
+                            ),
+                          ),
+                        );
                       }
                       return Container(
                         child: Text(
