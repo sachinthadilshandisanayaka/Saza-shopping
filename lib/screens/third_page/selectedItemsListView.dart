@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
+import 'package:sazashopping/screens/third_page/item_card.dart';
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
 
@@ -16,12 +17,9 @@ class SelectedMoreItems extends StatefulWidget {
 
 class _SelectedMoreItemsState extends State<SelectedMoreItems> {
   ScrollController _scrollController = ScrollController();
-
   List<MainItems> getListItems;
-
-  int loadedDataLenght = 10;
-
   bool moreDataAvalible = true;
+  int loadedDataLenght = 10;
 
   @override
   void initState() {
@@ -73,14 +71,17 @@ class _SelectedMoreItemsState extends State<SelectedMoreItems> {
                 return Container(
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
                     itemCount: getListItems.length + 1,
                     itemBuilder: (context, index) {
                       if (itemDisplayMaxLenght == index) {
+                        moreDataAvalible = false;
                         return Container(
                             child: Center(
                           child: Text('No items'),
                         ));
                       } else if (getListItems.length == index) {
+                        moreDataAvalible = true;
                         return SizedBox(
                           width: 40,
                           child: Center(
@@ -92,8 +93,13 @@ class _SelectedMoreItemsState extends State<SelectedMoreItems> {
                         );
                       }
                       return Container(
-                        child: Text(
-                          getListItems[index].toString(),
+                        margin: EdgeInsets.only(left: 10, right: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: ItemCardView(
+                          itemList: getListItems[index],
                         ),
                       );
                     },

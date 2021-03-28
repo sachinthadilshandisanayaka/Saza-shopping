@@ -4,10 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/home/catogeries/catogery_horizontal_line.dart';
+import 'package:sazashopping/screens/third_page/selectedItemsListView.dart';
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
-import 'package:sazashopping/routes/thirdPageRoute.dart';
+// import 'package:sazashopping/routes/thirdPageRoute.dart';
 
 class ItemTile extends StatelessWidget {
   final String itemname;
@@ -28,8 +29,51 @@ class ItemTile extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Container(
+              margin: EdgeInsets.only(right: 0),
               padding: EdgeInsets.only(left: 10, right: 0),
-              child: labelTopItem(context, user.uid, itemname),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    itemname.toUpperCase(),
+                    style: itemsTypeNameDecoration,
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      print('selected');
+                    },
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SelectedMoreItems(
+                                      itemname: itemname,
+                                      uid: user.uid,
+                                    )));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'MORE',
+                            style: TextStyle(
+                                fontFamily: 'Montserrat',
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                          Icon(
+                            Icons.arrow_right,
+                            color: Colors.black,
+                          ),
+                        ],
+                      ),
+                    ),
+                    style: TextButton.styleFrom(primary: Colors.black),
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(5),
@@ -42,45 +86,6 @@ class ItemTile extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget labelTopItem(BuildContext context, String uid, String itemname) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          itemname.toUpperCase(),
-          style: itemsTypeNameDecoration,
-        ),
-        TextButton(
-          onPressed: () {
-            print('selected');
-          },
-          child: TextButton(
-            onPressed: () {
-              Navigator.of(context).push(createThirdPageRoute(uid, itemname));
-            },
-            child: Row(
-              children: [
-                Text(
-                  'MORE',
-                  style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-                Icon(
-                  Icons.arrow_right,
-                  color: Colors.black,
-                ),
-              ],
-            ),
-          ),
-          style: TextButton.styleFrom(primary: Colors.black),
-        ),
-      ],
     );
   }
 }
