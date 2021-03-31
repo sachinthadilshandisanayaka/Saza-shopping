@@ -62,39 +62,13 @@ class Home extends StatelessWidget {
             ],
           ),
           drawer: Drawer(),
-          body: MainItemList(
-            connetion: connected,
+          body: Provider(
+            create: (context) => DataBaseService(),
+            child: MainItemList(
+              connetion: connected,
+            ),
           ),
-          // Builder(
-          //   builder: (BuildContext context) {
-          //     return OfflineBuilder(
-          //       connectivityBuilder: (BuildContext context,
-          //           ConnectivityResult connectivity, Widget child) {
-          //         if (connectivity != ConnectivityResult.none) {
-          //           _setState(true);
-          //         } else {
-          //           _setState(false);
-          //         }
-          //         return Stack(
-          //           fit: StackFit.expand,
-          //           children: [
-          //             MainItemList(
-          //               connetion: connected,
-          //             ),
-          //             Positioned(
-          //               left: 0.0,
-          //               right: 0.0,
-          //               height: 32.0,
-          //               child:
-          //                   ConnectionCheckAndShowInTop(connection: connected),
-          //             ),
-          //           ],
-          //         );
-          //       },
-          //       child: MainItemList(connetion: connected),
-          //     );
-          //   },
-          // ),
+        
         ),
       ),
     );
