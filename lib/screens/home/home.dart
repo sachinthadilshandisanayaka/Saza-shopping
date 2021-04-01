@@ -68,7 +68,6 @@ class Home extends StatelessWidget {
               connetion: connected,
             ),
           ),
-        
         ),
       ),
     );
