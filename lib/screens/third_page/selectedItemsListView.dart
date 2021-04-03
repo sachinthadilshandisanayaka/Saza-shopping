@@ -24,7 +24,7 @@ class _SelectedMoreItemsState extends State<SelectedMoreItems> {
   @override
   void initState() {
     super.initState();
-
+    
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
