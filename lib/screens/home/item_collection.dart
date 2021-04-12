@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/home/catogeries/catogery_horizontal_line.dart';
-import 'package:sazashopping/screens/third_page/selectedItemsListView.dart';
+import 'package:sazashopping/screens/third_page/moreItems.dart';
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
@@ -46,12 +46,14 @@ class ItemTile extends StatelessWidget {
                     child: TextButton(
                       onPressed: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SelectedMoreItems(
-                                      itemname: itemname,
-                                      uid: user.uid,
-                                    )));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SelectedMoreItems(
+                              itemname: itemname,
+                              uid: user.uid,
+                            ),
+                          ),
+                        );
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

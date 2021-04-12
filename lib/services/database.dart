@@ -10,9 +10,6 @@ class DataBaseService {
   final CollectionReference sazaCollection =
       FirebaseFirestore.instance.collection('mainItems');
 
-  final CollectionReference sazaItems =
-      FirebaseFirestore.instance.collection('mainItems');
-
   Future updateItem(String name, String image, String price, int quantity,
       String material) async {
     return await sazaCollection.doc(uid).set({

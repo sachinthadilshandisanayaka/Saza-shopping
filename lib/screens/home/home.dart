@@ -62,7 +62,7 @@ class Home extends StatelessWidget {
             ],
           ),
           drawer: Drawer(),
-          body: Provider(
+          body: Provider<DataBaseService>(
             create: (context) => DataBaseService(),
             child: MainItemList(
               connetion: connected,

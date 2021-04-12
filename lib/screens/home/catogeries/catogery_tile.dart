@@ -15,11 +15,13 @@ class ImageAdnDataDislpay extends StatelessWidget {
       onTap: () {
         if (connetion) {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SelectedItemDisplay(
-                        mainItems: this.shopItem,
-                      )));
+            context,
+            MaterialPageRoute(
+              builder: (context) => SelectedItemDisplay(
+                mainItems: this.shopItem,
+              ),
+            ),
+          );
         } else {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => NoConnection()));

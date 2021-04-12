@@ -50,8 +50,6 @@ class _MainItemListState extends State<MainItemList> {
       setState(() {
         _length = _length + 1;
       });
-
-      print('hello');
     }
   }
 
