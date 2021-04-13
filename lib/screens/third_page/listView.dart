@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
@@ -5,7 +7,7 @@ import 'package:sazashopping/screens/third_page/item_card.dart';
 import 'package:sazashopping/services/database.dart';
 
 class ItemsListView extends StatefulWidget {
-   final String uid;
+  final String uid;
   final String itemname;
   ItemsListView({@required this.uid, @required this.itemname});
   @override
@@ -60,6 +62,7 @@ class _ItemsListViewState extends State<ItemsListView> {
           getListItems = snapshot.data;
           return Container(
             child: ListView.builder(
+              physics: BouncingScrollPhysics(),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemCount: getListItems.length + 1,
@@ -68,7 +71,12 @@ class _ItemsListViewState extends State<ItemsListView> {
                   moreDataAvalible = false;
                   return Container(
                       child: Center(
-                    child: Text('No items'),
+                    child: Text(
+                      'No more items',
+                      style: TextStyle(
+                        fontSize: 10,
+                      ),
+                    ),
                   ));
                 } else if (getListItems.length == index) {
                   moreDataAvalible = true;

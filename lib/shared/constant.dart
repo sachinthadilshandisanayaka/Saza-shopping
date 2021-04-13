@@ -88,10 +88,9 @@ const itemTileNameDecoration = TextStyle(
 );
 
 var itemsTypeNameDecoration = TextStyle(
-  fontFamily: 'CormorantGaramond',
-  fontSize: 22,
+  fontFamily: 'Montserrat',
+  fontSize: 20,
   color: appBarColor,
-  fontWeight: FontWeight.bold,
   shadows: [
     Shadow(
       color: itemShadowColor,

@@ -55,21 +55,13 @@ class ItemTile extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'MORE',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          ),
-                          Icon(
-                            Icons.arrow_right,
-                            color: Colors.black,
-                          ),
-                        ],
+                      child: Text(
+                        'MORE',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.bold,
+                          color: appBarColor,
+                        ),
                       ),
                     ),
                     style: TextButton.styleFrom(primary: Colors.black),
