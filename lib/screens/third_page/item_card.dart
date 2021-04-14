@@ -86,6 +86,9 @@ class ItemCardView extends StatelessWidget {
                       style: nameStyle,
                       softWrap: false,
                     ),
+                    SizedBox(
+                      height: 9.0,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -99,13 +102,16 @@ class ItemCardView extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(
+                      height: 15.0,
+                    ),
                     Text(
                       material + ' : ' + itemList.material,
                       style: materialStyle,
                     ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

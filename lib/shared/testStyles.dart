@@ -11,7 +11,7 @@ var priceStyle = TextStyle(
 var quantityStyle = TextStyle(
   fontSize: 10,
   fontFamily: 'Montserrat',
-  color: appBarColor,
+  color: Colors.black,
   fontWeight: FontWeight.bold,
 );
 
