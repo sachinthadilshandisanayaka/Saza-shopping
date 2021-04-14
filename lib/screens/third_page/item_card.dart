@@ -5,6 +5,7 @@ import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/secondPage/selectedItemDisplay.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/string.dart';
+import 'package:sazashopping/shared/testStyles.dart';
 
 class ItemCardView extends StatelessWidget {
   final connection = true;
@@ -82,11 +83,7 @@ class ItemCardView extends StatelessWidget {
                       itemList.name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: nameStyle,
                       softWrap: false,
                     ),
                     Row(
@@ -94,30 +91,17 @@ class ItemCardView extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           srilankaRuppes + ' ' + itemList.price,
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontFamily: 'Montserrat',
-                            color: appBarColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: priceStyle,
                         ),
                         Text(
                           'Available' + ' ' + itemList.quantity.toString(),
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontFamily: 'Montserrat',
-                            color: appBarColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: quantityStyle,
                         ),
                       ],
                     ),
                     Text(
                       material + ' : ' + itemList.material,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: 'Montserrat',
-                      ),
+                      style: materialStyle,
                     ),
                   ],
                 ),
