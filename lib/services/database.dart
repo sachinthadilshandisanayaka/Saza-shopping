@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sazashopping/models/mainItem.dart';
+import 'package:sazashopping/shared/string.dart';
 
 class DataBaseService {
   final String uid;
@@ -37,7 +38,7 @@ class DataBaseService {
   // get items stream
   Stream<List<MainItems>> get dynamicItemlenght {
     return sazaCollection
-        .doc(uid)
+        .doc(mainItemsDocumentID)
         .collection(itemtype)
         .snapshots()
         .map((d) => _itemListFromSnapShot(d));
@@ -45,7 +46,7 @@ class DataBaseService {
 
   Stream<List<MainItems>> get dynamicItem {
     return sazaCollection
-        .doc(uid)
+        .doc(mainItemsDocumentID)
         .collection(itemtype)
         .limit(limit == 0 ? 3 : limit)
         .snapshots()

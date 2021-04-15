@@ -30,7 +30,7 @@ class SelectedItemDisplay extends StatelessWidget {
           ],
         ),
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: ClampingScrollPhysics(),
           child: ClipPath(
             clipper: MessageClipper(),
             child: Container(

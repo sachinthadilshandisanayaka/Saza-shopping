@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/user.dart';
+import 'package:sazashopping/screens/additems/itemAdd.dart';
 import 'package:sazashopping/screens/home/home_title.dart';
 import 'package:sazashopping/screens/home/main_item_list.dart';
 import 'package:sazashopping/screens/home/menus/constants.dart';
@@ -48,6 +49,9 @@ class Home extends StatelessWidget {
                             title: 'Log out',
                           );
                         });
+                  } else if (action == Constants.additem) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ItemAdding()));
                   }
                 },
                 itemBuilder: (BuildContext context) {
