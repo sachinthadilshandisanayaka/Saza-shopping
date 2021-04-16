@@ -8,8 +8,19 @@ class ItemAdding extends StatefulWidget {
 class _ItemAddingState extends State<ItemAdding> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [],
+        ),
+        body: Container(
+          child: Column(
+            children: <Widget>[
+              
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
