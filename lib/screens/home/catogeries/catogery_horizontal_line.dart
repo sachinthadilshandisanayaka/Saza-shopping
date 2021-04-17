@@ -9,10 +9,8 @@ import 'package:sazashopping/shared/double.dart';
 
 class CatogeriesHorizontalTile extends StatefulWidget {
   final String type;
-  final String uid;
   final bool connection;
-  CatogeriesHorizontalTile(
-      {@required this.type, @required this.uid, @required this.connection});
+  CatogeriesHorizontalTile({@required this.type, @required this.connection});
   @override
   _CatogeriesHorizontalTileState createState() =>
       _CatogeriesHorizontalTileState();
@@ -60,10 +58,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
         : itemMaxLength;
 
     return StreamBuilder(
-      stream: DataBaseService(
-                  uid: widget.uid,
-                  itemtype: widget.type,
-                  limit: loadedDataLenght)
+      stream: DataBaseService(itemtype: widget.type, limit: loadedDataLenght)
               .dynamicItem ??
           [],
       builder: (context, snapshot) {

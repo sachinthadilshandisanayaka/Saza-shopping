@@ -7,9 +7,8 @@ import 'package:sazashopping/screens/third_page/item_card.dart';
 import 'package:sazashopping/services/database.dart';
 
 class ItemsListView extends StatefulWidget {
-  final String uid;
   final String itemname;
-  ItemsListView({@required this.uid, @required this.itemname});
+  ItemsListView({@required this.itemname});
   @override
   _ItemsListViewState createState() => _ItemsListViewState();
 }
@@ -51,12 +50,10 @@ class _ItemsListViewState extends State<ItemsListView> {
     final allShopItems = Provider.of<List<MainItems>>(context) ?? [];
     final itemDisplayMaxLenght = allShopItems.length;
     return StreamBuilder(
-      stream: DataBaseService(
-                  uid: widget.uid,
-                  itemtype: widget.itemname,
-                  limit: loadedDataLenght)
-              .dynamicItem ??
-          [],
+      stream:
+          DataBaseService(itemtype: widget.itemname, limit: loadedDataLenght)
+                  .dynamicItem ??
+              [],
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           getListItems = snapshot.data;

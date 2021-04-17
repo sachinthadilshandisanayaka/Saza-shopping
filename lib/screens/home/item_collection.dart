@@ -2,13 +2,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
-import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/home/catogeries/catogery_horizontal_line.dart';
-import 'package:sazashopping/screens/third_page/moreItems.dart';
+import 'package:sazashopping/screens/third_page/showItems.dart';
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
-// import 'package:sazashopping/routes/thirdPageRoute.dart';
 
 class ItemTile extends StatelessWidget {
   final String itemname;
@@ -17,10 +15,8 @@ class ItemTile extends StatelessWidget {
   ItemTile({@required this.itemname, @required this.connection});
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<Users>(context);
     return StreamProvider<List<MainItems>>.value(
-      value:
-          DataBaseService(uid: user.uid, itemtype: itemname).dynamicItemlenght,
+      value: DataBaseService(itemtype: itemname).dynamicItemlenght,
       child: Material(
         color: backgroudColor, // here
         elevation: 0,
@@ -47,12 +43,25 @@ class ItemTile extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => SelectedMoreItems(
-                              itemname: itemname,
-                              uid: user.uid,
-                            ),
-                          ),
+                          PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
+                                      SelectedMoreItems(
+                                        itemname: itemname,
+                                      ),
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                var begin = Offset(1.0, 0.0);
+                                var end = Offset(0.0, 0.0);
+                                var curve = Curves.ease;
+
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+                                return SlideTransition(
+                                  position: animation.drive(tween),
+                                  child: child,
+                                );
+                              }),
                         );
                       },
                       child: Text(
@@ -73,7 +82,6 @@ class ItemTile extends StatelessWidget {
               padding: EdgeInsets.all(5),
               child: CatogeriesHorizontalTile(
                 type: itemname,
-                uid: user.uid,
                 connection: this.connection,
               ),
             ),
