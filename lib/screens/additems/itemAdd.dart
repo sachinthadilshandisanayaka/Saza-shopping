@@ -19,7 +19,7 @@ class _ItemAddingState extends State<ItemAdding> {
         appBar: AppBar(
           actions: [],
         ),
-        body: StreamBuilder<Object>(
+        body: StreamBuilder(
             stream: CategoryDataBaseService().catogories,
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -27,7 +27,10 @@ class _ItemAddingState extends State<ItemAdding> {
                   child: CircularProgressIndicator(),
                 );
               } else {
-                print(snapshot.data);
+                for (var category in snapshot.data) {
+                  print(category.name.toString());
+                  print(category.category.toString());
+                }
                 return Container(
                   padding: EdgeInsets.all(15.0),
                   child: Form(
