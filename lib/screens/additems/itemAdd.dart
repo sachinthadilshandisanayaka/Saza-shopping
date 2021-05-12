@@ -22,30 +22,27 @@ class _ItemAddingState extends State<ItemAdding> {
         body: StreamBuilder<Object>(
             stream: CategoryDataBaseService().catogories,
             builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                print(snapshot.data);
+              if (!snapshot.hasData) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
               } else {
-                print('---------------- no data ------------------');
-              }
-
-              return Container(
-                padding: EdgeInsets.all(15.0),
-                child: Column(
-                  children: <Widget>[
-                    Form(
-                      key: _formKeyAddItem,
-                      child: Column(
-                        children: [
-                          Text('Item name'),
-                          TextFormField(
-                            decoration: textinputDecoration,
-                          ),
-                        ],
-                      ),
+                print(snapshot.data);
+                return Container(
+                  padding: EdgeInsets.all(15.0),
+                  child: Form(
+                    key: _formKeyAddItem,
+                    child: Column(
+                      children: [
+                        Text('Item name'),
+                        TextFormField(
+                          decoration: textinputDecoration,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              );
+                  ),
+                );
+              }
             }),
       ),
     );
