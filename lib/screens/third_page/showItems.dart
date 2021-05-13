@@ -19,6 +19,7 @@ class _SelectedMoreItemsState extends State<SelectedMoreItems> {
     return StreamProvider<List<MainItems>>.value(
       value: DataBaseService(itemtype: widget.itemname).dynamicItemlenght,
       child: SafeArea(
+        top: false,
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: appBarColor,
