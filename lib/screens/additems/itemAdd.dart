@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/services/categoryCollection.dart';
@@ -13,6 +12,7 @@ class ItemAdding extends StatefulWidget {
 
 class _ItemAddingState extends State<ItemAdding> {
   final _formKeyAddItem = GlobalKey<FormState>();
+  final categorySelected = TextEditingController();
 
   String productname;
   String productMaterial;
@@ -20,11 +20,13 @@ class _ItemAddingState extends State<ItemAdding> {
   String maleOrFemale;
   String madeCountry;
   String description;
+  String selectedCategoryBydefault;
   int quantity;
   String procudeSizeType;
   List<String> productColors;
   List<String> productSize;
-  Map<String, String> productCategory;
+  List<String> productSubCategory;
+  Map<String, String> productCategory = new Map();
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,11 @@ class _ItemAddingState extends State<ItemAdding> {
               for (var category in snapshot.data) {
                 print(category.name.toString());
                 print(category.category.toString());
+
+                for (var ct in category.category) {
+                  productCategory[ct.toString()] = category.name.toString();
+                  productSubCategory.add(ct.toString());
+                }
               }
               return SingleChildScrollView(
                 physics: BouncingScrollPhysics(),
@@ -75,7 +82,23 @@ class _ItemAddingState extends State<ItemAdding> {
                       SizedBox(
                         height: 10,
                       ),
-                      DropDownField(),
+                      DropDownField(
+                        controller: categorySelected,
+                        hintText: "Select item category",
+                        enabled: true,
+                        items: productSubCategory,
+                        itemsVisibleInDropdown: 10,
+                        onValueChanged: (value) {
+                          setState(() {
+                            selectedCategoryBydefault = value;
+                          });
+                        },
+                      ),
+                      Text(
+                        selectedCategoryBydefault.isEmpty
+                            ? ""
+                            : "$productCategory[$selectedCategoryBydefault]=> $selectedCategoryBydefault",
+                      ),
                       SizedBox(
                         height: 10,
                       ),
