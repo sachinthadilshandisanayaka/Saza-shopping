@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/services/categoryCollection.dart';
 import 'package:sazashopping/shared/colors.dart';
@@ -23,6 +24,7 @@ class _ItemAddingState extends State<ItemAdding> {
   String procudeSizeType;
   List<String> productColors;
   List<String> productSize;
+  Map<String, String> productCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +72,10 @@ class _ItemAddingState extends State<ItemAdding> {
                           return val.trim().isEmpty ? 'Enter item name' : null;
                         },
                       ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      DropDownField(),
                       SizedBox(
                         height: 10,
                       ),
