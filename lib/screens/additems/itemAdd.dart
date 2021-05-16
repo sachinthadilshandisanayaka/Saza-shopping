@@ -23,10 +23,25 @@ class _ItemAddingState extends State<ItemAdding> {
   String selectedCategoryBydefault;
   int quantity;
   String procudeSizeType;
-  List<String> productColors;
-  List<String> productSize;
-  List<String> productSubCategory;
+  List<String> productColors = new List();
+  List<String> productSize = new List();
+  List<String> productSubCategory = new List();
   Map<String, String> productCategory = new Map();
+
+  Widget displaySelectedCategory(pC) {
+    return selectedCategoryBydefault == null ||
+            selectedCategoryBydefault.toString().isEmpty
+        ? Text('')
+        : Text(
+            pC[selectedCategoryBydefault].toString() +
+                " > " +
+                selectedCategoryBydefault.toString(),
+            style: TextStyle(
+                fontFamily: 'Baloo2',
+                color: appBarColor,
+                fontWeight: FontWeight.bold),
+          );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,135 +62,138 @@ class _ItemAddingState extends State<ItemAdding> {
               );
             } else {
               for (var category in snapshot.data) {
-                print(category.name.toString());
-                print(category.category.toString());
-
                 for (var ct in category.category) {
-                  productCategory[ct.toString()] = category.name.toString();
-                  productSubCategory.add(ct.toString());
+                  if (!productSubCategory.contains(ct)) {
+                    productCategory[ct] = category.name.toString();
+                    productSubCategory.add(ct.toString() ?? '');
+                  }
                 }
               }
-              return SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.all(15.0),
-                child: Form(
-                  key: _formKeyAddItem,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Item name',
-                        style: TextStyle(fontFamily: 'Baloo2'),
-                      ),
-                      TextFormField(
-                        decoration: textinputDecoration,
-                        onChanged: (val) {
-                          setState(() {
-                            productname = val.trim();
-                          });
-                        },
-                        validator: (val) {
-                          return val.trim().isEmpty ? 'Enter item name' : null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      DropDownField(
-                        controller: categorySelected,
-                        hintText: "Select item category",
-                        enabled: true,
-                        items: productSubCategory,
-                        itemsVisibleInDropdown: 10,
-                        onValueChanged: (value) {
-                          setState(() {
-                            selectedCategoryBydefault = value;
-                          });
-                        },
-                      ),
-                      Text(
-                        selectedCategoryBydefault.isEmpty
-                            ? ""
-                            : "$productCategory[$selectedCategoryBydefault]=> $selectedCategoryBydefault",
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Material',
-                        style: TextStyle(fontFamily: 'Baloo2'),
-                      ),
-                      TextFormField(
-                        decoration: textinputDecoration,
-                        onChanged: (val) {
-                          setState(() {
-                            productMaterial = val.trim();
-                          });
-                        },
-                        validator: (val) {
-                          return val.trim().isEmpty ? 'Enter material' : null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Brand',
-                        style: TextStyle(fontFamily: 'Baloo2'),
-                      ),
-                      TextFormField(
-                        decoration: textinputDecoration,
-                        onChanged: (val) {
-                          setState(() {
-                            brandName = val.trim();
-                          });
-                        },
-                        validator: (val) {
-                          return val.trim().isEmpty ? 'Enter Brand' : null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Made in',
-                        style: TextStyle(fontFamily: 'Baloo2'),
-                      ),
-                      TextFormField(
-                        decoration: textinputDecoration,
-                        onChanged: (val) {
-                          setState(() {
-                            madeCountry = val.trim();
-                          });
-                        },
-                        validator: (val) {
-                          return val.trim().isEmpty ? 'Enter Country' : null;
-                        },
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Quantity Avilable',
-                        style: TextStyle(fontFamily: 'Baloo2'),
-                      ),
-                      TextFormField(
-                        decoration: textinputDecoration,
-                        onChanged: (val) {
-                          setState(() {
-                            madeCountry = val.trim();
-                          });
-                        },
-                        validator: (val) {
-                          return val.trim().isEmpty ? 'Add quantity' : null;
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              );
             }
+            return SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              padding: EdgeInsets.all(15.0),
+              child: Form(
+                key: _formKeyAddItem,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Item name',
+                      style: TextStyle(fontFamily: 'Baloo2'),
+                    ),
+                    TextFormField(
+                      decoration: textinputDecoration,
+                      onChanged: (val) {
+                        setState(() {
+                          productname = val.trim();
+                        });
+                      },
+                      validator: (val) {
+                        return val.trim().isEmpty ? 'Enter item name' : null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Category',
+                      style: TextStyle(fontFamily: 'Baloo2'),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    DropDownField(
+                      controller: categorySelected,
+                      hintText: "Select item category",
+                      textStyle: TextStyle(fontFamily: 'Baloo2'),
+                      enabled: true,
+                      items: productSubCategory,
+                      itemsVisibleInDropdown: 5,
+                      onValueChanged: (value) {
+                        setState(() {
+                          selectedCategoryBydefault = value;
+                        });
+                      },
+                    ),
+                    displaySelectedCategory(productCategory),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Material',
+                      style: TextStyle(fontFamily: 'Baloo2'),
+                    ),
+                    TextFormField(
+                      decoration: textinputDecoration,
+                      onChanged: (val) {
+                        setState(() {
+                          productMaterial = val.trim();
+                        });
+                      },
+                      validator: (val) {
+                        return val.trim().isEmpty ? 'Enter material' : null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Brand',
+                      style: TextStyle(fontFamily: 'Baloo2'),
+                    ),
+                    TextFormField(
+                      decoration: textinputDecoration,
+                      onChanged: (val) {
+                        setState(() {
+                          brandName = val.trim();
+                        });
+                      },
+                      validator: (val) {
+                        return val.trim().isEmpty ? 'Enter Brand' : null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Made in',
+                      style: TextStyle(fontFamily: 'Baloo2'),
+                    ),
+                    TextFormField(
+                      decoration: textinputDecoration,
+                      onChanged: (val) {
+                        setState(() {
+                          madeCountry = val.trim();
+                        });
+                      },
+                      validator: (val) {
+                        return val.trim().isEmpty ? 'Enter Country' : null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Quantity Avilable',
+                      style: TextStyle(fontFamily: 'Baloo2'),
+                    ),
+                    TextFormField(
+                      decoration: textinputDecoration,
+                      onChanged: (val) {
+                        setState(() {
+                          madeCountry = val.trim();
+                        });
+                      },
+                      validator: (val) {
+                        return val.trim().isEmpty ? 'Add quantity' : null;
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
           },
         ),
       ),
