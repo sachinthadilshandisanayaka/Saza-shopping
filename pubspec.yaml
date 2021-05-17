@@ -42,6 +42,7 @@ dependencies:
   connectivity: ^0.4.3+6
   flutter_image: ^3.0.0
   dropdownfield: ^1.0.3
+  lite_rolling_switch: ^0.1.1
 
 dev_dependencies:
   flutter_test:

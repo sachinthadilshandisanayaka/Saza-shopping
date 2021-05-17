@@ -15,7 +15,7 @@ class DisplaySelectedCategory extends StatefulWidget {
 class _DisplaySelectedCategoryState extends State<DisplaySelectedCategory> {
   @override
   Widget build(BuildContext context) {
-    return widget.selectedCategoryBydefault.toString().isEmpty ||
+    return widget.selectedCategoryBydefault.isEmpty ||
             widget.selectedCategoryBydefault == null
         ? SizedBox()
         : Text(
@@ -24,6 +24,10 @@ class _DisplaySelectedCategoryState extends State<DisplaySelectedCategory> {
                 " > " +
                 widget.selectedCategoryBydefault.toString(),
             style: inputFormTextStyle.copyWith(
-                color: appBarColor, fontWeight: FontWeight.bold));
+                color: appBarColor, fontWeight: FontWeight.bold),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            softWrap: false,
+          );
   }
 }

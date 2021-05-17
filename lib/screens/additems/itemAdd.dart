@@ -1,3 +1,4 @@
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/screens/additems/customWidget/displayingSelectedCategory.dart';
@@ -13,6 +14,7 @@ class ItemAdding extends StatefulWidget {
 class _ItemAddingState extends State<ItemAdding> {
   final _formKeyAddItem = GlobalKey<FormState>();
   final categorySelected = TextEditingController();
+  final genderSelected = TextEditingController();
 
   String productname;
   String productMaterial;
@@ -21,13 +23,22 @@ class _ItemAddingState extends State<ItemAdding> {
   String madeCountry;
   String description;
   String selectedCategoryBydefault;
-  String selectedCategoryBydefault2;
   int quantity;
   String procudeSizeType;
   List<String> productColors = new List();
   List<String> productSize = new List();
   List<String> productSubCategory = new List();
   Map<String, String> productCategory = new Map();
+  bool genderVisibility = false;
+  bool genderVisibilityDefault;
+
+  changeVisibility(bool visibility, String feild) {
+    setState(() {
+      if (feild == "gender") {
+        genderVisibility = visibility;
+      }
+    });
+  }
 
   // Widget displaySelectedCategory(pC) {
   //   return selectedCategoryBydefault == null ||
@@ -101,16 +112,11 @@ class _ItemAddingState extends State<ItemAdding> {
                       onValueChanged: (value) {
                         setState(() {
                           selectedCategoryBydefault = value;
-                          print("----> 1" + selectedCategoryBydefault);
                         });
-                      },
-                      setter: (newValue) {
-                        selectedCategoryBydefault2 = newValue;
-                        print("----> 2" + selectedCategoryBydefault2);
                       },
                     ),
                     DisplaySelectedCategory(
-                        selectedCategoryBydefault, productCategory),
+                        selectedCategoryBydefault ?? '', productCategory),
                     sizedBox,
                     displayText('Material'),
                     TextFormField(
@@ -166,6 +172,56 @@ class _ItemAddingState extends State<ItemAdding> {
                         return val.trim().isEmpty ? 'Add quantity' : null;
                       },
                     ),
+                    sizedBox,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Gender',
+                          style: inputFormTextStyle,
+                        ),
+                        new LiteRollingSwitch(
+                          value: false,
+                          textOn: "active",
+                          textOff: "inactive",
+                          colorOn: Colors.greenAccent,
+                          colorOff: Colors.redAccent,
+                          iconOn: Icons.done,
+                          iconOff: Icons.remove_circle_outline,
+                          onChanged: (bool state) {
+                            genderVisibilityDefault = state;
+                          },
+                          onTap: () {
+                            changeVisibility(genderVisibilityDefault, "gender");
+                          },
+                          onSwipe: () {
+                            changeVisibility(genderVisibilityDefault, "gender");
+                          },
+                          onDoubleTap: () {
+                            changeVisibility(genderVisibilityDefault, "gender");
+                          },
+                        ),
+                      ],
+                    ),
+                    sizedBox,
+                    genderVisibility
+                        ? new DropDownField(
+                            controller: genderSelected,
+                            hintText: "Choose gender",
+                            textStyle: inputFormTextStyle,
+                            enabled: true,
+                            items: gender,
+                            itemsVisibleInDropdown: 3,
+                            onValueChanged: (value) {
+                              setState(() {
+                                maleOrFemale = value;
+                              });
+                            },
+                          )
+                        : SizedBox(),
+                    SizedBox(
+                      height: 30,
+                    ),
                   ],
                 ),
               ),
@@ -176,6 +232,8 @@ class _ItemAddingState extends State<ItemAdding> {
     );
   }
 }
+
+List<String> gender = ["Male", "Female", "Both"];
 
 Widget sizedBox = SizedBox(
   height: 10,
