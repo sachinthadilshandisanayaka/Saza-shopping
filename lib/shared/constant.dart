@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:sazashopping/shared/colors.dart';
 
@@ -108,3 +107,5 @@ var defaultBoxDecoration = BoxDecoration(color: Colors.white, boxShadow: [
     offset: Offset(0, 0.1),
   )
 ]);
+
+var inputFormTextStyle = TextStyle(fontFamily: 'Baloo2');

@@ -1,6 +1,6 @@
-import 'dart:ui';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
+import 'package:sazashopping/screens/additems/customWidget/displayingSelectedCategory.dart';
 import 'package:sazashopping/services/categoryCollection.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
@@ -21,6 +21,7 @@ class _ItemAddingState extends State<ItemAdding> {
   String madeCountry;
   String description;
   String selectedCategoryBydefault;
+  String selectedCategoryBydefault2;
   int quantity;
   String procudeSizeType;
   List<String> productColors = new List();
@@ -28,20 +29,17 @@ class _ItemAddingState extends State<ItemAdding> {
   List<String> productSubCategory = new List();
   Map<String, String> productCategory = new Map();
 
-  Widget displaySelectedCategory(pC) {
-    return selectedCategoryBydefault == null ||
-            selectedCategoryBydefault.toString().isEmpty
-        ? Text('')
-        : Text(
-            pC[selectedCategoryBydefault].toString() +
-                " > " +
-                selectedCategoryBydefault.toString(),
-            style: TextStyle(
-                fontFamily: 'Baloo2',
-                color: appBarColor,
-                fontWeight: FontWeight.bold),
-          );
-  }
+  // Widget displaySelectedCategory(pC) {
+  //   return selectedCategoryBydefault == null ||
+  //           selectedCategoryBydefault.toString().isEmpty
+  //       ? SizedBox()
+  //       : Text(
+  //           pC[selectedCategoryBydefault].toString() +
+  //               " > " +
+  //               selectedCategoryBydefault.toString(),
+  //           style: inputFormTextStyle.copyWith(
+  //               color: appBarColor, fontWeight: FontWeight.bold));
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -79,10 +77,7 @@ class _ItemAddingState extends State<ItemAdding> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Item name',
-                      style: TextStyle(fontFamily: 'Baloo2'),
-                    ),
+                    displayText('Item name'),
                     TextFormField(
                       decoration: textinputDecoration,
                       onChanged: (val) {
@@ -94,37 +89,30 @@ class _ItemAddingState extends State<ItemAdding> {
                         return val.trim().isEmpty ? 'Enter item name' : null;
                       },
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Category',
-                      style: TextStyle(fontFamily: 'Baloo2'),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    sizedBox,
+                    displayText('Category'),
                     DropDownField(
                       controller: categorySelected,
                       hintText: "Select item category",
-                      textStyle: TextStyle(fontFamily: 'Baloo2'),
+                      textStyle: inputFormTextStyle,
                       enabled: true,
                       items: productSubCategory,
                       itemsVisibleInDropdown: 5,
                       onValueChanged: (value) {
                         setState(() {
                           selectedCategoryBydefault = value;
+                          print("----> 1" + selectedCategoryBydefault);
                         });
                       },
+                      setter: (newValue) {
+                        selectedCategoryBydefault2 = newValue;
+                        print("----> 2" + selectedCategoryBydefault2);
+                      },
                     ),
-                    displaySelectedCategory(productCategory),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Material',
-                      style: TextStyle(fontFamily: 'Baloo2'),
-                    ),
+                    DisplaySelectedCategory(
+                        selectedCategoryBydefault, productCategory),
+                    sizedBox,
+                    displayText('Material'),
                     TextFormField(
                       decoration: textinputDecoration,
                       onChanged: (val) {
@@ -136,13 +124,8 @@ class _ItemAddingState extends State<ItemAdding> {
                         return val.trim().isEmpty ? 'Enter material' : null;
                       },
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Brand',
-                      style: TextStyle(fontFamily: 'Baloo2'),
-                    ),
+                    sizedBox,
+                    displayText('Brand'),
                     TextFormField(
                       decoration: textinputDecoration,
                       onChanged: (val) {
@@ -154,13 +137,8 @@ class _ItemAddingState extends State<ItemAdding> {
                         return val.trim().isEmpty ? 'Enter Brand' : null;
                       },
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Made in',
-                      style: TextStyle(fontFamily: 'Baloo2'),
-                    ),
+                    sizedBox,
+                    displayText('Made in'),
                     TextFormField(
                       decoration: textinputDecoration,
                       onChanged: (val) {
@@ -172,12 +150,10 @@ class _ItemAddingState extends State<ItemAdding> {
                         return val.trim().isEmpty ? 'Enter Country' : null;
                       },
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    sizedBox,
                     Text(
                       'Quantity Avilable',
-                      style: TextStyle(fontFamily: 'Baloo2'),
+                      style: inputFormTextStyle,
                     ),
                     TextFormField(
                       decoration: textinputDecoration,
@@ -199,4 +175,12 @@ class _ItemAddingState extends State<ItemAdding> {
       ),
     );
   }
+}
+
+Widget sizedBox = SizedBox(
+  height: 10,
+);
+
+Widget displayText(text) {
+  return Text(text, style: inputFormTextStyle);
 }
