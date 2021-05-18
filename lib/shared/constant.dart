@@ -108,4 +108,6 @@ var defaultBoxDecoration = BoxDecoration(color: Colors.white, boxShadow: [
   )
 ]);
 
-var inputFormTextStyle = TextStyle(fontFamily: 'Baloo2');
+var inputFormTextStyle = TextStyle(
+  fontFamily: 'Baloo2',
+);

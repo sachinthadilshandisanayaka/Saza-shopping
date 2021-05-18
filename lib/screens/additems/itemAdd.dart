@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
@@ -180,47 +182,94 @@ class _ItemAddingState extends State<ItemAdding> {
                           'Gender',
                           style: inputFormTextStyle,
                         ),
-                        new LiteRollingSwitch(
-                          value: false,
-                          textOn: "active",
-                          textOff: "inactive",
-                          colorOn: Colors.greenAccent,
-                          colorOff: Colors.redAccent,
-                          iconOn: Icons.done,
-                          iconOff: Icons.remove_circle_outline,
-                          onChanged: (bool state) {
-                            genderVisibilityDefault = state;
-                          },
-                          onTap: () {
-                            changeVisibility(genderVisibilityDefault, "gender");
-                          },
-                          onSwipe: () {
-                            changeVisibility(genderVisibilityDefault, "gender");
-                          },
-                          onDoubleTap: () {
-                            changeVisibility(genderVisibilityDefault, "gender");
-                          },
+                        new Container(
+                          height: 35.0,
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: new LiteRollingSwitch(
+                              value: false,
+                              textOn: "active",
+                              textOff: "inactive",
+                              colorOn: Colors.greenAccent,
+                              colorOff: Colors.redAccent,
+                              iconOn: Icons.done,
+                              iconOff: Icons.remove_circle_outline,
+                              onChanged: (bool state) {
+                                genderVisibilityDefault = state;
+                              },
+                              onTap: () {
+                                changeVisibility(
+                                    genderVisibilityDefault, "gender");
+                              },
+                              onSwipe: () {
+                                changeVisibility(
+                                    genderVisibilityDefault, "gender");
+                              },
+                              onDoubleTap: () {
+                                changeVisibility(
+                                    genderVisibilityDefault, "gender");
+                              },
+                            ),
+                          ),
                         ),
                       ],
                     ),
                     sizedBox,
                     genderVisibility
-                        ? new DropDownField(
-                            controller: genderSelected,
-                            hintText: "Choose gender",
-                            textStyle: inputFormTextStyle,
-                            enabled: true,
-                            items: gender,
-                            itemsVisibleInDropdown: 3,
-                            onValueChanged: (value) {
-                              setState(() {
-                                maleOrFemale = value;
-                              });
-                            },
+                        ? new Container(
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5))),
+                            padding: EdgeInsets.only(
+                              left: 5.0,
+                              right: 5.0,
+                              top: 2.0,
+                              bottom: 2.0,
+                            ),
+                            child: new DropdownButton(
+                              focusColor: Colors.white,
+                              hint: Text(
+                                'Select gender',
+                                style: inputFormTextStyle,
+                              ),
+                              isExpanded: true,
+                              iconSize: 22,
+                              value: maleOrFemale,
+                              icon: Icon(Icons.arrow_drop_down),
+                              underline: SizedBox(),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  maleOrFemale = newValue;
+                                });
+                              },
+                              items: gender.map((value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: inputFormTextStyle,
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           )
+                        // DropDownField(
+                        //     controller: genderSelected,
+                        //     hintText: "Choose gender",
+                        //     textStyle: inputFormTextStyle,
+                        //     enabled: true,
+                        //     items: gender,
+                        //     itemsVisibleInDropdown: 3,
+                        //     onValueChanged: (value) {
+                        //       setState(() {
+                        //         maleOrFemale = value;
+                        //       });
+                        //     },
+                        //   )
                         : SizedBox(),
                     SizedBox(
-                      height: 30,
+                      height: 60,
                     ),
                   ],
                 ),
