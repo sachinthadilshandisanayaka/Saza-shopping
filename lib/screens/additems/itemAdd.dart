@@ -16,6 +16,7 @@ class _ItemAddingState extends State<ItemAdding> {
   final _formKeyAddItem = GlobalKey<FormState>();
   final categorySelected = TextEditingController();
   final genderSelected = TextEditingController();
+  final formkey = GlobalKey<FormFieldState>();
 
   String productname;
   String productMaterial;
@@ -272,16 +273,23 @@ class _ItemAddingState extends State<ItemAdding> {
                       'Add Colors',
                       style: inputFormTextStyle,
                     ),
-                    TextFormField(
+                    new TextFormField(
+                      key: formkey,
                       decoration: textinputDecoration,
                       onChanged: (val) {
                         setState(() {
                           tempColor = val.trim();
                         });
                       },
-                      // validator: (val) {
-                      //   return null;
-                      // },
+                      validator: (val) {
+                        if (colorIsNull) {
+                          return "Can't be null";
+                        } else if (colorAllreadyAvilable) {
+                          return "color is already avilbale";
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
                     Container(
                       child: Align(
@@ -289,7 +297,8 @@ class _ItemAddingState extends State<ItemAdding> {
                         child: TextButton(
                           child: Text('Add'),
                           onPressed: () {
-                            if (tempColor == null) {
+                            // print("-----------" + tempColor.toString());
+                            if (tempColor == null || tempColor == '') {
                               setState(() {
                                 colorIsNull = true;
                               });
@@ -303,7 +312,12 @@ class _ItemAddingState extends State<ItemAdding> {
                                 colorAllreadyAvilable = false;
                                 colorIsNull = false;
                                 productColors.add(tempColor);
+                                tempColor = '';
                               });
+                            }
+                            if (formkey.currentState.validate()) {
+                              formkey.currentState.reset();
+                              setState(() {});
                             }
                           },
                         ),
