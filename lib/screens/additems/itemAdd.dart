@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
@@ -25,14 +24,22 @@ class _ItemAddingState extends State<ItemAdding> {
   String madeCountry;
   String description;
   String selectedCategoryBydefault;
-  int quantity;
+  String tempColor;
   String procudeSizeType;
+
+  int quantity;
+
   List<String> productColors = new List();
   List<String> productSize = new List();
   List<String> productSubCategory = new List();
+
   Map<String, String> productCategory = new Map();
-  bool genderVisibility = false;
+
   bool genderVisibilityDefault;
+
+  bool colorAllreadyAvilable = false;
+  bool colorIsNull = false;
+  bool genderVisibility = false;
 
   changeVisibility(bool visibility, String feild) {
     setState(() {
@@ -164,14 +171,19 @@ class _ItemAddingState extends State<ItemAdding> {
                       style: inputFormTextStyle,
                     ),
                     TextFormField(
+                      keyboardType: TextInputType.number,
                       decoration: textinputDecoration,
                       onChanged: (val) {
                         setState(() {
-                          madeCountry = val.trim();
+                          quantity = int.parse(val);
                         });
                       },
                       validator: (val) {
-                        return val.trim().isEmpty ? 'Add quantity' : null;
+                        if (val.trim().isEmpty) {
+                          return 'Add quantity';
+                        } else {
+                          return null;
+                        }
                       },
                     ),
                     sizedBox,
@@ -254,19 +266,79 @@ class _ItemAddingState extends State<ItemAdding> {
                               }).toList(),
                             ),
                           )
-                        // DropDownField(
-                        //     controller: genderSelected,
-                        //     hintText: "Choose gender",
-                        //     textStyle: inputFormTextStyle,
-                        //     enabled: true,
-                        //     items: gender,
-                        //     itemsVisibleInDropdown: 3,
-                        //     onValueChanged: (value) {
-                        //       setState(() {
-                        //         maleOrFemale = value;
-                        //       });
-                        //     },
-                        //   )
+                        : SizedBox(),
+                    sizedBox,
+                    Text(
+                      'Add Colors',
+                      style: inputFormTextStyle,
+                    ),
+                    TextFormField(
+                      decoration: textinputDecoration,
+                      onChanged: (val) {
+                        setState(() {
+                          tempColor = val.trim();
+                        });
+                      },
+                      // validator: (val) {
+                      //   return null;
+                      // },
+                    ),
+                    Container(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          child: Text('Add'),
+                          onPressed: () {
+                            if (tempColor == null) {
+                              setState(() {
+                                colorIsNull = true;
+                              });
+                            } else if (productColors.contains(tempColor)) {
+                              setState(() {
+                                colorAllreadyAvilable = true;
+                                colorIsNull = false;
+                              });
+                            } else {
+                              setState(() {
+                                colorAllreadyAvilable = false;
+                                colorIsNull = false;
+                                productColors.add(tempColor);
+                              });
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                    productColors.isNotEmpty
+                        ? Container(
+                            decoration: BoxDecoration(color: Colors.white),
+                            padding: EdgeInsets.only(left: 5.0),
+                            child: ListView.builder(
+                              itemCount: productColors.length,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              physics: BouncingScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      productColors[index].toString(),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.close),
+                                      onPressed: () {
+                                        setState(() {
+                                          productColors.removeAt(index);
+                                        });
+                                      },
+                                    )
+                                  ],
+                                );
+                              },
+                            ),
+                          )
                         : SizedBox(),
                     SizedBox(
                       height: 60,
