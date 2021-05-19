@@ -1,7 +1,10 @@
+import 'dart:io';
 import 'dart:ui';
+import 'package:image_picker/image_picker.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
+import 'package:sazashopping/models/imageUploadImage.dart';
 import 'package:sazashopping/screens/additems/customWidget/displayingSelectedCategory.dart';
 import 'package:sazashopping/services/categoryCollection.dart';
 import 'package:sazashopping/shared/colors.dart';
@@ -17,6 +20,10 @@ class _ItemAddingState extends State<ItemAdding> {
   final categorySelected = TextEditingController();
   final genderSelected = TextEditingController();
   final formkey = GlobalKey<FormFieldState>();
+  final sizeFormkey = GlobalKey<FormFieldState>();
+
+  List<Object> images = List<Object>();
+  Future<PickedFile> imageFile;
 
   String productname;
   String productMaterial;
@@ -28,6 +35,7 @@ class _ItemAddingState extends State<ItemAdding> {
   String procudeSizeType;
 
   String tempColor;
+  String tempSize;
 
   int quantity;
 
@@ -42,12 +50,28 @@ class _ItemAddingState extends State<ItemAdding> {
   bool colorAllreadyAvilable = false;
   bool colorIsNull = false;
   bool genderVisibility = false;
+  bool sizeAllreadyAvilable = false;
+  bool sizeIsNull = false;
 
   changeVisibility(bool visibility, String feild) {
     setState(() {
       if (feild == "gender") {
         genderVisibility = visibility;
       }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() {
+      images.add("Add Image");
+      images.add("Add Image");
+      images.add("Add Image");
+      images.add("Add Image");
+      images.add("Add Image");
+      images.add("Add Image");
     });
   }
 
@@ -255,7 +279,9 @@ class _ItemAddingState extends State<ItemAdding> {
                     displayText('Add color'),
                     new TextFormField(
                       key: formkey,
-                      decoration: textinputDecoration,
+                      decoration: textinputDecoration.copyWith(
+                          hintText: 'you can add list of colors',
+                          hintStyle: TextStyle(fontFamily: 'Baloo2')),
                       onChanged: (val) {
                         setState(() {
                           tempColor = val.trim();
@@ -265,7 +291,7 @@ class _ItemAddingState extends State<ItemAdding> {
                         if (colorIsNull) {
                           return "Can't be null";
                         } else if (colorAllreadyAvilable) {
-                          return "color is already avilbale";
+                          return "color is already avilabale";
                         } else {
                           return null;
                         }
@@ -274,9 +300,12 @@ class _ItemAddingState extends State<ItemAdding> {
                     Container(
                       width: MediaQuery.of(context).size.width,
                       child: Align(
-                        alignment: Alignment.centerRight,
+                        alignment: Alignment.bottomRight,
                         child: TextButton(
-                          child: Text('Add'),
+                          child: Text(
+                            'Add',
+                            style: TextStyle(fontFamily: 'Montserrat'),
+                          ),
                           onPressed: () {
                             // print("-----------" + tempColor.toString());
                             if (tempColor == null || tempColor == '') {
@@ -298,7 +327,6 @@ class _ItemAddingState extends State<ItemAdding> {
                             }
                             if (formkey.currentState.validate()) {
                               formkey.currentState.reset();
-                              setState(() {});
                             }
                           },
                         ),
@@ -335,6 +363,107 @@ class _ItemAddingState extends State<ItemAdding> {
                             ),
                           )
                         : SizedBox(),
+                    sizedBox,
+                    displayText('Size'),
+                    new TextFormField(
+                      key: sizeFormkey,
+                      decoration: textinputDecoration.copyWith(
+                          hintText: 'you can add list of sizes',
+                          hintStyle: TextStyle(fontFamily: 'Baloo2')),
+                      onChanged: (val) {
+                        setState(() {
+                          tempSize = val.trim();
+                        });
+                      },
+                      validator: (val) {
+                        if (sizeIsNull) {
+                          return "Can't be null";
+                        } else if (sizeAllreadyAvilable) {
+                          return "Size is already avilabale";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: TextButton(
+                          child: Text(
+                            'Add',
+                            style: TextStyle(fontFamily: 'Montserrat'),
+                          ),
+                          onPressed: () {
+                            if (tempSize == null || tempSize == '') {
+                              setState(() {
+                                sizeIsNull = true;
+                              });
+                            } else if (productSize.contains(tempSize)) {
+                              setState(() {
+                                sizeAllreadyAvilable = true;
+                                sizeIsNull = false;
+                              });
+                            } else {
+                              setState(() {
+                                sizeAllreadyAvilable = false;
+                                sizeIsNull = false;
+                                productSize.add(tempSize);
+                                tempSize = '';
+                              });
+                            }
+                            if (sizeFormkey.currentState.validate()) {
+                              sizeFormkey.currentState.reset();
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                    productSize.isNotEmpty
+                        ? Container(
+                            decoration: BoxDecoration(color: Colors.white),
+                            padding: EdgeInsets.only(left: 5.0),
+                            child: ListView.builder(
+                              itemCount: productSize.length,
+                              scrollDirection: Axis.vertical,
+                              shrinkWrap: true,
+                              physics: BouncingScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      productSize[index].toString(),
+                                    ),
+                                    IconButton(
+                                      icon: Icon(Icons.close),
+                                      onPressed: () {
+                                        setState(() {
+                                          productSize.removeAt(index);
+                                        });
+                                      },
+                                    )
+                                  ],
+                                );
+                              },
+                            ),
+                          )
+                        : SizedBox(),
+                    sizedBox,
+                    displayText('Images'),
+                    Container(
+                      height: 250,
+                      child: Column(
+                        verticalDirection: VerticalDirection.up,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Expanded(
+                            child: buildGridView(),
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       height: 60,
                     ),
@@ -346,6 +475,78 @@ class _ItemAddingState extends State<ItemAdding> {
         ),
       ),
     );
+  }
+
+  Widget buildGridView() {
+    return GridView.count(
+      shrinkWrap: true,
+      crossAxisCount: 3,
+      childAspectRatio: 1,
+      children: List.generate(images.length, (index) {
+        if (images[index] is ImageUploadModel) {
+          ImageUploadModel uploadModel = images[index];
+          return Card(
+            clipBehavior: Clip.antiAlias,
+            child: Stack(
+              children: <Widget>[
+                Image.file(
+                  File(uploadModel.imageFile.path),
+                  width: 300,
+                  height: 300,
+                ),
+                Positioned(
+                  right: 5,
+                  top: 5,
+                  child: InkWell(
+                    child: Icon(
+                      Icons.remove_circle,
+                      size: 20,
+                      color: Colors.red,
+                    ),
+                    onTap: () {
+                      setState(() {
+                        images.replaceRange(index, index + 1, ['Add Image']);
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        } else {
+          return Card(
+            child: IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                _onAddImageClick(index);
+              },
+            ),
+          );
+        }
+      }),
+    );
+  }
+
+  Future _onAddImageClick(int index) async {
+    setState(() {
+      imageFile = ImagePicker().getImage(source: ImageSource.gallery);
+      getFileImage(index);
+    });
+  }
+
+  void getFileImage(int index) async {
+//    var dir = await path_provider.getTemporaryDirectory();
+
+    imageFile.then((file) async {
+      setState(() {
+        ImageUploadModel imageUpload = new ImageUploadModel();
+        imageUpload.isUploaded = false;
+        imageUpload.uploading = false;
+        imageUpload.imageFile = file;
+        imageUpload.imageUrl = '';
+        images.replaceRange(index, index + 1, [imageUpload]);
+      });
+    });
   }
 }
 
