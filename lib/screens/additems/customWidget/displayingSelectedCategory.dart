@@ -16,7 +16,8 @@ class _DisplaySelectedCategoryState extends State<DisplaySelectedCategory> {
   @override
   Widget build(BuildContext context) {
     return widget.selectedCategoryBydefault.isEmpty ||
-            widget.selectedCategoryBydefault == null
+            widget.selectedCategoryBydefault == null ||
+            widget.selectedCategoryBydefault == ''
         ? SizedBox()
         : Text(
             widget.productCategory[widget.selectedCategoryBydefault]

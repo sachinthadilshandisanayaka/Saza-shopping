@@ -111,3 +111,8 @@ var defaultBoxDecoration = BoxDecoration(color: Colors.white, boxShadow: [
 var inputFormTextStyle = TextStyle(
   fontFamily: 'Baloo2',
 );
+
+var addItemFormTextStyle = TextStyle(
+  fontFamily: 'Baloo2',
+  fontWeight: FontWeight.bold,
+);

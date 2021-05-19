@@ -24,9 +24,10 @@ class _ItemAddingState extends State<ItemAdding> {
   String maleOrFemale;
   String madeCountry;
   String description;
-  String selectedCategoryBydefault;
-  String tempColor;
+  String selectedCategory;
   String procudeSizeType;
+
+  String tempColor;
 
   int quantity;
 
@@ -49,18 +50,6 @@ class _ItemAddingState extends State<ItemAdding> {
       }
     });
   }
-
-  // Widget displaySelectedCategory(pC) {
-  //   return selectedCategoryBydefault == null ||
-  //           selectedCategoryBydefault.toString().isEmpty
-  //       ? SizedBox()
-  //       : Text(
-  //           pC[selectedCategoryBydefault].toString() +
-  //               " > " +
-  //               selectedCategoryBydefault.toString(),
-  //           style: inputFormTextStyle.copyWith(
-  //               color: appBarColor, fontWeight: FontWeight.bold));
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -121,12 +110,12 @@ class _ItemAddingState extends State<ItemAdding> {
                       itemsVisibleInDropdown: 5,
                       onValueChanged: (value) {
                         setState(() {
-                          selectedCategoryBydefault = value;
+                          selectedCategory = value;
                         });
                       },
                     ),
                     DisplaySelectedCategory(
-                        selectedCategoryBydefault ?? '', productCategory),
+                        selectedCategory ?? '', productCategory),
                     sizedBox,
                     displayText('Material'),
                     TextFormField(
@@ -167,10 +156,7 @@ class _ItemAddingState extends State<ItemAdding> {
                       },
                     ),
                     sizedBox,
-                    Text(
-                      'Quantity Avilable',
-                      style: inputFormTextStyle,
-                    ),
+                    displayText('Quantity Avilable'),
                     TextFormField(
                       keyboardType: TextInputType.number,
                       decoration: textinputDecoration,
@@ -191,10 +177,7 @@ class _ItemAddingState extends State<ItemAdding> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
-                          'Gender',
-                          style: inputFormTextStyle,
-                        ),
+                        displayText('Gender'),
                         new Container(
                           height: 35.0,
                           child: FittedBox(
@@ -269,10 +252,7 @@ class _ItemAddingState extends State<ItemAdding> {
                           )
                         : SizedBox(),
                     sizedBox,
-                    Text(
-                      'Add Colors',
-                      style: inputFormTextStyle,
-                    ),
+                    displayText('Add color'),
                     new TextFormField(
                       key: formkey,
                       decoration: textinputDecoration,
@@ -292,6 +272,7 @@ class _ItemAddingState extends State<ItemAdding> {
                       },
                     ),
                     Container(
+                      width: MediaQuery.of(context).size.width,
                       child: Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
@@ -375,5 +356,5 @@ Widget sizedBox = SizedBox(
 );
 
 Widget displayText(text) {
-  return Text(text, style: inputFormTextStyle);
+  return Text(text, style: addItemFormTextStyle);
 }
