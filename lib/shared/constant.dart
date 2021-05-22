@@ -44,15 +44,22 @@ var cartButtonStyle = TextStyle(
   color: Colors.amber[700],
   letterSpacing: 2,
   fontFamily: 'OpenSans',
-  fontSize: 15,
+  fontSize: 22,
+  fontWeight: FontWeight.bold,
 );
 
 var buybuttonStyle = TextStyle(
   color: Colors.white,
   letterSpacing: 2,
-  fontFamily: 'OpenSans',
+  fontFamily: 'Baloo2',
   fontSize: 15,
-  shadows: [Shadow(color: Colors.black45, blurRadius: 3, offset: Offset(0, 1))],
+  shadows: [
+    Shadow(
+      color: Colors.black45,
+      blurRadius: 3,
+      offset: Offset(0, 1),
+    ),
+  ],
 );
 
 var carElevatedStryle = ElevatedButton.styleFrom(
@@ -67,7 +74,7 @@ var carElevatedStryle = ElevatedButton.styleFrom(
 );
 
 const itemPriceStyle = TextStyle(
-  fontSize: 20,
+  fontSize: 18,
   fontFamily: 'Montserrat',
   fontWeight: FontWeight.bold,
   color: Colors.teal,

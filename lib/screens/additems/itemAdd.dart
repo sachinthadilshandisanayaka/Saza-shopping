@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:ui';
 import 'package:image_picker/image_picker.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
@@ -6,9 +5,19 @@ import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/imageUploadImage.dart';
 import 'package:sazashopping/screens/additems/customWidget/displayingSelectedCategory.dart';
+import 'package:sazashopping/screens/additems/formValidator/colorValidator.dart';
+import 'package:sazashopping/screens/additems/formValidator/sizeValidator.dart';
+import 'package:sazashopping/screens/additems/funtions/storeItemDatabase.dart';
 import 'package:sazashopping/services/categoryCollection.dart';
+import 'package:sazashopping/shared/boxDecoration.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
+import 'package:sazashopping/shared/list.dart';
+import 'package:sazashopping/shared/widget/centeredRaiseButton.dart';
+import 'package:sazashopping/shared/widget/displayText.dart';
+import 'package:sazashopping/shared/widget/imagePickerCardView.dart';
+import 'package:sazashopping/shared/widget/imagePickerNullView.dart';
+import 'package:sazashopping/shared/widget/sizeBox.dart';
 
 class ItemAdding extends StatefulWidget {
   @override
@@ -17,7 +26,7 @@ class ItemAdding extends StatefulWidget {
 
 class _ItemAddingState extends State<ItemAdding> {
   final _formKeyAddItem = GlobalKey<FormState>();
-  final categorySelected = TextEditingController();
+  final categorySelectedController = TextEditingController();
   final genderSelected = TextEditingController();
   final formkey = GlobalKey<FormFieldState>();
   final sizeFormkey = GlobalKey<FormFieldState>();
@@ -126,7 +135,7 @@ class _ItemAddingState extends State<ItemAdding> {
                     sizedBox,
                     displayText('Category'),
                     DropDownField(
-                      controller: categorySelected,
+                      controller: categorySelectedController,
                       hintText: "Select item category",
                       textStyle: inputFormTextStyle,
                       enabled: true,
@@ -237,10 +246,7 @@ class _ItemAddingState extends State<ItemAdding> {
                     sizedBox,
                     genderVisibility
                         ? new Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5))),
+                            decoration: genderSelecterBoxDecoration,
                             padding: EdgeInsets.only(
                               left: 5.0,
                               right: 5.0,
@@ -288,13 +294,8 @@ class _ItemAddingState extends State<ItemAdding> {
                         });
                       },
                       validator: (val) {
-                        if (colorIsNull) {
-                          return "Can't be null";
-                        } else if (colorAllreadyAvilable) {
-                          return "color is already avilabale";
-                        } else {
-                          return null;
-                        }
+                        return colorValidate(
+                            colorIsNull, colorAllreadyAvilable);
                       },
                     ),
                     Container(
@@ -307,7 +308,6 @@ class _ItemAddingState extends State<ItemAdding> {
                             style: TextStyle(fontFamily: 'Montserrat'),
                           ),
                           onPressed: () {
-                            // print("-----------" + tempColor.toString());
                             if (tempColor == null || tempColor == '') {
                               setState(() {
                                 colorIsNull = true;
@@ -376,13 +376,7 @@ class _ItemAddingState extends State<ItemAdding> {
                         });
                       },
                       validator: (val) {
-                        if (sizeIsNull) {
-                          return "Can't be null";
-                        } else if (sizeAllreadyAvilable) {
-                          return "Size is already avilabale";
-                        } else {
-                          return null;
-                        }
+                        return sizeValidate(sizeIsNull, sizeAllreadyAvilable);
                       },
                     ),
                     Container(
@@ -459,10 +453,58 @@ class _ItemAddingState extends State<ItemAdding> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Expanded(
-                            child: buildGridView(),
+                            child: GridView.count(
+                              shrinkWrap: true,
+                              crossAxisCount: 3,
+                              childAspectRatio: 1,
+                              children: List.generate(images.length, (index) {
+                                if (images[index] is ImageUploadModel) {
+                                  ImageUploadModel uploadModel = images[index];
+                                  return buildCardView(
+                                    uploadModel: uploadModel,
+                                    cardOnTapFuntion: () => removeImage(index),
+                                  );
+                                } else {
+                                  return defaultCardView(
+                                      onpressFuntion: () =>
+                                          _onAddImageClick(index));
+                                }
+                              }),
+                            ),
                           ),
                         ],
                       ),
+                    ),
+                    sizedBox,
+                    displayText('Description'),
+                    TextFormField(
+                      decoration: textinputDecoration,
+                      maxLines: 6,
+                      onChanged: (val) {
+                        setState(() {
+                          description = val.trim();
+                        });
+                      },
+                      validator: (val) {
+                        return val.trim().isEmpty
+                            ? 'Add your description'
+                            : null;
+                      },
+                    ),
+                    sizedBox,
+                    sizedBox,
+                    RaiseButtonCenter(
+                      pressBottonFuntion: () => storeItemDataBase(
+                        context,
+                        _formKeyAddItem,
+                        selectedCategory,
+                        genderVisibility,
+                        maleOrFemale,
+                        productColors,
+                        productSize,
+                        images,
+                      ),
+                      buttonLable: 'ADD ITEM',
                     ),
                     SizedBox(
                       height: 60,
@@ -477,56 +519,6 @@ class _ItemAddingState extends State<ItemAdding> {
     );
   }
 
-  Widget buildGridView() {
-    return GridView.count(
-      shrinkWrap: true,
-      crossAxisCount: 3,
-      childAspectRatio: 1,
-      children: List.generate(images.length, (index) {
-        if (images[index] is ImageUploadModel) {
-          ImageUploadModel uploadModel = images[index];
-          return Card(
-            clipBehavior: Clip.antiAlias,
-            child: Stack(
-              children: <Widget>[
-                Image.file(
-                  File(uploadModel.imageFile.path),
-                  width: 300,
-                  height: 300,
-                ),
-                Positioned(
-                  right: 5,
-                  top: 5,
-                  child: InkWell(
-                    child: Icon(
-                      Icons.remove_circle,
-                      size: 20,
-                      color: Colors.red,
-                    ),
-                    onTap: () {
-                      setState(() {
-                        images.replaceRange(index, index + 1, ['Add Image']);
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-          );
-        } else {
-          return Card(
-            child: IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () {
-                _onAddImageClick(index);
-              },
-            ),
-          );
-        }
-      }),
-    );
-  }
-
   Future _onAddImageClick(int index) async {
     setState(() {
       imageFile = ImagePicker().getImage(source: ImageSource.gallery);
@@ -536,26 +528,23 @@ class _ItemAddingState extends State<ItemAdding> {
 
   void getFileImage(int index) async {
 //    var dir = await path_provider.getTemporaryDirectory();
-
     imageFile.then((file) async {
-      setState(() {
-        ImageUploadModel imageUpload = new ImageUploadModel();
-        imageUpload.isUploaded = false;
-        imageUpload.uploading = false;
-        imageUpload.imageFile = file;
-        imageUpload.imageUrl = '';
-        images.replaceRange(index, index + 1, [imageUpload]);
-      });
+      if (file != null) {
+        setState(() {
+          ImageUploadModel imageUpload = new ImageUploadModel();
+          imageUpload.isUploaded = false;
+          imageUpload.uploading = false;
+          imageUpload.imageFile = file;
+          imageUpload.imageUrl = '';
+          images.replaceRange(index, index + 1, [imageUpload]);
+        });
+      }
     });
   }
-}
 
-List<String> gender = ["Male", "Female", "Both"];
-
-Widget sizedBox = SizedBox(
-  height: 10,
-);
-
-Widget displayText(text) {
-  return Text(text, style: addItemFormTextStyle);
+  void removeImage(int index) {
+    setState(() {
+      images.replaceRange(index, index + 1, ['Add Image']);
+    });
+  }
 }
