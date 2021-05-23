@@ -44,6 +44,7 @@ dependencies:
   dropdownfield: ^1.0.3
   lite_rolling_switch: ^0.1.1
   image_picker: ^0.6.7+22
+  path: ^1.5.0
 
 dev_dependencies:
   flutter_test:

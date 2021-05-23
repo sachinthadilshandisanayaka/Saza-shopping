@@ -13,10 +13,5 @@ Widget dropDownField(
     items: productSubCategory,
     itemsVisibleInDropdown: 5,
     onValueChanged: (value) => valueChangeFuntion(value),
-    //  {
-    //   setState(() {
-    //     selectedCategory = value;
-    //   });
-    // },
   );
 }

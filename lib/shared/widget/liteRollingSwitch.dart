@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 
-Widget liteRollingSwith({@required Function changeVisibility}) {
-  bool genderVisibilityDefault;
+Widget liteRollingSwith(
+    {@required Function changeVisibility, @required String type}) {
+  bool visibilityDefault;
   return new Container(
     height: 35.0,
     child: FittedBox(
@@ -16,16 +17,16 @@ Widget liteRollingSwith({@required Function changeVisibility}) {
         iconOn: Icons.done,
         iconOff: Icons.remove_circle_outline,
         onChanged: (bool state) {
-          genderVisibilityDefault = state;
+          visibilityDefault = state;
         },
         onTap: () {
-          changeVisibility(genderVisibilityDefault, "gender");
+          changeVisibility(visibilityDefault, type);
         },
         onSwipe: () {
-          changeVisibility(genderVisibilityDefault, "gender");
+          changeVisibility(visibilityDefault, type);
         },
         onDoubleTap: () {
-          changeVisibility(genderVisibilityDefault, "gender");
+          changeVisibility(visibilityDefault, type);
         },
       ),
     ),

@@ -5,7 +5,7 @@ import 'package:sazashopping/models/imageUploadImage.dart';
 import 'package:sazashopping/screens/additems/customWidget/displayingSelectedCategory.dart';
 import 'package:sazashopping/screens/additems/formValidator/colorValidator.dart';
 import 'package:sazashopping/screens/additems/formValidator/sizeValidator.dart';
-import 'package:sazashopping/screens/additems/funtions/storeItemDatabase.dart';
+import 'package:sazashopping/screens/additems/funtions/addModelValue.dart';
 import 'package:sazashopping/services/categoryCollection.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
@@ -48,11 +48,14 @@ class _ItemAddingState extends State<ItemAdding> {
 
   int quantity;
 
+  double price;
+  double offer;
+
   List<String> productColors = new List();
   List<String> productSize = new List();
   List<String> productSubCategory = new List();
 
-  Map<String, String> productCategory = new Map();
+  Map<String, String> productCategories = new Map();
 
   bool genderVisibilityDefault;
 
@@ -61,11 +64,14 @@ class _ItemAddingState extends State<ItemAdding> {
   bool genderVisibility = false;
   bool sizeAllreadyAvilable = false;
   bool sizeIsNull = false;
+  bool offerVisibility = false;
 
   changeVisibility(bool visibility, String feild) {
     setState(() {
       if (feild == "gender") {
         genderVisibility = visibility;
+      } else if (feild == "offer") {
+        offerVisibility = visibility;
       }
     });
   }
@@ -105,7 +111,7 @@ class _ItemAddingState extends State<ItemAdding> {
               for (var category in snapshot.data) {
                 for (var ct in category.category) {
                   if (!productSubCategory.contains(ct)) {
-                    productCategory[ct] = category.name.toString();
+                    productCategories[ct] = category.name.toString();
                     productSubCategory.add(ct.toString() ?? '');
                   }
                 }
@@ -141,7 +147,46 @@ class _ItemAddingState extends State<ItemAdding> {
                           dropDownFieldSelection(value),
                     ),
                     DisplaySelectedCategory(
-                        selectedCategory ?? '', productCategory),
+                        selectedCategory ?? '', productCategories),
+                    sizedBox,
+                    displayText('Price'),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: textinputDecoration,
+                      onChanged: (val) {
+                        setState(() {
+                          price = double.parse(val);
+                        });
+                      },
+                    ),
+                    sizedBox,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        displayText("Offer"),
+                        liteRollingSwith(
+                            changeVisibility: changeVisibility, type: "offer"),
+                      ],
+                    ),
+                    sizedBox,
+                    offerVisibility
+                        ? TextFormField(
+                            decoration: textinputDecoration,
+                            onChanged: (val) {
+                              setState(() {
+                                offer = double.parse(val.trim());
+                              });
+                            },
+                            validator: (val) {
+                              if (offerVisibility == true &&
+                                  val.trim().isEmpty) {
+                                return "add value";
+                              } else {
+                                return null;
+                              }
+                            },
+                          )
+                        : SizedBox(),
                     sizedBox,
                     displayText('Material'),
                     TextFormField(
@@ -192,11 +237,7 @@ class _ItemAddingState extends State<ItemAdding> {
                         });
                       },
                       validator: (val) {
-                        if (val.trim().isEmpty) {
-                          return 'Add quantity';
-                        } else {
-                          return null;
-                        }
+                        return val.trim().isEmpty ? 'Add quantity' : null;
                       },
                     ),
                     sizedBox,
@@ -204,7 +245,8 @@ class _ItemAddingState extends State<ItemAdding> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         displayText('Gender'),
-                        liteRollingSwith(changeVisibility: changeVisibility),
+                        liteRollingSwith(
+                            changeVisibility: changeVisibility, type: "gender"),
                       ],
                     ),
                     sizedBox,
@@ -321,13 +363,22 @@ class _ItemAddingState extends State<ItemAdding> {
                     RaiseButtonCenter(
                       pressBottonFuntion: () => storeItemDataBase(
                         context,
+                        productname,
                         _formKeyAddItem,
                         selectedCategory,
+                        productCategories,
                         genderVisibility,
                         maleOrFemale,
                         productColors,
                         productSize,
                         images,
+                        offerVisibility,
+                        offer,
+                        price,
+                        description,
+                        madeCountry,
+                        brandName,
+                        quantity,
                       ),
                       buttonLable: 'ADD ITEM',
                     ),
