@@ -1,7 +1,5 @@
 import 'dart:ui';
 import 'package:image_picker/image_picker.dart';
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
-import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/imageUploadImage.dart';
 import 'package:sazashopping/screens/additems/customWidget/displayingSelectedCategory.dart';
@@ -9,14 +7,17 @@ import 'package:sazashopping/screens/additems/formValidator/colorValidator.dart'
 import 'package:sazashopping/screens/additems/formValidator/sizeValidator.dart';
 import 'package:sazashopping/screens/additems/funtions/storeItemDatabase.dart';
 import 'package:sazashopping/services/categoryCollection.dart';
-import 'package:sazashopping/shared/boxDecoration.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
-import 'package:sazashopping/shared/list.dart';
+import 'package:sazashopping/shared/widget/bottomRightAlignButton.dart';
 import 'package:sazashopping/shared/widget/centeredRaiseButton.dart';
 import 'package:sazashopping/shared/widget/displayText.dart';
+import 'package:sazashopping/shared/widget/dropDownFiled.dart';
+import 'package:sazashopping/shared/widget/dropDownItemShowWithRemoveItem.dart';
+import 'package:sazashopping/shared/widget/genderSelection.dart';
 import 'package:sazashopping/shared/widget/imagePickerCardView.dart';
 import 'package:sazashopping/shared/widget/imagePickerNullView.dart';
+import 'package:sazashopping/shared/widget/liteRollingSwitch.dart';
 import 'package:sazashopping/shared/widget/sizeBox.dart';
 
 class ItemAdding extends StatefulWidget {
@@ -26,7 +27,6 @@ class ItemAdding extends StatefulWidget {
 
 class _ItemAddingState extends State<ItemAdding> {
   final _formKeyAddItem = GlobalKey<FormState>();
-  final categorySelectedController = TextEditingController();
   final genderSelected = TextEditingController();
   final formkey = GlobalKey<FormFieldState>();
   final sizeFormkey = GlobalKey<FormFieldState>();
@@ -134,18 +134,11 @@ class _ItemAddingState extends State<ItemAdding> {
                     ),
                     sizedBox,
                     displayText('Category'),
-                    DropDownField(
-                      controller: categorySelectedController,
-                      hintText: "Select item category",
-                      textStyle: inputFormTextStyle,
-                      enabled: true,
-                      items: productSubCategory,
-                      itemsVisibleInDropdown: 5,
-                      onValueChanged: (value) {
-                        setState(() {
-                          selectedCategory = value;
-                        });
-                      },
+                    dropDownField(
+                      hint: 'Select item category',
+                      productSubCategory: productSubCategory,
+                      valueChangeFuntion: (value) =>
+                          dropDownFieldSelection(value),
                     ),
                     DisplaySelectedCategory(
                         selectedCategory ?? '', productCategory),
@@ -211,75 +204,15 @@ class _ItemAddingState extends State<ItemAdding> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         displayText('Gender'),
-                        new Container(
-                          height: 35.0,
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: new LiteRollingSwitch(
-                              value: false,
-                              textOn: "active",
-                              textOff: "inactive",
-                              colorOn: Colors.greenAccent,
-                              colorOff: Colors.redAccent,
-                              iconOn: Icons.done,
-                              iconOff: Icons.remove_circle_outline,
-                              onChanged: (bool state) {
-                                genderVisibilityDefault = state;
-                              },
-                              onTap: () {
-                                changeVisibility(
-                                    genderVisibilityDefault, "gender");
-                              },
-                              onSwipe: () {
-                                changeVisibility(
-                                    genderVisibilityDefault, "gender");
-                              },
-                              onDoubleTap: () {
-                                changeVisibility(
-                                    genderVisibilityDefault, "gender");
-                              },
-                            ),
-                          ),
-                        ),
+                        liteRollingSwith(changeVisibility: changeVisibility),
                       ],
                     ),
                     sizedBox,
                     genderVisibility
-                        ? new Container(
-                            decoration: genderSelecterBoxDecoration,
-                            padding: EdgeInsets.only(
-                              left: 5.0,
-                              right: 5.0,
-                              top: 2.0,
-                              bottom: 2.0,
-                            ),
-                            child: new DropdownButton(
-                              focusColor: Colors.white,
-                              hint: Text(
-                                'Select gender',
-                                style: inputFormTextStyle,
-                              ),
-                              isExpanded: true,
-                              iconSize: 22,
-                              value: maleOrFemale,
-                              icon: Icon(Icons.arrow_drop_down),
-                              underline: SizedBox(),
-                              onChanged: (newValue) {
-                                setState(() {
-                                  maleOrFemale = newValue;
-                                });
-                              },
-                              items: gender.map((value) {
-                                return DropdownMenuItem(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: inputFormTextStyle,
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          )
+                        ? selectGender(
+                            text: 'Select gender',
+                            maleOrFemale: maleOrFemale,
+                            funtion: gendetSelection)
                         : SizedBox(),
                     sizedBox,
                     displayText('Add color'),
@@ -298,69 +231,15 @@ class _ItemAddingState extends State<ItemAdding> {
                             colorIsNull, colorAllreadyAvilable);
                       },
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: TextButton(
-                          child: Text(
-                            'Add',
-                            style: TextStyle(fontFamily: 'Montserrat'),
-                          ),
-                          onPressed: () {
-                            if (tempColor == null || tempColor == '') {
-                              setState(() {
-                                colorIsNull = true;
-                              });
-                            } else if (productColors.contains(tempColor)) {
-                              setState(() {
-                                colorAllreadyAvilable = true;
-                                colorIsNull = false;
-                              });
-                            } else {
-                              setState(() {
-                                colorAllreadyAvilable = false;
-                                colorIsNull = false;
-                                productColors.add(tempColor);
-                                tempColor = '';
-                              });
-                            }
-                            if (formkey.currentState.validate()) {
-                              formkey.currentState.reset();
-                            }
-                          },
-                        ),
-                      ),
+                    bottomRightAlignButton(
+                      context: context,
+                      text: 'Add',
+                      buttonClickOperation: () => listColorValueChecker(),
                     ),
                     productColors.isNotEmpty
-                        ? Container(
-                            decoration: BoxDecoration(color: Colors.white),
-                            padding: EdgeInsets.only(left: 5.0),
-                            child: ListView.builder(
-                              itemCount: productColors.length,
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              physics: BouncingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      productColors[index].toString(),
-                                    ),
-                                    IconButton(
-                                      icon: Icon(Icons.close),
-                                      onPressed: () {
-                                        setState(() {
-                                          productColors.removeAt(index);
-                                        });
-                                      },
-                                    )
-                                  ],
-                                );
-                              },
-                            ),
+                        ? dropDownSelectedItems(
+                            productColors: productColors,
+                            removeItem: (index) => removeColorListItem(index),
                           )
                         : SizedBox(),
                     sizedBox,
@@ -379,69 +258,15 @@ class _ItemAddingState extends State<ItemAdding> {
                         return sizeValidate(sizeIsNull, sizeAllreadyAvilable);
                       },
                     ),
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: TextButton(
-                          child: Text(
-                            'Add',
-                            style: TextStyle(fontFamily: 'Montserrat'),
-                          ),
-                          onPressed: () {
-                            if (tempSize == null || tempSize == '') {
-                              setState(() {
-                                sizeIsNull = true;
-                              });
-                            } else if (productSize.contains(tempSize)) {
-                              setState(() {
-                                sizeAllreadyAvilable = true;
-                                sizeIsNull = false;
-                              });
-                            } else {
-                              setState(() {
-                                sizeAllreadyAvilable = false;
-                                sizeIsNull = false;
-                                productSize.add(tempSize);
-                                tempSize = '';
-                              });
-                            }
-                            if (sizeFormkey.currentState.validate()) {
-                              sizeFormkey.currentState.reset();
-                            }
-                          },
-                        ),
-                      ),
+                    bottomRightAlignButton(
+                      context: context,
+                      text: 'Add',
+                      buttonClickOperation: () => listSizeValueChecker(),
                     ),
                     productSize.isNotEmpty
-                        ? Container(
-                            decoration: BoxDecoration(color: Colors.white),
-                            padding: EdgeInsets.only(left: 5.0),
-                            child: ListView.builder(
-                              itemCount: productSize.length,
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              physics: BouncingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      productSize[index].toString(),
-                                    ),
-                                    IconButton(
-                                      icon: Icon(Icons.close),
-                                      onPressed: () {
-                                        setState(() {
-                                          productSize.removeAt(index);
-                                        });
-                                      },
-                                    )
-                                  ],
-                                );
-                              },
-                            ),
+                        ? dropDownSelectedItems(
+                            productColors: productSize,
+                            removeItem: (index) => removeSizeListItem(index),
                           )
                         : SizedBox(),
                     sizedBox,
@@ -517,6 +342,76 @@ class _ItemAddingState extends State<ItemAdding> {
         ),
       ),
     );
+  }
+
+  void gendetSelection(String newValue) {
+    setState(() {
+      maleOrFemale = newValue;
+    });
+  }
+
+  void dropDownFieldSelection(value) {
+    setState(() {
+      selectedCategory = value;
+    });
+  }
+
+  void removeSizeListItem(int index) {
+    setState(() {
+      productSize.removeAt(index);
+    });
+  }
+
+  void removeColorListItem(int index) {
+    setState(() {
+      productColors.removeAt(index);
+    });
+  }
+
+  void listColorValueChecker() {
+    if (tempColor == null || tempColor == '') {
+      setState(() {
+        colorIsNull = true;
+      });
+    } else if (productColors.contains(tempColor)) {
+      setState(() {
+        colorAllreadyAvilable = true;
+        colorIsNull = false;
+      });
+    } else {
+      setState(() {
+        colorAllreadyAvilable = false;
+        colorIsNull = false;
+        productColors.add(tempColor);
+        tempColor = '';
+      });
+    }
+    if (formkey.currentState.validate()) {
+      formkey.currentState.reset();
+    }
+  }
+
+  void listSizeValueChecker() {
+    if (tempSize == null || tempSize == '') {
+      setState(() {
+        sizeIsNull = true;
+      });
+    } else if (productSize.contains(tempSize)) {
+      setState(() {
+        sizeAllreadyAvilable = true;
+        sizeIsNull = false;
+      });
+    } else {
+      setState(() {
+        sizeAllreadyAvilable = false;
+        sizeIsNull = false;
+        productSize.add(tempSize);
+        tempSize = '';
+      });
+    }
+    if (sizeFormkey.currentState.validate()) {
+      sizeFormkey.currentState.reset();
+    }
   }
 
   Future _onAddImageClick(int index) async {
