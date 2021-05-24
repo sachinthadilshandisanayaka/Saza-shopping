@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sazashopping/screens/home/home.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
 
@@ -24,7 +25,11 @@ Widget raiseButtonCenter(
           try {
             bool result = await pressBottonFuntion();
             if (result) {
-              Navigator.of(context).pop();
+              print('-------------true----------------');
+              lading(false);
+
+              // Navigator.of(context).pushReplacement(
+              //     MaterialPageRoute(builder: (context) => Home()));
             } else {
               print('---------------------- hello');
             }

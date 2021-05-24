@@ -24,13 +24,7 @@ Widget buildCardView({
               size: 20,
               color: Colors.red,
             ),
-            onTap: () => cardOnTapFuntion()
-            // setState(
-            //   () {
-            //     images.replaceRange(index, index + 1, ['Add Image']);
-            //   },
-            // );
-            ,
+            onTap: () => cardOnTapFuntion(),
           ),
         ),
       ],

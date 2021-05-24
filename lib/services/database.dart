@@ -28,7 +28,20 @@ class DataBaseService {
         .doc(mainCategory)
         .collection(subCategory)
         .doc()
-        .set({});
+        .set({
+      'name': mainItems.name,
+      'material': mainItems.material,
+      'gender': mainItems.gender,
+      'description': mainItems.description,
+      'country': mainItems.country,
+      'brand': mainItems.brand,
+      'price': mainItems.price,
+      'offer': mainItems.offer,
+      'quantity': mainItems.quantity,
+      'size': FieldValue.arrayUnion(mainItems.size),
+      'images': FieldValue.arrayUnion(mainItems.images),
+      'color': FieldValue.arrayUnion(mainItems.color),
+    });
   }
   // item list from database
 

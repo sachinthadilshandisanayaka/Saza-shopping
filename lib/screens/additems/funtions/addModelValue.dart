@@ -24,7 +24,7 @@ Future storeItemDataBase(
   String brand,
   int quentity,
 ) async {
-  List<String> imgURLS;
+  List<String> imgURLS = new List();
   DataBaseService dataBaseService = DataBaseService();
 
   if (_formKeyAddItem.currentState.validate()) {
@@ -36,28 +36,31 @@ Future storeItemDataBase(
           allCategories: productCategories,
           file: ium,
         );
-        print("=========" + result.toString());
+        print("======================");
+        print('product name' + productname.toString() + "---------------");
         imgURLS.add(ium.imageUrl.toString());
       }
     }
-    MainItems mainItems = new MainItems(
-      name: productname,
-      brand: brand,
-      material: material,
+
+    MainItems mainItems = MainItems(
+      name: productname ?? '',
+      brand: brand ?? '',
+      material: material ?? '',
       gender: genderVisibility ? maleOrFemale : '',
-      description: description,
-      country: madeCountry,
-      quantity: quentity,
-      offer: offerAvilable ? offer : 0,
-      price: price.toString(),
+      description: description ?? '',
+      country: madeCountry ?? '',
+      quantity: quentity ?? 0,
+      offer: offerAvilable ? offer : 0.0,
+      price: '34' ?? '',
       size: productSize.length != 0 ? productSize : [],
-      images: imgURLS,
+      images: imgURLS ?? [],
       color: productColors.length != 0 ? productColors : [],
     );
-    print("--------" + mainItems.images.length.toString());
-    // dynamic result = await dataBaseService.uploadItem(mainItems,
-    //     selectedCategory, productCategories[selectedCategory].toString());
-    // print(result.toString());
+
+    print("--------" + mainItems.name.toString());
+    dynamic result = await dataBaseService.uploadItem(mainItems,
+        selectedCategory, productCategories[selectedCategory].toString());
+
     return true;
   } else {
     return false;

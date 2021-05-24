@@ -1,18 +1,18 @@
 class MainItems {
-  final String itemId;
-  final String name;
-  final String image;
-  final String material;
-  final String gender;
-  final String description;
-  final String country;
-  final String brand;
-  final List<String> size;
-  final List<String> color;
-  final List<String> images;
-  final int quantity;
-  final double offer;
-  final String price;
+  String itemId;
+  String name;
+  String image;
+  String material;
+  String gender;
+  String description;
+  String country;
+  String brand;
+  List<String> size;
+  List<String> color;
+  List<String> images;
+  int quantity;
+  double offer;
+  String price;
 
   MainItems({
     this.itemId,

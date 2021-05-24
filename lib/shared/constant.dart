@@ -44,8 +44,8 @@ const itemdefaultStyle = TextStyle(
 var cartButtonStyle = TextStyle(
   color: Colors.amber[700],
   letterSpacing: 2,
-  fontFamily: 'OpenSans',
-  fontSize: 22,
+  fontFamily: 'Baloo2',
+  fontSize: 15,
   fontWeight: FontWeight.bold,
 );
 

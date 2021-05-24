@@ -2,6 +2,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/imageUploadImage.dart';
 import 'package:sazashopping/screens/additems/customWidget/displayingSelectedCategory.dart';
+import 'package:sazashopping/screens/additems/formValidator/multiValueValidator.dart';
 import 'package:sazashopping/screens/additems/funtions/addModelValue.dart';
 import 'package:sazashopping/services/categoryCollection.dart';
 import 'package:sazashopping/shared/colors.dart';
@@ -136,16 +137,21 @@ class _ItemAddingState extends State<ItemAdding> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           displayText('Item name'),
-                          stringTextFormField(
-                              funtion: (val) =>
-                                  setInputValue(val, productname)),
+                          stringTextFormField(funtion: (val) {
+                            setState(() {
+                              productname = val.trim();
+                            });
+                          }),
                           sizedBox,
                           displayText('Category'),
                           dropDownField(
                             hint: 'Select item category',
                             productSubCategory: productSubCategory,
-                            valueChangeFuntion: (value) =>
-                                dropDownFieldSelection(value),
+                            valueChangeFuntion: (value) {
+                              setState(() {
+                                selectedCategory = value;
+                              });
+                            },
                           ),
                           DisplaySelectedCategory(
                               selectedCategory ?? '', productCategories),
@@ -153,7 +159,11 @@ class _ItemAddingState extends State<ItemAdding> {
                           displayText('Price'),
                           stringTextFormField(
                               textInputType: TextInputType.number,
-                              funtion: (val) => setInputDobleValue(val, price)),
+                              funtion: (val) {
+                                setState(() {
+                                  price = double.parse(val.trim());
+                                });
+                              }),
                           sizedBox,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -167,30 +177,46 @@ class _ItemAddingState extends State<ItemAdding> {
                           sizedBox,
                           offerVisibility
                               ? swicthTextField(
+                                  type: TextInputType.number,
                                   hint: 'add offer precentage \'%\'',
-                                  funt: (val) => setInputDobleValue(val, offer),
+                                  funt: (val) {
+                                    setState(() {
+                                      offer = double.parse(val);
+                                    });
+                                  },
                                   state: offerVisibility,
                                 )
                               : SizedBox(),
                           sizedBox,
                           displayText('Material'),
-                          stringTextFormField(
-                              funtion: (val) =>
-                                  setInputValue(val, productMaterial)),
+                          stringTextFormField(funtion: (val) {
+                            setState(() {
+                              productMaterial = val.trim();
+                            });
+                          }),
                           sizedBox,
                           displayText('Brand'),
-                          stringTextFormField(
-                              funtion: (val) => setInputValue(val, brandName)),
+                          stringTextFormField(funtion: (val) {
+                            setState(() {
+                              brandName = val.trim();
+                            });
+                          }),
                           sizedBox,
                           displayText('Made in'),
-                          stringTextFormField(
-                              funtion: (val) =>
-                                  setInputValue(val, madeCountry)),
+                          stringTextFormField(funtion: (val) {
+                            setState(() {
+                              madeCountry = val.trim();
+                            });
+                          }),
                           sizedBox,
                           displayText('Quantity Avilable'),
                           stringTextFormField(
                               textInputType: TextInputType.number,
-                              funtion: (val) => setInputValue(val, quantity)),
+                              funtion: (val) {
+                                setState(() {
+                                  quantity = int.parse(val.trim());
+                                });
+                              }),
                           sizedBox,
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -206,20 +232,51 @@ class _ItemAddingState extends State<ItemAdding> {
                               ? selectGender(
                                   text: 'Select gender',
                                   maleOrFemale: maleOrFemale,
-                                  funtion: gendetSelection)
+                                  funtion: (value) {
+                                    setState(() {
+                                      maleOrFemale = value;
+                                    });
+                                  })
                               : SizedBox(),
                           sizedBox,
                           displayText('Add color'),
                           listedTextFormField(
                               formkey: formkey,
                               hint: 'you can add list of colors',
-                              funtion: (val) => setInputValue(val, tempColor),
-                              isValueNull: colorIsNull,
-                              valueIsreadyAvilable: colorAllreadyAvilable),
+                              funtion: (val) {
+                                setState(() {
+                                  tempColor = val.trim();
+                                });
+                              },
+                              validFunction: (val) {
+                                return swicthValidate(
+                                    colorIsNull, colorAllreadyAvilable);
+                              }),
                           bottomRightAlignButton(
                             context: context,
                             text: 'Add',
-                            buttonClickOperation: () => listColorValueChecker(),
+                            buttonClickOperation: () {
+                              if (tempColor == null || tempColor == '') {
+                                setState(() {
+                                  colorIsNull = true;
+                                });
+                              } else if (productColors.contains(tempColor)) {
+                                setState(() {
+                                  colorAllreadyAvilable = true;
+                                  colorIsNull = false;
+                                });
+                              } else {
+                                setState(() {
+                                  colorAllreadyAvilable = false;
+                                  colorIsNull = false;
+                                  productColors.add(tempColor);
+                                  tempColor = '';
+                                });
+                              }
+                              if (formkey.currentState.validate()) {
+                                formkey.currentState.reset();
+                              }
+                            },
                           ),
                           productColors.isNotEmpty
                               ? dropDownSelectedItems(
@@ -229,17 +286,45 @@ class _ItemAddingState extends State<ItemAdding> {
                                 )
                               : SizedBox(),
                           sizedBox,
-                          displayText('Size'),
+                          displayText('Add Size'),
                           listedTextFormField(
-                              formkey: sizeFormkey,
-                              hint: 'you can add list of sizes',
-                              funtion: (val) => setInputValue(val, tempSize),
-                              isValueNull: colorIsNull,
-                              valueIsreadyAvilable: colorAllreadyAvilable),
+                            formkey: sizeFormkey,
+                            hint: 'you can add list of sizes',
+                            funtion: (val) {
+                              setState(() {
+                                tempSize = val.trim();
+                              });
+                            },
+                            validFunction: (val) {
+                              return swicthValidate(
+                                  sizeIsNull, sizeAllreadyAvilable);
+                            },
+                          ),
                           bottomRightAlignButton(
                             context: context,
                             text: 'Add',
-                            buttonClickOperation: () => listSizeValueChecker(),
+                            buttonClickOperation: () {
+                              if (tempSize == null || tempSize == '') {
+                                setState(() {
+                                  sizeIsNull = true;
+                                });
+                              } else if (productSize.contains(tempSize)) {
+                                setState(() {
+                                  sizeIsNull = false;
+                                  sizeAllreadyAvilable = true;
+                                });
+                              } else {
+                                setState(() {
+                                  sizeAllreadyAvilable = false;
+                                  sizeIsNull = false;
+                                  productSize.add(tempSize);
+                                  tempSize = '';
+                                });
+                              }
+                              if (sizeFormkey.currentState.validate()) {
+                                sizeFormkey.currentState.reset();
+                              }
+                            },
                           ),
                           productSize.isNotEmpty
                               ? dropDownSelectedItems(
@@ -286,7 +371,9 @@ class _ItemAddingState extends State<ItemAdding> {
                           displayText('Description'),
                           stringTextFormField(
                             maxline: 8,
-                            funtion: (val) => setInputValue(val, description),
+                            funtion: (val) {
+                              description = val.trim();
+                            },
                           ),
                           sizedBox,
                           sizedBox,
@@ -329,36 +416,6 @@ class _ItemAddingState extends State<ItemAdding> {
     );
   }
 
-  void setInputValue(val, variable) {
-    setState(() {
-      variable = val.trim();
-    });
-  }
-
-  void setInputDobleValue(String val, variable) {
-    setState(() {
-      variable = double.parse(val);
-    });
-  }
-
-  void setInputIntValue(String val, variable) {
-    setState(() {
-      variable = int.parse(val);
-    });
-  }
-
-  void gendetSelection(String newValue) {
-    setState(() {
-      maleOrFemale = newValue;
-    });
-  }
-
-  void dropDownFieldSelection(String value) {
-    setState(() {
-      selectedCategory = value;
-    });
-  }
-
   void removeSizeListItem(int index) {
     setState(() {
       productSize.removeAt(index);
@@ -369,52 +426,6 @@ class _ItemAddingState extends State<ItemAdding> {
     setState(() {
       productColors.removeAt(index);
     });
-  }
-
-  void listColorValueChecker() {
-    if (tempColor == null || tempColor == '') {
-      setState(() {
-        colorIsNull = true;
-      });
-    } else if (productColors.contains(tempColor)) {
-      setState(() {
-        colorAllreadyAvilable = true;
-        colorIsNull = false;
-      });
-    } else {
-      setState(() {
-        colorAllreadyAvilable = false;
-        colorIsNull = false;
-        productColors.add(tempColor);
-        tempColor = '';
-      });
-    }
-    if (formkey.currentState.validate()) {
-      formkey.currentState.reset();
-    }
-  }
-
-  void listSizeValueChecker() {
-    if (tempSize == null || tempSize == '') {
-      setState(() {
-        sizeIsNull = true;
-      });
-    } else if (productSize.contains(tempSize)) {
-      setState(() {
-        sizeAllreadyAvilable = true;
-        sizeIsNull = false;
-      });
-    } else {
-      setState(() {
-        sizeAllreadyAvilable = false;
-        sizeIsNull = false;
-        productSize.add(tempSize);
-        tempSize = '';
-      });
-    }
-    if (sizeFormkey.currentState.validate()) {
-      sizeFormkey.currentState.reset();
-    }
   }
 
   Future _onAddImageClick(int index) async {
