@@ -5,6 +5,7 @@ import 'package:sazashopping/screens/additems/customWidget/displayingSelectedCat
 import 'package:sazashopping/screens/additems/funtions/addModelValue.dart';
 import 'package:sazashopping/services/categoryCollection.dart';
 import 'package:sazashopping/shared/colors.dart';
+import 'package:sazashopping/shared/loading.dart';
 import 'package:sazashopping/shared/widget/bottomRightAlignButton.dart';
 import 'package:sazashopping/shared/widget/centeredRaiseButton.dart';
 import 'package:sazashopping/shared/widget/displayText.dart';
@@ -64,6 +65,7 @@ class _ItemAddingState extends State<ItemAdding> {
   bool sizeAllreadyAvilable = false;
   bool sizeIsNull = false;
   bool offerVisibility = false;
+  bool loading = false;
 
   changeVisibility(bool visibility, String feild) {
     setState(() {
@@ -72,6 +74,12 @@ class _ItemAddingState extends State<ItemAdding> {
       } else if (feild == "offer") {
         offerVisibility = visibility;
       }
+    });
+  }
+
+  setLoaing(bool val) {
+    setState(() {
+      loading = val;
     });
   }
 
@@ -99,263 +107,243 @@ class _ItemAddingState extends State<ItemAdding> {
           backgroundColor: appBarColor,
           actions: [],
         ),
-        body: StreamBuilder(
-          stream: CategoryDataBaseService().catogories,
-          builder: (context, snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              for (var category in snapshot.data) {
-                for (var ct in category.category) {
-                  if (!productSubCategory.contains(ct)) {
-                    productCategories[ct] = category.name.toString();
-                    productSubCategory.add(ct.toString() ?? '');
+        body: loading
+            ? Loading()
+            : StreamBuilder(
+                stream: CategoryDataBaseService().catogories,
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    for (var category in snapshot.data) {
+                      for (var ct in category.category) {
+                        if (!productSubCategory.contains(ct)) {
+                          productCategories[ct] = category.name.toString();
+                          productSubCategory.add(ct.toString() ?? '');
+                        }
+                      }
+                    }
                   }
-                }
-              }
-            }
-            return SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.all(15.0),
-              child: Form(
-                key: _formKeyAddItem,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    displayText('Item name'),
-                    stringTextFormField(funtion: (val) => setProductName(val)),
-                    sizedBox,
-                    displayText('Category'),
-                    dropDownField(
-                      hint: 'Select item category',
-                      productSubCategory: productSubCategory,
-                      valueChangeFuntion: (value) =>
-                          dropDownFieldSelection(value),
-                    ),
-                    DisplaySelectedCategory(
-                        selectedCategory ?? '', productCategories),
-                    sizedBox,
-                    displayText('Price'),
-                    stringTextFormField(funtion: (val) => setPrice(val)),
-                    sizedBox,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        displayText("Offer"),
-                        liteRollingSwith(
-                            changeVisibility: changeVisibility, type: "offer"),
-                      ],
-                    ),
-                    sizedBox,
-                    offerVisibility
-                        ? swicthTextField(
-                            hint: 'add offer precentage \'%\'',
-                            funt: (val) => setOffer(val),
-                            state: offerVisibility,
-                          )
-                        : SizedBox(),
-                    sizedBox,
-                    displayText('Material'),
-                    stringTextFormField(funtion: (val) => setMaterial(val)),
-                    sizedBox,
-                    displayText('Brand'),
-                    stringTextFormField(funtion: (val) => setBrand(val)),
-                    sizedBox,
-                    displayText('Made in'),
-                    stringTextFormField(funtion: (val) => setCountry(val)),
-                    sizedBox,
-                    displayText('Quantity Avilable'),
-                    stringTextFormField(
-                        textInputType: TextInputType.number,
-                        funtion: (val) => setQuantity(val)),
-                    sizedBox,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        displayText('Gender'),
-                        liteRollingSwith(
-                            changeVisibility: changeVisibility, type: "gender"),
-                      ],
-                    ),
-                    sizedBox,
-                    genderVisibility
-                        ? selectGender(
-                            text: 'Select gender',
-                            maleOrFemale: maleOrFemale,
-                            funtion: gendetSelection)
-                        : SizedBox(),
-                    sizedBox,
-                    displayText('Add color'),
-                    listedTextFormField(
-                        formkey: formkey,
-                        hint: 'you can add list of colors',
-                        funtion: (val) => setColor(val),
-                        isValueNull: colorIsNull,
-                        valueIsreadyAvilable: colorAllreadyAvilable),
-                    bottomRightAlignButton(
-                      context: context,
-                      text: 'Add',
-                      buttonClickOperation: () => listColorValueChecker(),
-                    ),
-                    productColors.isNotEmpty
-                        ? dropDownSelectedItems(
-                            productColors: productColors,
-                            removeItem: (index) => removeColorListItem(index),
-                          )
-                        : SizedBox(),
-                    sizedBox,
-                    displayText('Size'),
-                    listedTextFormField(
-                        formkey: sizeFormkey,
-                        hint: 'you can add list of sizes',
-                        funtion: (val) => setSize(val),
-                        isValueNull: colorIsNull,
-                        valueIsreadyAvilable: colorAllreadyAvilable),
-                    bottomRightAlignButton(
-                      context: context,
-                      text: 'Add',
-                      buttonClickOperation: () => listSizeValueChecker(),
-                    ),
-                    productSize.isNotEmpty
-                        ? dropDownSelectedItems(
-                            productColors: productSize,
-                            removeItem: (index) => removeSizeListItem(index),
-                          )
-                        : SizedBox(),
-                    sizedBox,
-                    displayText('Images'),
-                    Container(
-                      height: 250,
+                  return SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    padding: EdgeInsets.all(15.0),
+                    child: Form(
+                      key: _formKeyAddItem,
                       child: Column(
-                        verticalDirection: VerticalDirection.up,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Expanded(
-                            child: GridView.count(
-                              shrinkWrap: true,
-                              crossAxisCount: 3,
-                              childAspectRatio: 1,
-                              children: List.generate(images.length, (index) {
-                                if (images[index] is ImageUploadModel) {
-                                  ImageUploadModel uploadModel = images[index];
-                                  return buildCardView(
-                                    uploadModel: uploadModel,
-                                    cardOnTapFuntion: () => removeImage(index),
-                                  );
-                                } else {
-                                  return defaultCardView(
-                                      onpressFuntion: () =>
-                                          _onAddImageClick(index));
-                                }
-                              }),
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          displayText('Item name'),
+                          stringTextFormField(
+                              funtion: (val) =>
+                                  setInputValue(val, productname)),
+                          sizedBox,
+                          displayText('Category'),
+                          dropDownField(
+                            hint: 'Select item category',
+                            productSubCategory: productSubCategory,
+                            valueChangeFuntion: (value) =>
+                                dropDownFieldSelection(value),
+                          ),
+                          DisplaySelectedCategory(
+                              selectedCategory ?? '', productCategories),
+                          sizedBox,
+                          displayText('Price'),
+                          stringTextFormField(
+                              textInputType: TextInputType.number,
+                              funtion: (val) => setInputDobleValue(val, price)),
+                          sizedBox,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              displayText("Offer"),
+                              liteRollingSwith(
+                                  changeVisibility: changeVisibility,
+                                  type: "offer"),
+                            ],
+                          ),
+                          sizedBox,
+                          offerVisibility
+                              ? swicthTextField(
+                                  hint: 'add offer precentage \'%\'',
+                                  funt: (val) => setInputDobleValue(val, offer),
+                                  state: offerVisibility,
+                                )
+                              : SizedBox(),
+                          sizedBox,
+                          displayText('Material'),
+                          stringTextFormField(
+                              funtion: (val) =>
+                                  setInputValue(val, productMaterial)),
+                          sizedBox,
+                          displayText('Brand'),
+                          stringTextFormField(
+                              funtion: (val) => setInputValue(val, brandName)),
+                          sizedBox,
+                          displayText('Made in'),
+                          stringTextFormField(
+                              funtion: (val) =>
+                                  setInputValue(val, madeCountry)),
+                          sizedBox,
+                          displayText('Quantity Avilable'),
+                          stringTextFormField(
+                              textInputType: TextInputType.number,
+                              funtion: (val) => setInputValue(val, quantity)),
+                          sizedBox,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              displayText('Gender'),
+                              liteRollingSwith(
+                                  changeVisibility: changeVisibility,
+                                  type: "gender"),
+                            ],
+                          ),
+                          sizedBox,
+                          genderVisibility
+                              ? selectGender(
+                                  text: 'Select gender',
+                                  maleOrFemale: maleOrFemale,
+                                  funtion: gendetSelection)
+                              : SizedBox(),
+                          sizedBox,
+                          displayText('Add color'),
+                          listedTextFormField(
+                              formkey: formkey,
+                              hint: 'you can add list of colors',
+                              funtion: (val) => setInputValue(val, tempColor),
+                              isValueNull: colorIsNull,
+                              valueIsreadyAvilable: colorAllreadyAvilable),
+                          bottomRightAlignButton(
+                            context: context,
+                            text: 'Add',
+                            buttonClickOperation: () => listColorValueChecker(),
+                          ),
+                          productColors.isNotEmpty
+                              ? dropDownSelectedItems(
+                                  productColors: productColors,
+                                  removeItem: (index) =>
+                                      removeColorListItem(index),
+                                )
+                              : SizedBox(),
+                          sizedBox,
+                          displayText('Size'),
+                          listedTextFormField(
+                              formkey: sizeFormkey,
+                              hint: 'you can add list of sizes',
+                              funtion: (val) => setInputValue(val, tempSize),
+                              isValueNull: colorIsNull,
+                              valueIsreadyAvilable: colorAllreadyAvilable),
+                          bottomRightAlignButton(
+                            context: context,
+                            text: 'Add',
+                            buttonClickOperation: () => listSizeValueChecker(),
+                          ),
+                          productSize.isNotEmpty
+                              ? dropDownSelectedItems(
+                                  productColors: productSize,
+                                  removeItem: (index) =>
+                                      removeSizeListItem(index),
+                                )
+                              : SizedBox(),
+                          sizedBox,
+                          displayText('Images'),
+                          Container(
+                            height: 230,
+                            child: Column(
+                              verticalDirection: VerticalDirection.up,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Expanded(
+                                  child: GridView.count(
+                                    shrinkWrap: true,
+                                    crossAxisCount: 3,
+                                    childAspectRatio: 1,
+                                    children:
+                                        List.generate(images.length, (index) {
+                                      if (images[index] is ImageUploadModel) {
+                                        ImageUploadModel uploadModel =
+                                            images[index];
+                                        return buildCardView(
+                                          uploadModel: uploadModel,
+                                          cardOnTapFuntion: () =>
+                                              removeImage(index),
+                                        );
+                                      } else {
+                                        return defaultCardView(
+                                            onpressFuntion: () =>
+                                                _onAddImageClick(index));
+                                      }
+                                    }),
+                                  ),
+                                ),
+                              ],
                             ),
+                          ),
+                          sizedBox,
+                          displayText('Description'),
+                          stringTextFormField(
+                            maxline: 8,
+                            funtion: (val) => setInputValue(val, description),
+                          ),
+                          sizedBox,
+                          sizedBox,
+                          raiseButtonCenter(
+                              lading: (val) => setLoaing(val),
+                              globalKey: _formKeyAddItem,
+                              buttonLable: 'ADD ITEM',
+                              pressBottonFuntion: () async {
+                                return await storeItemDataBase(
+                                  context,
+                                  productname,
+                                  _formKeyAddItem,
+                                  selectedCategory,
+                                  productCategories,
+                                  genderVisibility,
+                                  maleOrFemale,
+                                  productColors,
+                                  productSize,
+                                  images,
+                                  offerVisibility,
+                                  offer,
+                                  price,
+                                  description,
+                                  madeCountry,
+                                  brandName,
+                                  quantity,
+                                );
+                              },
+                              context: context),
+                          SizedBox(
+                            height: 60,
                           ),
                         ],
                       ),
                     ),
-                    sizedBox,
-                    displayText('Description'),
-                    stringTextFormField(
-                      maxline: 8,
-                      funtion: (val) => setDescription(val),
-                    ),
-                    sizedBox,
-                    sizedBox,
-                    RaiseButtonCenter(
-                      pressBottonFuntion: () => storeItemDataBase(
-                        context,
-                        productname,
-                        _formKeyAddItem,
-                        selectedCategory,
-                        productCategories,
-                        genderVisibility,
-                        maleOrFemale,
-                        productColors,
-                        productSize,
-                        images,
-                        offerVisibility,
-                        offer,
-                        price,
-                        description,
-                        madeCountry,
-                        brandName,
-                        quantity,
-                      ),
-                      buttonLable: 'ADD ITEM',
-                    ),
-                    SizedBox(
-                      height: 60,
-                    ),
-                  ],
-                ),
+                  );
+                },
               ),
-            );
-          },
-        ),
       ),
     );
   }
 
-  void setSize(String val) {
+  void setInputValue(val, variable) {
     setState(() {
-      tempSize = val.trim();
+      variable = val.trim();
     });
   }
 
-  void setDescription(String val) {
+  void setInputDobleValue(String val, variable) {
     setState(() {
-      description = val.trim();
+      variable = double.parse(val);
     });
   }
 
-  void setColor(String val) {
+  void setInputIntValue(String val, variable) {
     setState(() {
-      tempColor = val.trim();
-    });
-  }
-
-  void setMaterial(String val) {
-    setState(() {
-      productMaterial = val.trim();
-    });
-  }
-
-  void setOffer(String val) {
-    setState(() {
-      offer = double.parse(val.trim());
-    });
-  }
-
-  void setQuantity(String val) {
-    setState(() {
-      quantity = int.parse(val);
-    });
-  }
-
-  void setCountry(String val) {
-    setState(() {
-      madeCountry = val.trim();
-    });
-  }
-
-  void setBrand(String val) {
-    setState(() {
-      brandName = val.trim();
-    });
-  }
-
-  void setProductName(String val) {
-    setState(() {
-      productname = val.trim();
-    });
-  }
-
-  void setPrice(String val) {
-    setState(() {
-      price = double.parse(val.trim());
+      variable = int.parse(val);
     });
   }
 

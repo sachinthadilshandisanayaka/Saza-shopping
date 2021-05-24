@@ -19,6 +19,7 @@ Future uploadImage(
   await uploadTask.onComplete.whenComplete(() async {
     await reference.getDownloadURL().then((value) {
       file.imageUrl = value;
+      return (value);
     });
   });
 }

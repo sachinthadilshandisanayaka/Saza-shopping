@@ -21,6 +21,15 @@ class DataBaseService {
       'material': material
     });
   }
+
+  Future uploadItem(
+      MainItems mainItems, String subCategory, String mainCategory) async {
+    return await sazaCollection
+        .doc(mainCategory)
+        .collection(subCategory)
+        .doc()
+        .set({});
+  }
   // item list from database
 
   List<MainItems> _itemListFromSnapShot(QuerySnapshot snapshot) {
