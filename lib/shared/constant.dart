@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sazashopping/shared/colors.dart';
 
 const textinputDecoration = InputDecoration(
+  hintStyle: TextStyle(fontFamily: 'Baloo2'),
   border: OutlineInputBorder(),
   isDense: true,
   fillColor: Colors.white,

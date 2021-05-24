@@ -1,8 +1,8 @@
-String colorValidate(bool colorNull, bool colorAlreadyExist) {
+String swicthValidate(bool colorNull, bool colorAlreadyExist) {
   if (colorNull) {
     return "Can't be null";
   } else if (colorAlreadyExist) {
-    return "color is already avilabale";
+    return "value is already avilabale";
   } else {
     return null;
   }
