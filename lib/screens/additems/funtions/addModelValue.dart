@@ -6,7 +6,6 @@ import 'package:sazashopping/services/uploadImage.dart';
 import 'package:sazashopping/shared/string.dart';
 
 Future storeItemDataBase(
-  BuildContext context,
   String productname,
   GlobalKey<FormState> _formKeyAddItem,
   String selectedCategory,
@@ -31,13 +30,11 @@ Future storeItemDataBase(
     for (var image in images) {
       if (image is ImageUploadModel) {
         ImageUploadModel ium = image;
-        Future<dynamic> result = await uploadImage(
+        await uploadImage(
           category: selectedCategory,
           allCategories: productCategories,
           file: ium,
         );
-        print("======================");
-        print('product name' + productname.toString() + "---------------");
         imgURLS.add(ium.imageUrl.toString());
       }
     }
@@ -60,9 +57,7 @@ Future storeItemDataBase(
     print("--------" + mainItems.name.toString());
     dynamic result = await dataBaseService.uploadItem(mainItems,
         selectedCategory, productCategories[selectedCategory].toString());
-
+    print(result.toString());
     return true;
-  } else {
-    return false;
   }
 }
