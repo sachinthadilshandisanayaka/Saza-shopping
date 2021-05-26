@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sazashopping/models/mainItem.dart';
-import 'package:sazashopping/shared/string.dart';
 
 class DataBaseService {
   final String uid;
-  final String itemtype;
+
+  final String subCategeoryName;
+  final String mainCategoryName;
   int limit;
-  DataBaseService({this.uid, this.itemtype, this.limit = 0});
+  DataBaseService(
+      {this.uid, this.limit = 0, this.mainCategoryName, this.subCategeoryName});
 
   final CollectionReference sazaCollection =
       FirebaseFirestore.instance.collection('mainItems');
@@ -65,35 +67,54 @@ class DataBaseService {
     }).toList();
   }
 
-  List<MainItems> _itemListFromSnapShot(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      return MainItems(
-          itemId: doc.id ?? '',
-          name: doc.data()['name'] ?? '',
-          image: doc.data()['image'] ?? '',
-          price: doc.data()['price'] ?? '',
-          quantity: doc.data()['quantity'] ?? 0,
-          material: doc.data()['material'] ?? '');
-    }).toList();
-  }
+  // List<MainItems> _itemListFromSnapShot(QuerySnapshot snapshot) {
+  //   return snapshot.docs.map((doc) {
+  //     return MainItems(
+  //         itemId: doc.id ?? '',
+  //         name: doc.data()['name'] ?? '',
+  //         image: doc.data()['image'] ?? '',
+  //         price: doc.data()['price'] ?? '',
+  //         quantity: doc.data()['quantity'] ?? 0,
+  //         material: doc.data()['material'] ?? '');
+  //   }).toList();
+  // }
 
-  // get items stream
-  Stream<List<MainItems>> get dynamicItemlenght {
+  // // get items stream
+  // Stream<List<MainItems>> get dynamicItemlenght {
+  //   return sazaCollection
+  //       .doc(mainItemsDocumentID)
+  //       .collection(itemtype)
+  //       .snapshots()
+  //       .map((d) => _itemListFromSnapShot(d));
+  // }
+
+  // new
+  Stream<List<MainItems>> get databaseStoreAllItems {
     return sazaCollection
-        .doc(mainItemsDocumentID)
-        .collection(itemtype)
+        .doc(mainCategoryName)
+        .collection(subCategeoryName)
         .snapshots()
-        .map((d) => _itemListFromSnapShot(d));
+        .map((i) => itemListFromSnapShot(i));
   }
 
-  Stream<List<MainItems>> get dynamicItem {
+  // new
+  Stream<List<MainItems>> get databaseStoreItemsPagination {
     return sazaCollection
-        .doc(mainItemsDocumentID)
-        .collection(itemtype)
+        .doc(mainCategoryName)
+        .collection(subCategeoryName)
         .limit(limit == 0 ? 3 : limit)
         .snapshots()
-        .map((d) => _itemListFromSnapShot(d));
+        .map((i) => itemListFromSnapShot(i));
   }
+
+  // Stream<List<MainItems>> get dynamicItem {
+  //   return sazaCollection
+  //       .doc(mainItemsDocumentID)
+  //       .collection(itemtype)
+  //       .limit(limit == 0 ? 3 : limit)
+  //       .snapshots()
+  //       .map((d) => _itemListFromSnapShot(d));
+  // }
 
   Stream<QuerySnapshot> get shopItems {
     return sazaCollection.snapshots();

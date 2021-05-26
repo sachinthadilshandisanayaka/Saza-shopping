@@ -63,7 +63,7 @@ class ItemCardView extends StatelessWidget {
                 child: Hero(
                   tag: itemList,
                   child: Image.network(
-                    itemList.image,
+                    itemList.images[0],
                     fit: BoxFit.contain,
                     loadingBuilder: (context, child, progress) {
                       return progress == null

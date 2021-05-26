@@ -2,15 +2,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
-import 'package:sazashopping/screens/home/catogeries/catogery_tile.dart';
+import 'package:sazashopping/screens/home/catogeries/cuperationActivityIndicator.dart';
+import 'package:sazashopping/screens/home/catogeries/imageContainer.dart';
+import 'package:sazashopping/screens/home/catogeries/loading.dart';
+import 'package:sazashopping/screens/home/catogeries/noItemWidget.dart';
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/double.dart';
 
 class CatogeriesHorizontalTile extends StatefulWidget {
   final String type;
+  final String id;
   final bool connection;
-  CatogeriesHorizontalTile({@required this.type, @required this.connection});
+  CatogeriesHorizontalTile(
+      {@required this.type, @required this.connection, @required this.id});
   @override
   _CatogeriesHorizontalTileState createState() =>
       _CatogeriesHorizontalTileState();
@@ -57,71 +62,45 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
         ? allShopItems.length
         : itemMaxLength;
 
-    return StreamBuilder(
-      stream: DataBaseService(itemtype: widget.type, limit: loadedDataLenght)
-              .dynamicItem ??
-          [],
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          getListItems = snapshot.data;
-          return Container(
-            height: 280.0,
-            color: backgroudColor, // here
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: getListItems.length + 1,
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                if (index == itemDisplayMaxLenght) {
-                  moreDataAvalible = false;
-                  return SizedBox(
-                    width: 2,
-                  );
-                } else if (index == getListItems.length) {
-                  moreDataAvalible = true;
-                  return SizedBox(
-                    width: 40,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Colors.teal[200]),
-                      ),
-                    ),
-                  );
-                }
+    return allShopItems.length == 0
+        ? noItemWidget(context: context)
+        : StreamBuilder(
+            stream: DataBaseService(
+                        mainCategoryName: widget.id,
+                        subCategeoryName: widget.type,
+                        limit: loadedDataLenght)
+                    .databaseStoreItemsPagination ??
+                [],
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                getListItems = snapshot.data;
                 return Container(
-                  width: 180,
-                  height: 270,
-                  padding: EdgeInsets.only(bottom: 4),
-                  margin: EdgeInsets.only(left: 6, right: 10, bottom: 12),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: itemShadowColor,
-                        blurRadius: 6,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: ImageAdnDataDislpay(
-                    shopItem: getListItems[index],
-                    connetion: widget.connection,
+                  height: 280.0,
+                  color: backgroudColor, // here
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    itemCount: getListItems.length + 1,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      if (index == itemDisplayMaxLenght) {
+                        moreDataAvalible = false;
+                        return SizedBox(
+                          width: 2,
+                        );
+                      } else if (index == getListItems.length) {
+                        moreDataAvalible = true;
+                        return horisantalLoading();
+                      }
+                      return imageContainer(
+                          connection: true, mainItems: getListItems[index]);
+                    },
                   ),
                 );
-              },
-            ),
+              }
+              return cuperationActivityIndicator(context: context);
+            },
           );
-        }
-        return Container(
-          height: 250,
-          width: MediaQuery.of(context).size.width,
-          child: CupertinoActivityIndicator(),
-        );
-      },
-    );
   }
 }

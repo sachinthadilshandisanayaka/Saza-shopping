@@ -9,14 +9,18 @@ import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
 
 class ItemTile extends StatelessWidget {
+  final String id;
   final String itemname;
   final bool connection;
 
-  ItemTile({@required this.itemname, @required this.connection});
+  ItemTile(
+      {@required this.itemname, @required this.connection, @required this.id});
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<MainItems>>.value(
-      value: DataBaseService(itemtype: itemname).dynamicItemlenght,
+      value: DataBaseService(
+              mainCategoryName: this.id, subCategeoryName: this.itemname)
+          .databaseStoreAllItems,
       child: Material(
         color: backgroudColor, // here
         elevation: 0,
@@ -47,6 +51,7 @@ class ItemTile extends StatelessWidget {
                               pageBuilder:
                                   (context, animation, secondaryAnimation) =>
                                       SelectedMoreItems(
+                                        id: this.id,
                                         itemname: itemname,
                                       ),
                               transitionsBuilder: (context, animation,
@@ -81,6 +86,7 @@ class ItemTile extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(5),
               child: CatogeriesHorizontalTile(
+                id: this.id,
                 type: itemname,
                 connection: this.connection,
               ),

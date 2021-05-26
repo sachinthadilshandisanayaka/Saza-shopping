@@ -354,6 +354,7 @@ class _ItemAddingState extends State<ItemAdding> {
                         try {
                           dynamic result = await storeItemDataBase(
                             productname,
+                            productMaterial,
                             _formKeyAddItem,
                             selectedCategory,
                             widget.mainCategories,

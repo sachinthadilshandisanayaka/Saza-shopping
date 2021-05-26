@@ -7,7 +7,8 @@ import 'package:sazashopping/shared/colors.dart';
 
 class SelectedMoreItems extends StatefulWidget {
   final String itemname;
-  SelectedMoreItems({@required this.itemname});
+  final String id;
+  SelectedMoreItems({@required this.itemname, @required this.id});
 
   @override
   _SelectedMoreItemsState createState() => _SelectedMoreItemsState();
@@ -17,7 +18,9 @@ class _SelectedMoreItemsState extends State<SelectedMoreItems> {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<MainItems>>.value(
-      value: DataBaseService(itemtype: widget.itemname).dynamicItemlenght,
+      value: DataBaseService(
+              mainCategoryName: widget.id, subCategeoryName: widget.itemname)
+          .databaseStoreItemsPagination,
       child: SafeArea(
         top: false,
         child: Scaffold(
@@ -26,6 +29,7 @@ class _SelectedMoreItemsState extends State<SelectedMoreItems> {
             actions: [],
           ),
           body: ItemsListView(
+            id: widget.id,
             itemname: widget.itemname,
           ),
         ),

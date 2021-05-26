@@ -54,7 +54,7 @@ class ImageAdnDataDislpay extends StatelessWidget {
               child: Hero(
                 tag: shopItem,
                 child: Image.network(
-                  this.shopItem.image,
+                  this.shopItem.images[0],
                   fit: BoxFit.fitWidth,
                   loadingBuilder: (context, child, progress) {
                     return progress == null ? child : LinearProgressIndicator();

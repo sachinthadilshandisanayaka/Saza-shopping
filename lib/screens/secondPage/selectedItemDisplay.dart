@@ -51,7 +51,7 @@ class SelectedItemDisplay extends StatelessWidget {
                           child: Hero(
                             tag: mainItems,
                             child: Image.network(
-                              this.mainItems.image,
+                              this.mainItems.images[0],
                               fit: BoxFit.contain,
                               loadingBuilder: (context, child, progress) {
                                 return progress == null

@@ -3,10 +3,10 @@ import 'package:sazashopping/models/imageUploadImage.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/services/uploadImage.dart';
-import 'package:sazashopping/shared/string.dart';
 
 Future storeItemDataBase(
   String productname,
+  String material,
   GlobalKey<FormState> _formKeyAddItem,
   String selectedCategory,
   Map<String, String> productCategories,

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/screens/third_page/showItems.dart';
 
-Route createThirdPageRoute(String uid, String itemname) {
+Route createThirdPageRoute(String uid, String itemname, String id) {
   return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) =>
           SelectedMoreItems(
+            id: id,
             itemname: itemname,
           ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
