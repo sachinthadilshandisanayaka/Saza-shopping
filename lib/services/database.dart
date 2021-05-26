@@ -43,7 +43,27 @@ class DataBaseService {
       'color': FieldValue.arrayUnion(mainItems.color),
     });
   }
+
   // item list from database
+  List<MainItems> itemListFromSnapShot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return MainItems(
+        itemId: doc.id ?? '',
+        name: doc.data()['name'] ?? '',
+        material: doc.data()['material'] ?? '',
+        gender: doc.data()['gender'] ?? '',
+        description: doc.data()['description'] ?? '',
+        country: doc.data()['country'] ?? '',
+        brand: doc.data()['brand'] ?? '',
+        size: List.from(doc.data()['size']) ?? [],
+        color: List.from(doc.data()['color']) ?? [],
+        images: List.from(doc.data()['images']) ?? [],
+        quantity: doc.data()['quantity'] ?? 0,
+        offer: doc.data()['offer'] ?? 0.0,
+        price: doc.data()['price'] ?? '',
+      );
+    }).toList();
+  }
 
   List<MainItems> _itemListFromSnapShot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {

@@ -1,6 +1,6 @@
 class CatogeryItems {
-  final String name;
-  final List<String> category;
+  String name;
+  List<String> category;
 
   CatogeryItems({
     this.name,

@@ -9,7 +9,7 @@ class CategoryDataBaseService {
     return snapshot.docs.map((doc) {
       return CatogeryItems(
         name: doc.id ?? '',
-        category: List.from(doc.data()['name']),
+        category: List.from(doc.data()['name']) ?? [],
       );
     }).toList();
   }
