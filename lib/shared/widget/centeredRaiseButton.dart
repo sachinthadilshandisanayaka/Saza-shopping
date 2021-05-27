@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
 
-Widget raiseButtonCenter(
-    {@required Function lading,
-    @required Function pressBottonFuntion,
-    @required String buttonLable,
-    @required BuildContext context,
-    @required GlobalKey<FormState> globalKey}) {
+Widget raiseButtonCenter({
+  @required Function pressBottonFuntion,
+  @required String buttonLable,
+  @required BuildContext context,
+}) {
   return Center(
     child: Container(
       width: MediaQuery.of(context).size.width * 0.95,

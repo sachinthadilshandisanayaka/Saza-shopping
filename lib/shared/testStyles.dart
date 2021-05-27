@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:sazashopping/shared/colors.dart';
 
@@ -24,4 +26,10 @@ var nameStyle = TextStyle(
   fontSize: 20,
   fontFamily: 'Montserrat',
   fontWeight: FontWeight.bold,
+);
+var offerTestStyle = TextStyle(
+  fontSize: 14,
+  fontFamily: 'Montserrat',
+  fontWeight: FontWeight.bold,
+  color: Colors.redAccent,
 );

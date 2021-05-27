@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sazashopping/screens/home/item_collection.dart';
+import 'package:sazashopping/screens/home/database_stream_to_get_item_collection.dart';
 import 'package:sazashopping/screens/home/share/paginationLoading.dart';
 import 'package:sazashopping/shared/colors.dart';
 

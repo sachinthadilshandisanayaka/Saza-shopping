@@ -85,7 +85,7 @@ var itemTilePriceShowDecoration = TextStyle(
   color: appBarColor,
   fontFamily: 'Montserrat',
   fontWeight: FontWeight.w600,
-  fontSize: 13,
+  fontSize: 14,
 );
 
 const itemTileNameDecoration = TextStyle(

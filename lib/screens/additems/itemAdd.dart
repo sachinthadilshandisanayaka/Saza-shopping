@@ -346,8 +346,6 @@ class _ItemAddingState extends State<ItemAdding> {
                   sizedBox,
                   sizedBox,
                   raiseButtonCenter(
-                      lading: (val) => setLoaing(val),
-                      globalKey: _formKeyAddItem,
                       buttonLable: 'ADD ITEM',
                       pressBottonFuntion: () async {
                         setLoaing(true);

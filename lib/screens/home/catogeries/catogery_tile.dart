@@ -4,6 +4,8 @@ import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/secondPage/selectedItemDisplay.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/string.dart';
+import 'package:sazashopping/shared/testStyles.dart';
+import 'package:sazashopping/shared/widget/ellipsisTextBar.dart';
 
 class ImageAdnDataDislpay extends StatelessWidget {
   final MainItems shopItem;
@@ -65,20 +67,29 @@ class ImageAdnDataDislpay extends StatelessWidget {
             Container(
               height: 70,
               width: 180,
-              padding: const EdgeInsets.only(left: 10.0, top: 25.0),
+              padding:
+                  const EdgeInsets.only(left: 10.0, top: 25.0, right: 10.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    shopItem.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: itemTileNameDecoration,
-                    softWrap: false,
-                  ),
-                  Text(
-                    srilankaRuppes + ' ' + shopItem.price,
-                    style: itemTilePriceShowDecoration,
+                  ellipsisText(text: shopItem.name),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        srilankaRuppes + ' ' + shopItem.price,
+                        style: itemTilePriceShowDecoration,
+                      ),
+                      shopItem.offer == 0
+                          ? SizedBox()
+                          : Container(
+                              child: Text(
+                                '-' + shopItem.offer.toString() + '%',
+                                style: offerTestStyle,
+                              ),
+                            )
+                    ],
                   ),
                 ],
               ),
