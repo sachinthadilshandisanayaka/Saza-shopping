@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/category.dart';
-import 'package:sazashopping/screens/home/loadingWidget.dart';
-import 'package:sazashopping/screens/home/tabBarController.dart';
+import 'package:sazashopping/screens/home/activeConnection.dart';
+import 'package:sazashopping/screens/home/share/loadingWidget.dart';
+import 'package:sazashopping/screens/home/share/noneConnection.dart';
 import 'package:sazashopping/services/categoryCollection.dart';
 
 class TabBarWidget extends StatefulWidget {
@@ -17,23 +18,33 @@ class _TabBarWidgetState extends State<TabBarWidget> {
     return StreamBuilder<List<CatogeryItems>>(
         stream: CategoryDataBaseService().catogories,
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return LoadingBegin();
-          } else {
-            for (var category in snapshot.data) {
-              if (!productMainCategories.contains(category.name)) {
-                productMainCategories.add(category.name);
-                productSubCategory[category.name] = category.category.toList();
-                for (var i in category.category) {
-                  print(i.toString());
-                }
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+              {
+                print('none connection');
+                return ConnectionNone();
               }
-            }
+              break;
+            case ConnectionState.waiting:
+              {
+                print('waiting connection');
+                return LoadingBegin();
+              }
+              break;
+            case ConnectionState.active:
+              {
+                print('active');
+                return navigateToHome(context: context, snapshot: snapshot);
+              }
+              break;
+            case ConnectionState.done:
+              {
+                print('done connection');
+                return navigateToHome(context: context, snapshot: snapshot);
+              }
+              break;
           }
-          return tabBarController(
-              productMainCategories: productMainCategories,
-              productSubCategory: productSubCategory,
-              context: context);
+          return LoadingBegin();
         });
   }
 }

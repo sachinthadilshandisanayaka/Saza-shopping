@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/screens/home/item_collection.dart';
+import 'package:sazashopping/screens/home/share/paginationLoading.dart';
 import 'package:sazashopping/shared/colors.dart';
 
 class MainItemList extends StatefulWidget {
@@ -15,7 +16,7 @@ class MainItemList extends StatefulWidget {
 
 class _MainItemListState extends State<MainItemList> {
   List<String> subItemList;
-  int _length = 2;
+  int _length = 10;
   int maxLength;
   ScrollController _scrollController = ScrollController();
 
@@ -23,7 +24,9 @@ class _MainItemListState extends State<MainItemList> {
   void initState() {
     super.initState();
     maxLength = widget.subItems.length;
-    subItemList = widget.subItems.sublist(0, 2);
+    subItemList = widget.subItems.length > 10
+        ? widget.subItems.sublist(0, 10)
+        : widget.subItems;
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -88,7 +91,7 @@ class _MainItemListState extends State<MainItemList> {
                       ),
                     );
                   } else if (index == subItemList.length) {
-                    return CupertinoActivityIndicator();
+                    return PaginationLoading();
                   }
                   return Container(
                       child: ItemTile(

@@ -1,8 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/screens/home/main_item_list.dart';
-import 'package:provider/provider.dart';
-import 'package:sazashopping/services/database.dart';
 
 class Home extends StatefulWidget {
   final bool connected;
@@ -15,17 +12,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  TabController tabController;
-
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<QuerySnapshot>.value(
-      value: DataBaseService().shopItems,
-      child: MainItemList(
-        connetion: widget.connected,
-        id: widget.id,
-        subItems: widget.subItems,
-      ),
+    return MainItemList(
+      connetion: widget.connected,
+      id: widget.id,
+      subItems: widget.subItems,
     );
   }
 }

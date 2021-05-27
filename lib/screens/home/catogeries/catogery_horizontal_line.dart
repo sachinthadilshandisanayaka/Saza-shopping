@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/home/catogeries/cuperationActivityIndicator.dart';
 import 'package:sazashopping/screens/home/catogeries/imageContainer.dart';
-import 'package:sazashopping/screens/home/catogeries/loading.dart';
+import 'package:sazashopping/screens/home/share/loading.dart';
 import 'package:sazashopping/screens/home/catogeries/noItemWidget.dart';
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
