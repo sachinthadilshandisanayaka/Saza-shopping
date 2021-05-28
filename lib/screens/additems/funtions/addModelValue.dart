@@ -48,7 +48,7 @@ Future storeItemDataBase(
       country: madeCountry ?? '',
       quantity: quentity ?? 0,
       offer: offerAvilable ? offer : 0.0,
-      price: '34' ?? '',
+      price: price.toString() ?? '',
       size: productSize.length != 0 ? productSize : [],
       images: imgURLS ?? [],
       color: productColors.length != 0 ? productColors : [],
@@ -57,7 +57,7 @@ Future storeItemDataBase(
     print("--------" + mainItems.name.toString());
     dynamic result = await dataBaseService.uploadItem(mainItems,
         selectedCategory, productCategories[selectedCategory].toString());
-    print(result.toString());
+    print("result :" + result.toString());
     return true;
   }
 }

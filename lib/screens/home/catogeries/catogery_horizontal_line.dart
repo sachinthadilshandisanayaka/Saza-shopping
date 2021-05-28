@@ -5,7 +5,6 @@ import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/home/catogeries/cuperationActivityIndicator.dart';
 import 'package:sazashopping/screens/home/catogeries/imageContainer.dart';
 import 'package:sazashopping/screens/home/share/loading.dart';
-import 'package:sazashopping/screens/home/catogeries/noItemWidget.dart';
 import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/double.dart';
@@ -62,45 +61,43 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
         ? allShopItems.length
         : itemMaxLength;
 
-    return allShopItems.length == 0
-        ? noItemWidget(context: context)
-        : StreamBuilder(
-            stream: DataBaseService(
-                        mainCategoryName: widget.id,
-                        subCategeoryName: widget.type,
-                        limit: loadedDataLenght)
-                    .databaseStoreItemsPagination ??
-                [],
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                getListItems = snapshot.data;
-                return Container(
-                  height: 280.0,
-                  color: backgroudColor, // here
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    itemCount: getListItems.length + 1,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      if (index == itemDisplayMaxLenght) {
-                        moreDataAvalible = false;
-                        return SizedBox(
-                          width: 2,
-                        );
-                      } else if (index == getListItems.length) {
-                        moreDataAvalible = true;
-                        return horisantalLoading();
-                      }
-                      return imageContainer(
-                          connection: true, mainItems: getListItems[index]);
-                    },
-                  ),
-                );
-              }
-              return cuperationActivityIndicator(context: context);
-            },
+    return StreamBuilder(
+      stream: DataBaseService(
+                  mainCategoryName: widget.id,
+                  subCategeoryName: widget.type,
+                  limit: loadedDataLenght)
+              .databaseStoreItemsPagination ??
+          [],
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          getListItems = snapshot.data;
+          return Container(
+            height: 280.0,
+            color: backgroudColor, // here
+            child: ListView.builder(
+              controller: _scrollController,
+              itemCount: getListItems.length + 1,
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (context, index) {
+                if (index == itemDisplayMaxLenght) {
+                  moreDataAvalible = false;
+                  return SizedBox(
+                    width: 2,
+                  );
+                } else if (index == getListItems.length) {
+                  moreDataAvalible = true;
+                  return horisantalLoading();
+                }
+                return imageContainer(
+                    connection: true, mainItems: getListItems[index]);
+              },
+            ),
           );
+        }
+        return cuperationActivityIndicator(context: context);
+      },
+    );
   }
 }

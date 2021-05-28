@@ -11,8 +11,6 @@ class TabBarWidget extends StatefulWidget {
 }
 
 class _TabBarWidgetState extends State<TabBarWidget> {
-  Map<String, List<String>> productSubCategory = new Map();
-  List<String> productMainCategories = new List();
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<List<CatogeryItems>>(

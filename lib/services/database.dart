@@ -3,7 +3,6 @@ import 'package:sazashopping/models/mainItem.dart';
 
 class DataBaseService {
   final String uid;
-
   final String subCategeoryName;
   final String mainCategoryName;
   int limit;
@@ -26,21 +25,25 @@ class DataBaseService {
 
   Future uploadItem(
       MainItems mainItems, String subCategory, String mainCategory) async {
-    return sazaCollection.doc(mainCategory).collection(subCategory).doc();
-    //     .set({
-    //   'name': mainItems.name,
-    //   'material': mainItems.material,
-    //   'gender': mainItems.gender,
-    //   'description': mainItems.description,
-    //   'country': mainItems.country,
-    //   'brand': mainItems.brand,
-    //   'price': mainItems.price,
-    //   'offer': mainItems.offer,
-    //   'quantity': mainItems.quantity,
-    //   'size': FieldValue.arrayUnion(mainItems.size),
-    //   'images': FieldValue.arrayUnion(mainItems.images),
-    //   'color': FieldValue.arrayUnion(mainItems.color),
-    // });
+    await sazaCollection.doc(mainCategory).set({});
+    return await sazaCollection
+        .doc(mainCategory)
+        .collection(subCategory)
+        .doc()
+        .set({
+      'name': mainItems.name,
+      'material': mainItems.material,
+      'gender': mainItems.gender,
+      'description': mainItems.description,
+      'country': mainItems.country,
+      'brand': mainItems.brand,
+      'price': mainItems.price,
+      'offer': mainItems.offer,
+      'quantity': mainItems.quantity,
+      'size': FieldValue.arrayUnion(mainItems.size),
+      'images': FieldValue.arrayUnion(mainItems.images),
+      'color': FieldValue.arrayUnion(mainItems.color),
+    });
   }
 
   // item list from database
@@ -64,27 +67,6 @@ class DataBaseService {
     }).toList();
   }
 
-  // List<MainItems> _itemListFromSnapShot(QuerySnapshot snapshot) {
-  //   return snapshot.docs.map((doc) {
-  //     return MainItems(
-  //         itemId: doc.id ?? '',
-  //         name: doc.data()['name'] ?? '',
-  //         image: doc.data()['image'] ?? '',
-  //         price: doc.data()['price'] ?? '',
-  //         quantity: doc.data()['quantity'] ?? 0,
-  //         material: doc.data()['material'] ?? '');
-  //   }).toList();
-  // }
-
-  // // get items stream
-  // Stream<List<MainItems>> get dynamicItemlenght {
-  //   return sazaCollection
-  //       .doc(mainItemsDocumentID)
-  //       .collection(itemtype)
-  //       .snapshots()
-  //       .map((d) => _itemListFromSnapShot(d));
-  // }
-
   // new
   Stream<List<MainItems>> get databaseStoreAllItems {
     return sazaCollection
@@ -104,23 +86,13 @@ class DataBaseService {
         .map((i) => itemListFromSnapShot(i));
   }
 
-  // Stream<List<MainItems>> get dynamicItem {
-  //   return sazaCollection
-  //       .doc(mainItemsDocumentID)
-  //       .collection(itemtype)
-  //       .limit(limit == 0 ? 3 : limit)
-  //       .snapshots()
-  //       .map((d) => _itemListFromSnapShot(d));
-  // }
-
-  List<MainItems> _category(QuerySnapshot snapshot) {
+  List<String> _category(QuerySnapshot snapshot) {
     return snapshot.docs.map((val) {
-      print(val.reference.id.toString());
-      return MainItems(itemId: val.id.toString() ?? '');
+      return val.id.toString();
     }).toList();
   }
 
-  Stream<List<MainItems>> get shopItems {
+  Stream<List<String>> get shopItems {
     return sazaCollection.snapshots().map((i) => _category(i));
   }
 }

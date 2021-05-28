@@ -8,8 +8,11 @@ class UploadLoading extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
+      alignment: Alignment.center,
       child: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'uploading...',
@@ -17,6 +20,9 @@ class UploadLoading extends StatelessWidget {
                 fontFamily: 'Montserrat',
                 fontWeight: FontWeight.bold,
               ),
+            ),
+            SizedBox(
+              height: 5,
             ),
             SpinKitRing(
               size: 60.0,
