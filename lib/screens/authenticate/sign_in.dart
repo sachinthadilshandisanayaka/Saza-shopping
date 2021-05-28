@@ -1,10 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:sazashopping/screens/authenticate/shared/clipPath.dart';
 import 'package:sazashopping/services/auth.dart';
-import 'package:sazashopping/shared/clipPath.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/errorMessageShow.dart';
 import 'package:sazashopping/shared/loading.dart';
+import 'package:sazashopping/shared/widget/formHeaderText.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -34,25 +35,7 @@ class _SignInState extends State<SignIn> {
                 physics: BouncingScrollPhysics(),
                 child: Column(
                   children: <Widget>[
-                    Stack(children: <Widget>[
-                      ClipPath(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 200,
-                          color: Colors.teal[400],
-                        ),
-                        clipper: CustomClipPath(),
-                      ),
-                      Positioned(
-                        bottom: 8,
-                        left: MediaQuery.of(context).size.width * 0.35,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          backgroundImage: AssetImage('assets/splash.png'),
-                          radius: 50,
-                        ),
-                      ),
-                    ]),
+                    cliPath(context: context),
                     ErrorMessages(
                       message: _error,
                     ),
@@ -65,24 +48,11 @@ class _SignInState extends State<SignIn> {
                       child: Container(
                         padding: EdgeInsets.only(
                             left: 20, right: 20, top: 20, bottom: 5),
-                        decoration: BoxDecoration(
-                            color: Colors.teal[50],
-                            borderRadius: BorderRadius.circular(
-                              20,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 1,
-                                offset: Offset(1, 1),
-                              )
-                            ]),
+                        decoration: formBoxDecoration,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text(
-                              'Sign In',
-                              style: signPageMainTagDecoration,
-                            ),
+                            headerText(name: 'Sign In'),
                             SizedBox(
                               height: 20.0,
                             ),

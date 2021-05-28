@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/authenticate/authenticate.dart';
-import 'package:sazashopping/screens/home/connectionChecker_repository.dart';
+import 'package:sazashopping/screens/home/homeConnectionChecker_repository.dart';
 
 class Wrapper extends StatelessWidget {
   @override

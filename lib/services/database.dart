@@ -26,24 +26,21 @@ class DataBaseService {
 
   Future uploadItem(
       MainItems mainItems, String subCategory, String mainCategory) async {
-    return await sazaCollection
-        .doc(mainCategory)
-        .collection(subCategory)
-        .doc()
-        .set({
-      'name': mainItems.name,
-      'material': mainItems.material,
-      'gender': mainItems.gender,
-      'description': mainItems.description,
-      'country': mainItems.country,
-      'brand': mainItems.brand,
-      'price': mainItems.price,
-      'offer': mainItems.offer,
-      'quantity': mainItems.quantity,
-      'size': FieldValue.arrayUnion(mainItems.size),
-      'images': FieldValue.arrayUnion(mainItems.images),
-      'color': FieldValue.arrayUnion(mainItems.color),
-    });
+    return sazaCollection.doc(mainCategory).collection(subCategory).doc();
+    //     .set({
+    //   'name': mainItems.name,
+    //   'material': mainItems.material,
+    //   'gender': mainItems.gender,
+    //   'description': mainItems.description,
+    //   'country': mainItems.country,
+    //   'brand': mainItems.brand,
+    //   'price': mainItems.price,
+    //   'offer': mainItems.offer,
+    //   'quantity': mainItems.quantity,
+    //   'size': FieldValue.arrayUnion(mainItems.size),
+    //   'images': FieldValue.arrayUnion(mainItems.images),
+    //   'color': FieldValue.arrayUnion(mainItems.color),
+    // });
   }
 
   // item list from database
@@ -116,7 +113,14 @@ class DataBaseService {
   //       .map((d) => _itemListFromSnapShot(d));
   // }
 
-  Stream<QuerySnapshot> get shopItems {
-    return sazaCollection.snapshots();
+  List<MainItems> _category(QuerySnapshot snapshot) {
+    return snapshot.docs.map((val) {
+      print(val.reference.id.toString());
+      return MainItems(itemId: val.id.toString() ?? '');
+    }).toList();
+  }
+
+  Stream<List<MainItems>> get shopItems {
+    return sazaCollection.snapshots().map((i) => _category(i));
   }
 }

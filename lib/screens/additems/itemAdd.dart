@@ -4,7 +4,7 @@ import 'package:sazashopping/models/imageUploadImage.dart';
 import 'package:sazashopping/screens/additems/customWidget/displayingSelectedCategory.dart';
 import 'package:sazashopping/screens/additems/formValidator/multiValueValidator.dart';
 import 'package:sazashopping/screens/additems/funtions/addModelValue.dart';
-import 'package:sazashopping/shared/loading.dart';
+import 'package:sazashopping/shared/uploadLoading.dart';
 import 'package:sazashopping/shared/widget/bottomRightAlignButton.dart';
 import 'package:sazashopping/shared/widget/centeredRaiseButton.dart';
 import 'package:sazashopping/shared/widget/displayText.dart';
@@ -102,7 +102,7 @@ class _ItemAddingState extends State<ItemAdding> {
   @override
   Widget build(BuildContext context) {
     return loading
-        ? Loading()
+        ? UploadLoading()
         : SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             padding: EdgeInsets.all(15.0),

@@ -16,6 +16,19 @@ const textinputDecoration = InputDecoration(
   ),
 );
 
+var formBoxDecoration = BoxDecoration(
+  color: Colors.teal[50],
+  borderRadius: BorderRadius.circular(
+    20,
+  ),
+  boxShadow: [
+    BoxShadow(
+      blurRadius: 1,
+      offset: Offset(1, 1),
+    )
+  ],
+);
+
 const signPageMainTagDecoration = TextStyle(
   color: Colors.black,
   letterSpacing: 2.0,
@@ -108,13 +121,16 @@ var itemsTypeNameDecoration = TextStyle(
   letterSpacing: 1,
 );
 
-var defaultBoxDecoration = BoxDecoration(color: Colors.white, boxShadow: [
-  BoxShadow(
-    color: itemShadowColor,
-    blurRadius: 3,
-    offset: Offset(0, 0.1),
-  )
-]);
+var defaultBoxDecoration = BoxDecoration(
+  color: Colors.white,
+  boxShadow: [
+    BoxShadow(
+      color: itemShadowColor,
+      blurRadius: 3,
+      offset: Offset(0, 0.1),
+    ),
+  ],
+);
 
 var inputFormTextStyle = TextStyle(
   fontFamily: 'Baloo2',
