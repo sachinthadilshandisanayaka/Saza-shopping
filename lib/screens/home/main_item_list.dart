@@ -16,7 +16,8 @@ class MainItemList extends StatefulWidget {
 
 class _MainItemListState extends State<MainItemList> {
   List<String> subItemList;
-  int _length = 10;
+  int _length = 1;
+  int incrementValue = 2;
   int maxLength;
   ScrollController _scrollController = ScrollController();
 
@@ -24,9 +25,11 @@ class _MainItemListState extends State<MainItemList> {
   void initState() {
     super.initState();
     maxLength = widget.subItems.length;
-    subItemList = widget.subItems.length > 10
-        ? widget.subItems.sublist(0, 10)
-        : widget.subItems;
+    subItemList = widget.subItems.sublist(0, 1);
+
+    // widget.subItems.length > 10
+    //     ? widget.subItems.sublist(0, 10)
+    //     : widget.subItems;
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -43,14 +46,15 @@ class _MainItemListState extends State<MainItemList> {
   }
 
   _getMoreData() {
-    if (_length <= maxLength) {
-      for (int i = _length; i < _length + 1; i++) {
+    if (!((_length > maxLength) && (_length - maxLength >= 2))) {
+      for (int i = _length; i <= _length + 1; i++) {
         setState(() {
           subItemList.add(widget.subItems[i]);
         });
       }
       setState(() {
-        _length = _length + 1;
+        _length = _length + incrementValue;
+        print('--------------------' + _length.toString());
       });
     }
   }
@@ -78,6 +82,12 @@ class _MainItemListState extends State<MainItemList> {
                 shrinkWrap: true,
                 physics: BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
+                  print('-------' +
+                      index.toString() +
+                      '--------' +
+                      maxLength.toString() +
+                      '-------' +
+                      subItemList.toString());
                   if (index == maxLength) {
                     return Container(
                       child: Center(

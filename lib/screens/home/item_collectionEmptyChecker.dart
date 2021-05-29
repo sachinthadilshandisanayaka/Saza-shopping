@@ -4,7 +4,7 @@ import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/third_page/showItems.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
-import 'catogeries/catogery_horizontal_line.dart';
+import 'catogeries_row/catogery_horizontal_line.dart';
 
 class ItemCollectionEmptyCheck extends StatefulWidget {
   final String id;

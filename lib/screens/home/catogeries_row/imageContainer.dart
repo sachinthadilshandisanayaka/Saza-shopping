@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
-import 'package:sazashopping/screens/home/catogeries/catogery_tile.dart';
+import 'package:sazashopping/screens/home/catogeries_row/catogery_tile.dart';
 import 'package:sazashopping/shared/colors.dart';
 
 Widget imageContainer(
