@@ -5,9 +5,10 @@ class PaginationLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(left: 10, right: 10),
       width: MediaQuery.of(context).size.width * 0.7,
-      height: MediaQuery.of(context).size.height * 0.7,
-      color: Colors.grey,
+      height: MediaQuery.of(context).size.height * 0.6,
+      color: Colors.grey[100],
       child: Column(
         children: [
           Padding(
@@ -39,7 +40,7 @@ class PaginationLoading extends StatelessWidget {
             margin: EdgeInsets.only(top: 10),
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width * 0.5,
-            height: MediaQuery.of(context).size.height * 0.5,
+            height: MediaQuery.of(context).size.height * 0.4,
           ),
           // CupertinoActivityIndicator(),
         ],

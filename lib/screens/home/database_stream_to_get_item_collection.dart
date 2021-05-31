@@ -28,7 +28,7 @@ class ItemTile extends StatelessWidget {
             );
           }
         }
-        return Container();
+        return SizedBox();
       },
     );
     // return StreamProvider<List<MainItems>>.value(

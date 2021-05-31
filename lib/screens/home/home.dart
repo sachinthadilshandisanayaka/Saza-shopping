@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/home/main_item_list.dart';
 import 'package:sazashopping/services/database.dart';
-import 'package:sazashopping/shared/loading.dart';
 
 class Home extends StatefulWidget {
   final bool connected;
@@ -33,11 +32,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // this.newSubItems.length == 0
-        //     ? Loading()
-        //     :
-        MainItemList(
+    return MainItemList(
       connetion: widget.connected,
       id: widget.id,
       subItems: widget.subItems,

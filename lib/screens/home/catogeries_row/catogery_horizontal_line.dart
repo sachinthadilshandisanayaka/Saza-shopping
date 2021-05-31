@@ -63,7 +63,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
         ? widget.allShopItems
         : itemMaxLength;
 
-    return StreamBuilder(
+    return StreamBuilder<List<MainItems>>(
       stream: DataBaseService(
                   mainCategoryName: widget.id,
                   subCategeoryName: widget.type,
@@ -72,7 +72,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
           [],
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          getListItems = snapshot.data;
+          getListItems = snapshot.data.reversed.toList();
           return Container(
             height: 280.0,
             color: backgroudColor, // here

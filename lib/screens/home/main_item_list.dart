@@ -16,7 +16,7 @@ class MainItemList extends StatefulWidget {
 
 class _MainItemListState extends State<MainItemList> {
   List<String> subItemList;
-  int _length = 1;
+  int _length = 10;
   int incrementValue = 2;
   int maxLength;
   ScrollController _scrollController = ScrollController();
@@ -25,11 +25,11 @@ class _MainItemListState extends State<MainItemList> {
   void initState() {
     super.initState();
     maxLength = widget.subItems.length;
-    subItemList = widget.subItems.sublist(0, 1);
+    // subItemList = widget.subItems.sublist(0, 1);
 
-    // widget.subItems.length > 10
-    //     ? widget.subItems.sublist(0, 10)
-    //     : widget.subItems;
+    subItemList = widget.subItems.length > 10
+        ? widget.subItems.sublist(0, 10)
+        : widget.subItems;
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
