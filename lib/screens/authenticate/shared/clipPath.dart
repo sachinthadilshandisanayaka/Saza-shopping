@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/shared/clipPath.dart';
 
-Widget cliPath({BuildContext context}) {
+Widget cliPath({BuildContext context, Color color}) {
   return Stack(
     children: <Widget>[
       ClipPath(
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: 200,
-          color: Colors.blueGrey,
+          color: color,
         ),
         clipper: CustomClipPath(),
       ),

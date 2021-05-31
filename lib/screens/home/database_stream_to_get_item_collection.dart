@@ -28,7 +28,7 @@ class ItemTile extends StatelessWidget {
             );
           }
         }
-        return null;
+        return Container();
       },
     );
     // return StreamProvider<List<MainItems>>.value(

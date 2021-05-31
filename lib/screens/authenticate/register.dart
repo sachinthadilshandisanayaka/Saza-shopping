@@ -34,7 +34,7 @@ class _RegisterState extends State<Register> {
                 physics: BouncingScrollPhysics(),
                 child: Column(
                   children: <Widget>[
-                    cliPath(context: context),
+                    cliPath(context: context, color: Colors.blueGrey),
                     ErrorMessages(
                       message: _error,
                     ),

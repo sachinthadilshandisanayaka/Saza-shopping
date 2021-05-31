@@ -35,7 +35,7 @@ class _SignInState extends State<SignIn> {
                 physics: BouncingScrollPhysics(),
                 child: Column(
                   children: <Widget>[
-                    cliPath(context: context),
+                    cliPath(context: context, color: Colors.teal[400]),
                     ErrorMessages(
                       message: _error,
                     ),
