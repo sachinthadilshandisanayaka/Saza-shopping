@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/home/catogeries_row/cuperationActivityIndicator.dart';
 import 'package:sazashopping/screens/home/catogeries_row/imageContainer.dart';
@@ -12,9 +11,13 @@ import 'package:sazashopping/shared/double.dart';
 class CatogeriesHorizontalTile extends StatefulWidget {
   final String type;
   final String id;
+  final int allShopItems;
   final bool connection;
   CatogeriesHorizontalTile(
-      {@required this.type, @required this.connection, @required this.id});
+      {@required this.type,
+      @required this.connection,
+      @required this.id,
+      @required this.allShopItems});
   @override
   _CatogeriesHorizontalTileState createState() =>
       _CatogeriesHorizontalTileState();
@@ -56,9 +59,8 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
 
   @override
   Widget build(BuildContext context) {
-    final allShopItems = Provider.of<List<MainItems>>(context) ?? [];
-    final itemDisplayMaxLenght = allShopItems.length < itemMaxLength
-        ? allShopItems.length
+    final itemDisplayMaxLenght = widget.allShopItems < itemMaxLength
+        ? widget.allShopItems
         : itemMaxLength;
 
     return StreamBuilder(

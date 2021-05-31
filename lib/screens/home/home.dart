@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/screens/home/main_item_list.dart';
+import 'package:sazashopping/services/database.dart';
 
 class Home extends StatefulWidget {
   final bool connected;
@@ -12,6 +13,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<String> newSubItems = new List();
+  @override
   @override
   Widget build(BuildContext context) {
     return MainItemList(
