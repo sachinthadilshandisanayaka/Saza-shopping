@@ -3,6 +3,8 @@ import 'package:sazashopping/screens/home/home.dart';
 import 'package:sazashopping/screens/home/home_title.dart';
 import 'package:sazashopping/screens/home/share/popUpButoon.dart';
 import 'package:sazashopping/shared/colors.dart';
+import 'package:sazashopping/shared/testStyles.dart';
+import 'package:sazashopping/shared/widget/display_text_withStyle.dart';
 
 class TabBarController extends StatelessWidget {
   final Map<String, List<String>> productSubCategory;
@@ -30,7 +32,10 @@ class TabBarController extends StatelessWidget {
             indicatorColor: Colors.white,
             tabs: productMainCategories.map<Widget>((String mainCategory) {
               return Tab(
-                child: Text(mainCategory),
+                child: diplayTextWithStyle(
+                  text: mainCategory,
+                  style: tabBarHeaderNameStyle,
+                ),
               );
             }).toList(),
           ),

@@ -33,3 +33,10 @@ var offerTestStyle = TextStyle(
   fontWeight: FontWeight.bold,
   color: Colors.redAccent,
 );
+
+var tabBarHeaderNameStyle = TextStyle(
+  fontFamily: 'Montserrat',
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+  letterSpacing: 1,
+);
