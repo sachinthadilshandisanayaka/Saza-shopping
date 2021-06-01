@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sazashopping/models/category.dart';
 import 'package:sazashopping/screens/home/share/loadingWidget.dart';
 import 'package:sazashopping/screens/home/tabBarController.dart';
 

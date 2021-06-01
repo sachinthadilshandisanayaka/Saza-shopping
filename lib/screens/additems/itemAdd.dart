@@ -62,10 +62,8 @@ class _ItemAddingState extends State<ItemAdding> {
   bool genderVisibilityDefault;
 
   bool colorAllreadyAvilable = false;
-  bool colorIsNull = false;
   bool genderVisibility = false;
   bool sizeAllreadyAvilable = false;
-  bool sizeIsNull = false;
   bool offerVisibility = false;
   bool loading = false;
 
@@ -223,26 +221,24 @@ class _ItemAddingState extends State<ItemAdding> {
                         });
                       },
                       validFunction: (val) {
-                        return swicthValidate(
-                            colorIsNull, colorAllreadyAvilable);
+                        return swicthValidate(colorAllreadyAvilable);
                       }),
                   bottomRightAlignButton(
                     context: context,
                     text: 'Add',
                     buttonClickOperation: () {
-                      if (tempColor == null || tempColor == '') {
-                        setState(() {
-                          colorIsNull = true;
-                        });
-                      } else if (productColors.contains(tempColor)) {
+                      // if (tempColor == null || tempColor == '') {
+                      //   setState(() {
+                      //     colorIsNull = true;
+                      //   });
+                      // } else
+                      if (productColors.contains(tempColor)) {
                         setState(() {
                           colorAllreadyAvilable = true;
-                          colorIsNull = false;
                         });
                       } else {
                         setState(() {
                           colorAllreadyAvilable = false;
-                          colorIsNull = false;
                           productColors.add(tempColor);
                           tempColor = '';
                         });
@@ -269,26 +265,20 @@ class _ItemAddingState extends State<ItemAdding> {
                       });
                     },
                     validFunction: (val) {
-                      return swicthValidate(sizeIsNull, sizeAllreadyAvilable);
+                      return swicthValidate(sizeAllreadyAvilable);
                     },
                   ),
                   bottomRightAlignButton(
                     context: context,
                     text: 'Add',
                     buttonClickOperation: () {
-                      if (tempSize == null || tempSize == '') {
+                      if (productSize.contains(tempSize)) {
                         setState(() {
-                          sizeIsNull = true;
-                        });
-                      } else if (productSize.contains(tempSize)) {
-                        setState(() {
-                          sizeIsNull = false;
                           sizeAllreadyAvilable = true;
                         });
                       } else {
                         setState(() {
                           sizeAllreadyAvilable = false;
-                          sizeIsNull = false;
                           productSize.add(tempSize);
                           tempSize = '';
                         });
