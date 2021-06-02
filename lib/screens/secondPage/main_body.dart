@@ -85,6 +85,24 @@ Widget mainBody({BuildContext context, MainItems mainItems}) {
                               ),
                             ]),
                       ),
+                      mainItems.offer == 0.0
+                          ? Container(
+                              padding: EdgeInsets.all(10),
+                              child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      'offer',
+                                      style: itemdefaultStyle,
+                                    ),
+                                    Text(
+                                      mainItems.offer.toString(),
+                                      style: itemPriceStyle,
+                                    ),
+                                  ]),
+                            )
+                          : SizedBox(),
                       SizedBox(
                         height: 5,
                       ),
