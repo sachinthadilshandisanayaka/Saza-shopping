@@ -4,6 +4,7 @@ import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/services/auth.dart';
+import 'package:sazashopping/shared/colors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     return StreamProvider<Users>.value(
       value: AuthService().user, // auth.dart
       child: MaterialApp(
+        color: appBarColor,
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: Wrapper(),
