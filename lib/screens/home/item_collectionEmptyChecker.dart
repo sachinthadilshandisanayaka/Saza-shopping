@@ -4,22 +4,17 @@ import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'catogeries_row/catogery_horizontal_line.dart';
 
-class ItemCollectionEmptyCheck extends StatefulWidget {
+class DisplayHorizontolItemBar extends StatelessWidget {
   final String id;
   final String itemname;
   final bool connection;
   final int allShopItems;
-  ItemCollectionEmptyCheck(
+  DisplayHorizontolItemBar(
       {@required this.itemname,
       @required this.connection,
       @required this.id,
       @required this.allShopItems});
-  @override
-  _ItemCollectionEmptyCheckState createState() =>
-      _ItemCollectionEmptyCheckState();
-}
 
-class _ItemCollectionEmptyCheckState extends State<ItemCollectionEmptyCheck> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -37,7 +32,7 @@ class _ItemCollectionEmptyCheckState extends State<ItemCollectionEmptyCheck> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  widget.itemname.toUpperCase(),
+                  itemname.toUpperCase(),
                   style: itemsTypeNameDecoration,
                 ),
                 TextButton(
@@ -52,8 +47,8 @@ class _ItemCollectionEmptyCheckState extends State<ItemCollectionEmptyCheck> {
                             pageBuilder:
                                 (context, animation, secondaryAnimation) =>
                                     SelectedMoreItems(
-                                      id: widget.id,
-                                      itemname: widget.itemname,
+                                      id: id,
+                                      itemname: itemname,
                                     ),
                             transitionsBuilder: (context, animation,
                                 secondaryAnimation, child) {
@@ -87,10 +82,10 @@ class _ItemCollectionEmptyCheckState extends State<ItemCollectionEmptyCheck> {
           Padding(
             padding: EdgeInsets.all(5),
             child: CatogeriesHorizontalTile(
-              id: widget.id,
-              type: widget.itemname,
-              connection: widget.connection,
-              allShopItems: widget.allShopItems,
+              id: id,
+              type: itemname,
+              connection: connection,
+              allShopItems: allShopItems,
             ),
           ),
         ],

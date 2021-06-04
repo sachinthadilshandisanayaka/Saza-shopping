@@ -14,7 +14,11 @@ class _TabBarWidgetState extends State<TabBarWidget> {
     return StreamBuilder(
       stream: CategoryDataBaseService().catogories,
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.hasError) {
+          return Container(
+            child: Text('Error'),
+          );
+        } else if (snapshot.hasData) {
           return NavigateToTabBarController(
             snapshot: snapshot,
           );

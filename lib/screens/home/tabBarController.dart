@@ -44,7 +44,7 @@ class TabBarController extends StatelessWidget {
         body: TabBarView(
           children: productMainCategories.map((String mainCategory) {
             return Home(
-              connected: true,
+              connetion: true,
               id: mainCategory,
               subItems: productSubCategory[mainCategory],
             );

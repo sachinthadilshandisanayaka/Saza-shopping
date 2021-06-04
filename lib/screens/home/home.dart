@@ -1,50 +1,114 @@
+import 'dart:ui';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sazashopping/models/mainItem.dart';
-import 'package:sazashopping/screens/home/main_item_list.dart';
-import 'package:sazashopping/services/database.dart';
+import 'package:sazashopping/screens/home/database_stream_to_get_item_collection.dart';
+import 'package:sazashopping/screens/home/share/paginationLoading.dart';
+import 'package:sazashopping/shared/colors.dart';
 
 class Home extends StatefulWidget {
-  final bool connected;
+  final bool connetion;
   final String id;
   final List<String> subItems;
-  Home({this.connected, @required this.id, @required this.subItems});
-
+  Home({this.connetion, this.id, this.subItems});
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  List<String> newSubItems = new List();
+  List<String> subItemList;
+  int _length = 10;
+  int incrementValue = 2;
+  int maxLength;
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    for (var i in widget.subItems) {
-      itemLenght(widget.id, i).listen((data) {
-        if (data.length != 0) {
-          setState(() {
-            newSubItems.add(i);
-          });
+    setState(() {
+      maxLength = widget.subItems.length;
+      // subItemList = widget.subItems.sublist(0, 1);
+
+      subItemList = widget.subItems.length > 10
+          ? widget.subItems.sublist(0, 10)
+          : widget.subItems;
+
+      _scrollController.addListener(() {
+        if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent) {
+          _getMoreData();
         }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  _getMoreData() {
+    if (!((_length > maxLength) && (_length - maxLength >= 2))) {
+      for (int i = _length; i <= _length + 1; i++) {
+        setState(() {
+          subItemList.add(widget.subItems[i]);
+        });
+      }
+      setState(() {
+        _length = _length + incrementValue;
+        print('--------------------' + _length.toString());
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MainItemList(
-      connetion: widget.connected,
-      id: widget.id,
-      subItems: widget.subItems,
+    return SingleChildScrollView(
+      controller: _scrollController,
+      physics: BouncingScrollPhysics(),
+      child: Container(
+        decoration: BoxDecoration(color: backgroudColor),
+        child: Column(
+          children: [
+            // Container(
+            //     width: MediaQuery.of(context).size.width,
+            //     height: MediaQuery.of(context).size.height * 0.30,
+            //     child: OfferItems()), // offer
+            // SizedBox(
+            //   height: 10.0,
+            // ),
+            Container(
+              child: ListView.builder(
+                itemCount: subItemList.length + 1,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                physics: BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  if (index == maxLength) {
+                    return Container(
+                      child: Center(
+                        child: Text(
+                          'already have not new items',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                    );
+                  } else if (index == subItemList.length) {
+                    return PaginationLoading();
+                  }
+                  return ItemTile(
+                      id: widget.id,
+                      itemname: subItemList[index],
+                      connection: widget.connetion);
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
-}
-
-Stream<List<MainItems>> itemLenght(String categoryName, String subCatName) {
-  Stream<List<MainItems>> itemsStream = DataBaseService(
-        mainCategoryName: categoryName,
-        subCategeoryName: subCatName,
-      ).databaseStoreAllItems ??
-      [];
-  return itemsStream;
 }

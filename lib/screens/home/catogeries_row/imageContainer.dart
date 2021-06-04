@@ -3,9 +3,15 @@ import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/home/catogeries_row/catogery_tile.dart';
 import 'package:sazashopping/shared/colors.dart';
 
-Widget imageContainer(
-    {@required MainItems mainItems, @required bool connection}) {
-  return Container(
+class ImageTile extends StatelessWidget {
+  final MainItems mainItems;
+  final bool connection;
+
+  ImageTile({@required this.mainItems, @required this.connection});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
     width: 180,
     height: 270,
     padding: EdgeInsets.only(bottom: 4),
@@ -26,4 +32,6 @@ Widget imageContainer(
       connetion: connection,
     ),
   );
+  }
 }
+

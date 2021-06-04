@@ -92,7 +92,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
                   moreDataAvalible = true;
                   return horisantalLoading();
                 }
-                return imageContainer(
+                return ImageTile(
                     connection: true, mainItems: getListItems[index]);
               },
             ),

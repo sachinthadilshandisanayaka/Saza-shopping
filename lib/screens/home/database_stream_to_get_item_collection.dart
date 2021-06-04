@@ -20,7 +20,7 @@ class ItemTile extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data.length != 0) {
-            return ItemCollectionEmptyCheck(
+            return DisplayHorizontolItemBar(
               connection: this.connection,
               id: this.id,
               itemname: this.itemname,

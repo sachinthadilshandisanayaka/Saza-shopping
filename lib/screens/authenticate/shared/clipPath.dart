@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sazashopping/shared/clipPath.dart';
+import 'package:sazashopping/shared/clipPath/clipPath.dart';
 
 Widget cliPath({BuildContext context, Color color}) {
   return Stack(
