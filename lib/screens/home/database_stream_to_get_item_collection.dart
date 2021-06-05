@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/home/item_collectionEmptyChecker.dart';
 import 'package:sazashopping/services/database.dart';
+import 'package:sazashopping/shared/loading.dart';
 
 class ItemTile extends StatelessWidget {
   final String id;
@@ -26,20 +27,12 @@ class ItemTile extends StatelessWidget {
               itemname: this.itemname,
               allShopItems: snapshot.data.length,
             );
+          } else if (snapshot.data.length == 0) {
+            return SizedBox();
           }
         }
-        return SizedBox();
+        return Loading();
       },
     );
-    // return StreamProvider<List<MainItems>>.value(
-    //   value: DataBaseService(
-    //           mainCategoryName: this.id, subCategeoryName: this.itemname)
-    //       .databaseStoreAllItems,
-    //   child: ItemCollectionEmptyCheck(
-    //     connection: this.connection,
-    //     id: this.id,
-    //     itemname: this.itemname,
-    //   ),
-    // );
   }
 }
