@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sazashopping/shared/colors.dart';
 
 var priceStyle = TextStyle(
-  fontSize: 10,
+  fontSize: 15,
   fontFamily: 'Montserrat',
   color: appBarColor,
   fontWeight: FontWeight.bold,
@@ -14,12 +14,14 @@ var quantityStyle = TextStyle(
   fontSize: 10,
   fontFamily: 'Montserrat',
   color: Colors.black,
-  fontWeight: FontWeight.bold,
+  fontWeight: FontWeight.w300,
 );
 
 var materialStyle = TextStyle(
-  fontSize: 15,
+  fontSize: 10,
   fontFamily: 'Montserrat',
+  fontWeight: FontWeight.w300,
+  color: Colors.black,
 );
 
 var nameStyle = TextStyle(
@@ -28,7 +30,7 @@ var nameStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 var offerTestStyle = TextStyle(
-  fontSize: 14,
+  fontSize: 15,
   fontFamily: 'Montserrat',
   fontWeight: FontWeight.bold,
   color: Colors.redAccent,

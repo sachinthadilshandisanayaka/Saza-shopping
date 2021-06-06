@@ -14,7 +14,7 @@ class ItemCardView extends StatelessWidget {
   ItemCardView({@required this.itemList});
   @override
   Widget build(BuildContext context) {
-    final cardHeight = MediaQuery.of(context).size.height * 0.30;
+    final cardHeight = MediaQuery.of(context).size.height * 0.25;
     final cardWidth = MediaQuery.of(context).size.width * 0.90;
     return GestureDetector(
       onTap: () {
@@ -58,7 +58,7 @@ class ItemCardView extends StatelessWidget {
             children: <Widget>[
               Container(
                 width: cardWidth * 0.50,
-                height: cardWidth,
+                height: cardHeight * 0.95,
                 margin: EdgeInsets.only(left: 0),
                 child: Hero(
                   tag: itemList,
@@ -74,7 +74,7 @@ class ItemCardView extends StatelessWidget {
                 ),
               ),
               Container(
-                width: cardWidth * 0.5,
+                width: cardWidth * 0.50,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +87,7 @@ class ItemCardView extends StatelessWidget {
                       softWrap: false,
                     ),
                     SizedBox(
-                      height: 9.0,
+                      height: 5.0,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,16 +97,30 @@ class ItemCardView extends StatelessWidget {
                           style: priceStyle,
                         ),
                         Text(
-                          'Available' + ' ' + itemList.quantity.toString(),
-                          style: quantityStyle,
+                          itemList.offer.toString(),
+                          style: offerTestStyle,
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 15.0,
+                      height: 5,
+                    ),
+                    Text(
+                      'Available : ' + itemList.quantity.toString(),
+                      style: quantityStyle,
+                    ),
+                    SizedBox(
+                      height: 5.0,
                     ),
                     Text(
                       material + ' : ' + itemList.material,
+                      style: materialStyle,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      'Brand :' + itemList.brand,
                       style: materialStyle,
                     ),
                   ],
