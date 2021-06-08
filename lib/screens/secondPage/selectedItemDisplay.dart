@@ -26,8 +26,7 @@ class SelectedItemDisplay extends StatelessWidget {
             )
           ],
         ),
-        body: mainBody(
-          context: context,
+        body: ItemCard(
           mainItems: this.mainItems,
         ),
       ),
