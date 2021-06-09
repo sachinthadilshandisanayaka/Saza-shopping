@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sazashopping/screens/third_page/showItems.dart';
+import 'package:sazashopping/screens/thirdPage/showItems.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'catogeries_row/catogery_horizontal_line.dart';

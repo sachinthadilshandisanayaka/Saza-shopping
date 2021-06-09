@@ -11,7 +11,12 @@ Widget raiseButtonCenter({
     child: Container(
       width: MediaQuery.of(context).size.width * 0.95,
       child: RaisedButton(
-        padding: EdgeInsets.all(13),
+        padding: EdgeInsets.only(
+          left: 13,
+          right: 13,
+          top: 14,
+          bottom: 14,
+        ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(20),

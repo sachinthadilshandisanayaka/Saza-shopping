@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sazashopping/screens/third_page/showItems.dart';
+import 'package:sazashopping/screens/thirdPage/showItems.dart';
 
 Route createThirdPageRoute(String uid, String itemname, String id) {
   return PageRouteBuilder(

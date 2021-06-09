@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
-import 'package:sazashopping/screens/third_page/shared/subDetailShow_Row.dart';
+import 'package:sazashopping/screens/thirdPage/shared/subDetailShow_Row.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/string.dart';
 import 'package:sazashopping/shared/testStyles.dart';

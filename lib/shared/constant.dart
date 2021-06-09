@@ -57,16 +57,17 @@ const itemdefaultStyle = TextStyle(
 var cartButtonStyle = TextStyle(
   color: Colors.amber[700],
   letterSpacing: 2,
-  fontFamily: 'Baloo2',
-  fontSize: 15,
+  fontFamily: 'Montserrat',
+  fontSize: 14,
   fontWeight: FontWeight.bold,
 );
 
 var buybuttonStyle = TextStyle(
   color: Colors.white,
   letterSpacing: 2,
-  fontFamily: 'Baloo2',
-  fontSize: 15,
+  fontFamily: 'Montserrat',
+  fontSize: 14,
+  fontWeight: FontWeight.bold,
   shadows: [
     Shadow(
       color: Colors.black45,

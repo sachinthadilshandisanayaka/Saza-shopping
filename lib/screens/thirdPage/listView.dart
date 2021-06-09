@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
-import 'package:sazashopping/screens/third_page/item_card.dart';
+import 'package:sazashopping/screens/thirdPage/item_card.dart';
 import 'package:sazashopping/services/database.dart';
 
 class ItemsListView extends StatefulWidget {
