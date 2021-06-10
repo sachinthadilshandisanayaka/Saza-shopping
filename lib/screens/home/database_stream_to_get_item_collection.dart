@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/home/item_collectionEmptyChecker.dart';
 import 'package:sazashopping/services/database.dart';
-import 'package:sazashopping/shared/loading.dart';
+import 'package:sazashopping/shared/widget/sharedMaskLoading.dart';
 
 class ItemTile extends StatelessWidget {
   final String id;
@@ -31,7 +31,7 @@ class ItemTile extends StatelessWidget {
             return SizedBox();
           }
         }
-        return Loading();
+        return SharedMaskLoading();
       },
     );
   }

@@ -20,6 +20,7 @@ class _ItemCardState extends State<ItemCard> {
   double actualPrice = 0.0;
   String selecteSize;
   String selecteColor;
+  
   @override
   void initState() {
     // TODO: implement initState
