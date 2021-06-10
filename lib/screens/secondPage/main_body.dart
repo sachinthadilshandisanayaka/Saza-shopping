@@ -32,7 +32,7 @@ class _ItemCardState extends State<ItemCard> {
       }
     });
   }
-
+ 
   _priceCalculate(double price, double offer) {
     return (price - (price * (offer / 100)));
   }

@@ -12,14 +12,25 @@ class DataBaseService {
   final CollectionReference sazaCollection =
       FirebaseFirestore.instance.collection('mainItems');
 
-  Future updateItem(String name, String image, String price, int quantity,
-      String material) async {
-    return await sazaCollection.doc(uid).set({
-      'name': name,
-      'image': image,
-      'price': price,
-      'quantity': quantity,
-      'material': material
+  Future updateItem(
+      MainItems mainItems, String subCategory, String mainCategory) async {
+    return await sazaCollection
+        .doc(mainCategory)
+        .collection(subCategory)
+        .doc(uid)
+        .update({
+      'name': mainItems.name,
+      'material': mainItems.material,
+      'gender': mainItems.gender,
+      'description': mainItems.description,
+      'country': mainItems.country,
+      'brand': mainItems.brand,
+      'price': mainItems.price,
+      'offer': mainItems.offer,
+      'quantity': mainItems.quantity,
+      'size': FieldValue.arrayUnion(mainItems.size),
+      'images': FieldValue.arrayUnion(mainItems.images),
+      'color': FieldValue.arrayUnion(mainItems.color),
     });
   }
 
@@ -44,6 +55,14 @@ class DataBaseService {
       'images': FieldValue.arrayUnion(mainItems.images),
       'color': FieldValue.arrayUnion(mainItems.color),
     });
+  }
+
+  Future deleteItem(String subCategory, String mainCategory, String id) async {
+    return await sazaCollection
+        .doc(mainCategory)
+        .collection(subCategory)
+        .doc(id)
+        .delete();
   }
 
   // item list from database

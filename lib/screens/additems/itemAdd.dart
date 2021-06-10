@@ -232,17 +232,20 @@ class _ItemAddingState extends State<ItemAdding> {
                       //     colorIsNull = true;
                       //   });
                       // } else
-                      if (productColors.contains(tempColor)) {
-                        setState(() {
-                          colorAllreadyAvilable = true;
-                        });
-                      } else {
-                        setState(() {
-                          colorAllreadyAvilable = false;
-                          productColors.add(tempColor);
-                          tempColor = '';
-                        });
+                      if (tempColor.isNotEmpty) {
+                        if (productColors.contains(tempColor)) {
+                          setState(() {
+                            colorAllreadyAvilable = true;
+                          });
+                        } else {
+                          setState(() {
+                            colorAllreadyAvilable = false;
+                            productColors.add(tempColor);
+                            tempColor = '';
+                          });
+                        }
                       }
+
                       if (formkey.currentState.validate()) {
                         formkey.currentState.reset();
                       }
@@ -272,16 +275,18 @@ class _ItemAddingState extends State<ItemAdding> {
                     context: context,
                     text: 'Add',
                     buttonClickOperation: () {
-                      if (productSize.contains(tempSize)) {
-                        setState(() {
-                          sizeAllreadyAvilable = true;
-                        });
-                      } else {
-                        setState(() {
-                          sizeAllreadyAvilable = false;
-                          productSize.add(tempSize);
-                          tempSize = '';
-                        });
+                      if (tempSize.isNotEmpty) {
+                        if (productSize.contains(tempSize)) {
+                          setState(() {
+                            sizeAllreadyAvilable = true;
+                          });
+                        } else {
+                          setState(() {
+                            sizeAllreadyAvilable = false;
+                            productSize.add(tempSize);
+                            tempSize = '';
+                          });
+                        }
                       }
                       if (sizeFormkey.currentState.validate()) {
                         sizeFormkey.currentState.reset();

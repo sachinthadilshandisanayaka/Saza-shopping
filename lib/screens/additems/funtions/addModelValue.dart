@@ -55,9 +55,12 @@ Future storeItemDataBase(
     );
 
     print("--------" + mainItems.name.toString());
+
     dynamic result = await dataBaseService.uploadItem(mainItems,
         selectedCategory, productCategories[selectedCategory].toString());
+
     print("result :" + result.toString());
+
     return true;
   }
 }
