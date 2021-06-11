@@ -19,7 +19,7 @@ var tagStyle = TextStyle(
 
 var tabValueStyle = TextStyle(
   fontSize: 12,
-  fontFamily: 'Montserrat',
+  fontFamily: 'OpenSans',
   fontWeight: FontWeight.w300,
   color: Colors.black,
 );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/adminFeatures/additems/itemAddMainFrame.dart';
 import 'package:sazashopping/screens/adminFeatures/shared/popupMenuTags.dart';
@@ -15,6 +16,10 @@ class _AdminPopupMenuState extends State<AdminPopupMenu> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
+      icon: Icon(
+        FontAwesomeIcons.ellipsisV,
+        size: 20,
+      ),
       shape: RoundedRectangleBorder(),
       onSelected: (action) {
         if (action == PopMenuTags.update) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/adminFeatures/shared/popUpMenuButton.dart';
 import 'package:sazashopping/screens/secondPage/itemFrame.dart';
@@ -19,9 +20,12 @@ class SelectedItemDisplay extends StatelessWidget {
           backgroundColor: appBarColor,
           actions: <Widget>[
             Container(
-              margin: EdgeInsets.only(right: 5),
+              margin: EdgeInsets.only(right: 1),
               child: IconButton(
-                icon: Icon(Icons.shopping_bag_outlined),
+                icon: Icon(
+                  FontAwesomeIcons.shoppingBasket,
+                  size: 20,
+                ),
                 onPressed: () {},
               ),
             ),

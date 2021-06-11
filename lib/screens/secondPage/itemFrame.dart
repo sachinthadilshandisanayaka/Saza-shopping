@@ -100,7 +100,7 @@ class _ItemCardState extends State<ItemCard> {
                           ],
                         ),
                         SizedBox(
-                          height: 7,
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,6 +114,9 @@ class _ItemCardState extends State<ItemCard> {
                               style: itemPriceStyle,
                             ),
                           ],
+                        ),
+                        SizedBox(
+                          height: 7,
                         ),
                         widget.mainItems.offer != 0.0
                             ? Row(
@@ -133,6 +136,9 @@ class _ItemCardState extends State<ItemCard> {
                                 ],
                               )
                             : SizedBox(),
+                        SizedBox(
+                          height: 7,
+                        ),
                         widget.mainItems.offer != 0.0
                             ? Row(
                                 mainAxisAlignment:
@@ -152,14 +158,7 @@ class _ItemCardState extends State<ItemCard> {
                               )
                             : SizedBox(),
                         SizedBox(
-                          height: 7,
-                        ),
-                        Text(
-                          material + ' : ' + widget.mainItems.material,
-                          style: itemdefaultStyle,
-                        ),
-                        SizedBox(
-                          height: 7,
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -237,6 +236,9 @@ class _ItemCardState extends State<ItemCard> {
                                 : SizedBox(),
                           ],
                         ),
+                        SizedBox(
+                          height: 7,
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -289,11 +291,110 @@ class _ItemCardState extends State<ItemCard> {
                                 : SizedBox(),
                           ],
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          color: Colors.teal[50],
+                          padding: EdgeInsets.only(top: 3, bottom: 3),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                material,
+                                style: itemdefaultStyle,
+                              ),
+                              Text(
+                                widget.mainItems.material,
+                                style: itemdefaultStyle.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          color: Colors.teal[50],
+                          padding: EdgeInsets.only(top: 3, bottom: 3),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Gender',
+                                style: itemdefaultStyle,
+                              ),
+                              Text(
+                                widget.mainItems.gender,
+                                style: itemdefaultStyle.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          color: Colors.teal[50],
+                          padding: EdgeInsets.only(top: 3, bottom: 3),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Made in',
+                                style: itemdefaultStyle,
+                              ),
+                              Text(
+                                widget.mainItems.country,
+                                style: itemdefaultStyle.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          color: Colors.teal[50],
+                          padding: EdgeInsets.only(top: 3, bottom: 3),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Brand name',
+                                style: itemdefaultStyle,
+                              ),
+                              Text(
+                                widget.mainItems.brand,
+                                style: itemdefaultStyle.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          color: Colors.teal[50],
+                          padding: EdgeInsets.all(10),
+                          child: Text(
+                            widget.mainItems.description,
+                            style: itemdefaultStyle,
+                          ),
+                        ),
                       ],
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   outlineButtonCenter(
                       context: context,
