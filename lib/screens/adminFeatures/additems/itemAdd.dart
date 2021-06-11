@@ -1,14 +1,18 @@
+import 'package:dropdownfield/dropdownfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/imageUploadImage.dart';
-import 'package:sazashopping/screens/additems/customWidget/displayingSelectedCategory.dart';
-import 'package:sazashopping/screens/additems/formValidator/multiValueValidator.dart';
-import 'package:sazashopping/screens/additems/funtions/addModelValue.dart';
+import 'package:sazashopping/models/mainItem.dart';
+import 'package:sazashopping/screens/adminFeatures/additems/customWidget/displayingSelectedCategory.dart';
+import 'package:sazashopping/screens/adminFeatures/additems/formValidator/multiValueValidator.dart';
+import 'package:sazashopping/screens/adminFeatures/additems/formValidator/stringValidator.dart';
+import 'package:sazashopping/screens/adminFeatures/additems/formValidator/swithValidator.dart';
+import 'package:sazashopping/screens/adminFeatures/additems/funtions/addModelValue.dart';
+import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/uploadLoading.dart';
 import 'package:sazashopping/shared/widget/bottomRightAlignButton.dart';
 import 'package:sazashopping/shared/widget/centeredRaiseButton.dart';
 import 'package:sazashopping/shared/widget/displayText.dart';
-import 'package:sazashopping/shared/widget/dropDownFiled.dart';
 import 'package:sazashopping/shared/widget/dropDownItemShowWithRemoveItem.dart';
 import 'package:sazashopping/shared/widget/genderSelection.dart';
 import 'package:sazashopping/shared/widget/imagePickerCardView.dart';
@@ -16,16 +20,15 @@ import 'package:sazashopping/shared/widget/imagePickerNullView.dart';
 import 'package:sazashopping/shared/widget/listTextFormField.dart';
 import 'package:sazashopping/shared/widget/liteRollingSwitch.dart';
 import 'package:sazashopping/shared/widget/sizeBox.dart';
-import 'package:sazashopping/shared/widget/stringTextFormField.dart';
-import 'package:sazashopping/shared/widget/swithTextFormField.dart';
 
 class ItemAdding extends StatefulWidget {
   final List<String> subCategory;
   final Map<String, String> mainCategories;
-  ItemAdding({
-    @required this.subCategory,
-    @required this.mainCategories,
-  });
+  final MainItems mainItems;
+  ItemAdding(
+      {@required this.subCategory,
+      @required this.mainCategories,
+      this.mainItems});
   @override
   _ItemAddingState createState() => _ItemAddingState();
 }
@@ -95,6 +98,9 @@ class _ItemAddingState extends State<ItemAdding> {
       images.add("Add Image");
       images.add("Add Image");
     });
+    if (widget.mainItems != null) {
+      setState(() {});
+    }
   }
 
   @override
@@ -111,33 +117,44 @@ class _ItemAddingState extends State<ItemAdding> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   displayText('Item name'),
-                  stringTextFormField(funtion: (val) {
-                    setState(() {
-                      productname = val.trim();
-                    });
-                  }),
+                  TextFormField(
+                    initialValue: widget.mainItems.name ?? '',
+                    decoration: textinputDecoration,
+                    onChanged: (val) => (val) {
+                      setState(() {
+                        productname = val.trim();
+                      });
+                    },
+                    validator: (val) => checkValue(val),
+                  ),
                   sizedBox,
                   displayText('Category'),
-                  dropDownField(
-                    hint: 'Select item category',
-                    productSubCategory: widget.subCategory,
-                    valueChangeFuntion: (value) {
+                  DropDownField(
+                    hintText: 'Select item categor',
+                    textStyle: inputFormTextStyle,
+                    enabled: true,
+                    items: widget.subCategory,
+                    itemsVisibleInDropdown: 5,
+                    onValueChanged: (value) => {
                       setState(() {
                         selectedCategory = value;
-                      });
+                      })
                     },
                   ),
                   DisplaySelectedCategory(
                       selectedCategory ?? '', widget.mainCategories),
                   sizedBox,
                   displayText('Price'),
-                  stringTextFormField(
-                      textInputType: TextInputType.number,
-                      funtion: (val) {
-                        setState(() {
-                          price = double.parse(val.trim());
-                        });
-                      }),
+                  TextFormField(
+                    keyboardType: TextInputType.number,
+                    decoration: textinputDecoration,
+                    onChanged: (val) => {
+                      setState(() {
+                        price = double.parse(val.trim());
+                      })
+                    },
+                    validator: (val) => checkValue(val),
+                  ),
                   sizedBox,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -149,47 +166,64 @@ class _ItemAddingState extends State<ItemAdding> {
                   ),
                   sizedBox,
                   offerVisibility
-                      ? swicthTextField(
-                          type: TextInputType.number,
-                          hint: 'add offer precentage \'%\'',
-                          funt: (val) {
+                      ? TextFormField(
+                          keyboardType: TextInputType.number,
+                          decoration: textinputDecoration.copyWith(
+                              hintText: 'add offer precentage \'%\''),
+                          onChanged: (val) => {
                             setState(() {
                               offer = double.parse(val);
-                            });
+                            })
                           },
-                          state: offerVisibility,
+                          validator: (val) =>
+                              checkValueSwith(val, offerVisibility),
                         )
                       : SizedBox(),
                   sizedBox,
                   displayText('Material'),
-                  stringTextFormField(funtion: (val) {
-                    setState(() {
-                      productMaterial = val.trim();
-                    });
-                  }),
+                  TextFormField(
+                    decoration: textinputDecoration,
+                    onChanged: (val) => {
+                      setState(() {
+                        productMaterial = val.trim();
+                      })
+                    },
+                    validator: (val) => checkValue(val),
+                  ),
                   sizedBox,
                   displayText('Brand'),
-                  stringTextFormField(funtion: (val) {
-                    setState(() {
-                      brandName = val.trim();
-                    });
-                  }),
+                  TextFormField(
+                    decoration: textinputDecoration,
+                    onChanged: (val) => {
+                      setState(() {
+                        brandName = val.trim();
+                      })
+                    },
+                    validator: (val) => checkValue(val),
+                  ),
                   sizedBox,
                   displayText('Made in'),
-                  stringTextFormField(funtion: (val) {
-                    setState(() {
-                      madeCountry = val.trim();
-                    });
-                  }),
+                  TextFormField(
+                    decoration: textinputDecoration,
+                    onChanged: (val) => {
+                      setState(() {
+                        madeCountry = val.trim();
+                      })
+                    },
+                    validator: (val) => checkValue(val),
+                  ),
                   sizedBox,
                   displayText('Quantity Avilable'),
-                  stringTextFormField(
-                      textInputType: TextInputType.number,
-                      funtion: (val) {
-                        setState(() {
-                          quantity = int.parse(val.trim());
-                        });
-                      }),
+                  TextFormField(
+                    decoration: textinputDecoration,
+                    keyboardType: TextInputType.number,
+                    onChanged: (val) => {
+                      setState(() {
+                        quantity = int.parse(val.trim());
+                      })
+                    },
+                    validator: (val) => checkValue(val),
+                  ),
                   sizedBox,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -227,11 +261,6 @@ class _ItemAddingState extends State<ItemAdding> {
                     context: context,
                     text: 'Add',
                     buttonClickOperation: () {
-                      // if (tempColor == null || tempColor == '') {
-                      //   setState(() {
-                      //     colorIsNull = true;
-                      //   });
-                      // } else
                       if (tempColor.isNotEmpty) {
                         if (productColors.contains(tempColor)) {
                           setState(() {
@@ -312,19 +341,22 @@ class _ItemAddingState extends State<ItemAdding> {
                             crossAxisCount: 2,
                             childAspectRatio: 1,
                             scrollDirection: Axis.horizontal,
-                            children: List.generate(images.length, (index) {
-                              if (images[index] is ImageUploadModel) {
-                                ImageUploadModel uploadModel = images[index];
-                                return buildCardView(
-                                  uploadModel: uploadModel,
-                                  cardOnTapFuntion: () => removeImage(index),
-                                );
-                              } else {
-                                return defaultCardView(
-                                    onpressFuntion: () =>
-                                        _onAddImageClick(index));
-                              }
-                            }),
+                            children: List.generate(
+                              images.length,
+                              (index) {
+                                if (images[index] is ImageUploadModel) {
+                                  ImageUploadModel uploadModel = images[index];
+                                  return buildCardView(
+                                    uploadModel: uploadModel,
+                                    cardOnTapFuntion: () => removeImage(index),
+                                  );
+                                } else {
+                                  return defaultCardView(
+                                      onpressFuntion: () =>
+                                          _onAddImageClick(index));
+                                }
+                              },
+                            ),
                           ),
                         ),
                       ],
@@ -332,11 +364,11 @@ class _ItemAddingState extends State<ItemAdding> {
                   ),
                   sizedBox,
                   displayText('Description'),
-                  stringTextFormField(
-                    maxline: 8,
-                    funtion: (val) {
-                      description = val.trim();
-                    },
+                  TextFormField(
+                    maxLines: 8,
+                    decoration: textinputDecoration,
+                    onChanged: (val) => {description = val.trim()},
+                    validator: (val) => checkValue(val),
                   ),
                   sizedBox,
                   sizedBox,

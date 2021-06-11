@@ -70,6 +70,8 @@ class DataBaseService {
     return snapshot.docs.map((doc) {
       return MainItems(
         itemId: doc.id ?? '',
+        mainCat: mainCategoryName ?? '',
+        subCat: subCategeoryName ?? '',
         name: doc.data()['name'] ?? '',
         material: doc.data()['material'] ?? '',
         gender: doc.data()['gender'] ?? '',

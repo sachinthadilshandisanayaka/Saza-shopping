@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sazashopping/screens/additems/itemAddMainFrame.dart';
+import 'package:sazashopping/screens/adminFeatures/additems/itemAddMainFrame.dart';
 import 'package:sazashopping/screens/home/menus/constants.dart';
 import 'package:sazashopping/screens/home/showDialog/customDialog.dart';
-import 'package:sazashopping/screens/home/showDialog/newDialog.dart';
+// import 'package:sazashopping/screens/home/showDialog/newDialog.dart';
 
 Widget popUpMenuButton(BuildContext context) {
   return PopupMenuButton<String>(
@@ -14,14 +14,18 @@ Widget popUpMenuButton(BuildContext context) {
     ),
     onSelected: (action) async {
       if (action == Constants.logout) {
-        showNewDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return CustomDialog(
-                description: 'Do you want log out from this account',
-                title: 'Log out',
-              );
-            });
+        CustomDialog(
+          description: 'Do you want log out from this account',
+          title: 'Log out',
+        );
+        // showNewDialog(
+        //     context: context,
+        //     builder: (BuildContext context) {
+        //       return CustomDialog(
+        //         description: 'Do you want log out from this account',
+        //         title: 'Log out',
+        //       );
+        //     });
       } else if (action == Constants.additem) {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => ItemAddMainFrame()));

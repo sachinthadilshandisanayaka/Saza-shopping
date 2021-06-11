@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sazashopping/screens/additems/itemAdd.dart';
+import 'package:sazashopping/models/mainItem.dart';
+import 'package:sazashopping/screens/adminFeatures/additems/itemAdd.dart';
 import 'package:sazashopping/services/categoryCollection.dart';
 
 class WrapperAdditem extends StatefulWidget {
+  final MainItems mainItems;
+  WrapperAdditem({this.mainItems});
   @override
   _WrapperAdditemState createState() => _WrapperAdditemState();
 }
@@ -38,6 +41,7 @@ class _WrapperAdditemState extends State<WrapperAdditem> {
         return ItemAdding(
           subCategory: productSubCategory,
           mainCategories: productCategories,
+          mainItems: widget.mainItems,
         );
       },
     );

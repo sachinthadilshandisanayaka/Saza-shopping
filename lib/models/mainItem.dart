@@ -1,5 +1,7 @@
 class MainItems {
   String itemId;
+  String mainCat;
+  String subCat;
   String name;
   String image;
   String material;
@@ -16,6 +18,8 @@ class MainItems {
 
   MainItems({
     this.itemId,
+    this.mainCat,
+    this.subCat,
     this.name,
     this.image,
     this.price,
