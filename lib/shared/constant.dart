@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sazashopping/shared/colors.dart';
 
 const textinputDecoration = InputDecoration(
-  hintStyle: TextStyle(fontFamily: 'Baloo2'),
+  hintStyle: TextStyle(fontFamily: 'Baloo2', fontWeight: FontWeight.normal),
   border: OutlineInputBorder(),
   isDense: true,
   fillColor: Colors.white,
@@ -135,9 +135,10 @@ var defaultBoxDecoration = BoxDecoration(
 
 var inputFormTextStyle = TextStyle(
   fontFamily: 'Baloo2',
+  fontWeight: FontWeight.bold,
 );
 
 var addItemFormTextStyle = TextStyle(
   fontFamily: 'Baloo2',
-  fontWeight: FontWeight.bold,
+  fontWeight: FontWeight.normal,
 );

@@ -16,7 +16,9 @@ class ItemAddMainFrame extends StatelessWidget {
           backgroundColor: appBarColor,
           actions: [],
         ),
-        body: WrapperAdditem(),
+        body: WrapperAdditem(
+          mainItems: this.mainItems,
+        ),
       ),
     );
   }

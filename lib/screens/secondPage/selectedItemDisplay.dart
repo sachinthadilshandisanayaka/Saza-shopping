@@ -13,20 +13,20 @@ class SelectedItemDisplay extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Scaffold(
-        backgroundColor: secondAppBarColor,
+        backgroundColor: appBarColor,
         appBar: AppBar(
           elevation: 0.0,
-          backgroundColor: secondAppBarColor,
+          backgroundColor: appBarColor,
           actions: <Widget>[
-            AdminPopupMenu(
-              mainItems: mainItems,
-            ),
             Container(
               margin: EdgeInsets.only(right: 5),
               child: IconButton(
                 icon: Icon(Icons.shopping_bag_outlined),
                 onPressed: () {},
               ),
+            ),
+            AdminPopupMenu(
+              mainItems: this.mainItems,
             ),
           ],
         ),

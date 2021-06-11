@@ -20,7 +20,7 @@ class _ItemCardState extends State<ItemCard> {
   double actualPrice = 0.0;
   String selecteSize;
   String selecteColor;
-  
+
   @override
   void initState() {
     // TODO: implement initState
@@ -32,7 +32,7 @@ class _ItemCardState extends State<ItemCard> {
       }
     });
   }
- 
+
   _priceCalculate(double price, double offer) {
     return (price - (price * (offer / 100)));
   }
@@ -302,10 +302,8 @@ class _ItemCardState extends State<ItemCard> {
                   SizedBox(
                     height: 5,
                   ),
-                  raiseButtonCenter(
-                      context: context,
-                      buttonLable: buy,
-                      pressBottonFuntion: () {}),
+                  RaiseButtonCenter(
+                      buttonLable: buy, pressBottonFuntion: () {}),
                   SizedBox(
                     height: 30,
                   ),

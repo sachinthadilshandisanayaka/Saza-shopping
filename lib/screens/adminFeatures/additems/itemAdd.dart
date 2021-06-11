@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
@@ -65,10 +67,12 @@ class _ItemAddingState extends State<ItemAdding> {
   bool genderVisibilityDefault;
 
   bool colorAllreadyAvilable = false;
-  bool genderVisibility = false;
   bool sizeAllreadyAvilable = false;
   bool offerVisibility = false;
+  bool genderVisibility = false;
   bool loading = false;
+
+  bool ismainItemAvalible;
 
   changeVisibility(bool visibility, String feild) {
     setState(() {
@@ -99,8 +103,46 @@ class _ItemAddingState extends State<ItemAdding> {
       images.add("Add Image");
     });
     if (widget.mainItems != null) {
-      setState(() {});
+      _updateItem();
+    } else {
+      setState(() {
+        ismainItemAvalible = false;
+      });
     }
+  }
+
+  _updateItem() {
+    setState(() {
+      ismainItemAvalible = true;
+      selectedCategory = widget.mainItems.subCat;
+      if (widget.mainItems.offer == 0.0) {
+        offerVisibility = false;
+      } else {
+        offerVisibility = true;
+      }
+      if (widget.mainItems.gender != '') {
+        genderVisibility = true;
+        maleOrFemale = widget.mainItems.gender;
+      } else {
+        maleOrFemale = '';
+        genderVisibility = false;
+      }
+      if (widget.mainItems.color.isNotEmpty) {
+        productColors.addAll(widget.mainItems.color);
+      }
+      if (widget.mainItems.size.isNotEmpty) {
+        productSize.addAll(widget.mainItems.size);
+      }
+      if (widget.mainItems.images.isNotEmpty) {
+        for (var i = 0; i < widget.mainItems.images.length; i++) {
+          ImageUploadModel imageUpload = new ImageUploadModel();
+          imageUpload.isUploaded = false;
+          imageUpload.uploading = false;
+          imageUpload.imageUrl = widget.mainItems.images[i];
+          images.replaceRange(i, i + 1, [imageUpload]);
+        }
+      }
+    });
   }
 
   @override
@@ -118,7 +160,9 @@ class _ItemAddingState extends State<ItemAdding> {
                 children: [
                   displayText('Item name'),
                   TextFormField(
-                    initialValue: widget.mainItems.name ?? '',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    initialValue:
+                        ismainItemAvalible ? widget.mainItems.name : '',
                     decoration: textinputDecoration,
                     onChanged: (val) => (val) {
                       setState(() {
@@ -133,6 +177,7 @@ class _ItemAddingState extends State<ItemAdding> {
                     hintText: 'Select item categor',
                     textStyle: inputFormTextStyle,
                     enabled: true,
+                    value: ismainItemAvalible ? widget.mainItems.subCat : '',
                     items: widget.subCategory,
                     itemsVisibleInDropdown: 5,
                     onValueChanged: (value) => {
@@ -146,8 +191,11 @@ class _ItemAddingState extends State<ItemAdding> {
                   sizedBox,
                   displayText('Price'),
                   TextFormField(
+                    style: TextStyle(fontWeight: FontWeight.bold),
                     keyboardType: TextInputType.number,
                     decoration: textinputDecoration,
+                    initialValue:
+                        ismainItemAvalible ? widget.mainItems.price : '',
                     onChanged: (val) => {
                       setState(() {
                         price = double.parse(val.trim());
@@ -161,12 +209,20 @@ class _ItemAddingState extends State<ItemAdding> {
                     children: <Widget>[
                       displayText("Offer"),
                       liteRollingSwith(
-                          changeVisibility: changeVisibility, type: "offer"),
+                          changeVisibility: changeVisibility,
+                          type: "offer",
+                          ismainItemAvalible: offerVisibility),
                     ],
                   ),
                   sizedBox,
                   offerVisibility
                       ? TextFormField(
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          initialValue: offerVisibility
+                              ? ismainItemAvalible
+                                  ? widget.mainItems.offer.toString()
+                                  : ''
+                              : '',
                           keyboardType: TextInputType.number,
                           decoration: textinputDecoration.copyWith(
                               hintText: 'add offer precentage \'%\''),
@@ -182,6 +238,9 @@ class _ItemAddingState extends State<ItemAdding> {
                   sizedBox,
                   displayText('Material'),
                   TextFormField(
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    initialValue:
+                        ismainItemAvalible ? widget.mainItems.material : '',
                     decoration: textinputDecoration,
                     onChanged: (val) => {
                       setState(() {
@@ -193,6 +252,9 @@ class _ItemAddingState extends State<ItemAdding> {
                   sizedBox,
                   displayText('Brand'),
                   TextFormField(
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    initialValue:
+                        ismainItemAvalible ? widget.mainItems.brand : '',
                     decoration: textinputDecoration,
                     onChanged: (val) => {
                       setState(() {
@@ -204,6 +266,9 @@ class _ItemAddingState extends State<ItemAdding> {
                   sizedBox,
                   displayText('Made in'),
                   TextFormField(
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    initialValue:
+                        ismainItemAvalible ? widget.mainItems.country : '',
                     decoration: textinputDecoration,
                     onChanged: (val) => {
                       setState(() {
@@ -215,6 +280,10 @@ class _ItemAddingState extends State<ItemAdding> {
                   sizedBox,
                   displayText('Quantity Avilable'),
                   TextFormField(
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    initialValue: ismainItemAvalible
+                        ? widget.mainItems.quantity.toString()
+                        : '',
                     decoration: textinputDecoration,
                     keyboardType: TextInputType.number,
                     onChanged: (val) => {
@@ -230,7 +299,9 @@ class _ItemAddingState extends State<ItemAdding> {
                     children: <Widget>[
                       displayText('Gender'),
                       liteRollingSwith(
-                          changeVisibility: changeVisibility, type: "gender"),
+                          changeVisibility: changeVisibility,
+                          type: "gender",
+                          ismainItemAvalible: genderVisibility),
                     ],
                   ),
                   sizedBox,
@@ -346,7 +417,7 @@ class _ItemAddingState extends State<ItemAdding> {
                               (index) {
                                 if (images[index] is ImageUploadModel) {
                                   ImageUploadModel uploadModel = images[index];
-                                  return buildCardView(
+                                  return ImageGetingCarView(
                                     uploadModel: uploadModel,
                                     cardOnTapFuntion: () => removeImage(index),
                                   );
@@ -365,6 +436,9 @@ class _ItemAddingState extends State<ItemAdding> {
                   sizedBox,
                   displayText('Description'),
                   TextFormField(
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    initialValue:
+                        ismainItemAvalible ? widget.mainItems.description : '',
                     maxLines: 8,
                     decoration: textinputDecoration,
                     onChanged: (val) => {description = val.trim()},
@@ -372,42 +446,47 @@ class _ItemAddingState extends State<ItemAdding> {
                   ),
                   sizedBox,
                   sizedBox,
-                  raiseButtonCenter(
-                      buttonLable: 'ADD ITEM',
-                      pressBottonFuntion: () async {
-                        setLoaing(true);
-                        try {
-                          dynamic result = await storeItemDataBase(
-                            productname,
-                            productMaterial,
-                            _formKeyAddItem,
-                            selectedCategory,
-                            widget.mainCategories,
-                            genderVisibility,
-                            maleOrFemale,
-                            productColors,
-                            productSize,
-                            images,
-                            offerVisibility,
-                            offer,
-                            price,
-                            description,
-                            madeCountry,
-                            brandName,
-                            quantity,
-                          );
-                          if (result) {
-                            print('------------------ok');
-                            setLoaing(false);
-                            Navigator.of(context).pop();
-                          }
-                        } catch (e) {
-                          var _error = e.message;
-                          print(_error);
-                          setLoaing(false);
-                        }
-                      },
-                      context: context),
+                  ismainItemAvalible
+                      ? RaiseButtonCenter(
+                          buttonLable: 'UPDATE ITEM',
+                          pressBottonFuntion: () {},
+                        )
+                      : RaiseButtonCenter(
+                          buttonLable: 'ADD ITEM',
+                          pressBottonFuntion: () async {
+                            setLoaing(true);
+                            try {
+                              dynamic result = await storeItemDataBase(
+                                productname,
+                                productMaterial,
+                                _formKeyAddItem,
+                                selectedCategory,
+                                widget.mainCategories,
+                                genderVisibility,
+                                maleOrFemale,
+                                productColors,
+                                productSize,
+                                images,
+                                offerVisibility,
+                                offer,
+                                price,
+                                description,
+                                madeCountry,
+                                brandName,
+                                quantity,
+                              );
+                              if (result) {
+                                print('------------------ok');
+                                setLoaing(false);
+                                Navigator.of(context).pop();
+                              }
+                            } catch (e) {
+                              var _error = e.message;
+                              print(_error);
+                              setLoaing(false);
+                            }
+                          },
+                        ),
                   SizedBox(
                     height: 60,
                   ),
