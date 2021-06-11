@@ -32,7 +32,7 @@ Future storeItemDataBase(
         ImageUploadModel ium = image;
         await uploadImage(
           category: selectedCategory,
-          allCategories: productCategories,
+          mainCat: productCategories[selectedCategory],
           file: ium,
         );
         imgURLS.add(ium.imageUrl.toString());

@@ -6,12 +6,12 @@ import 'package:path/path.dart' as path;
 
 Future uploadImage(
     {@required String category,
-    @required Map<String, String> allCategories,
+    @required String mainCat,
     @required ImageUploadModel file}) async {
   //CollectionReference _imgRef;
   StorageReference reference = FirebaseStorage.instance
       .ref()
-      .child(allCategories[category])
+      .child(mainCat)
       .child(category)
       .child(path.basename(file.imageFile.path));
 
@@ -19,7 +19,7 @@ Future uploadImage(
   await uploadTask.onComplete.whenComplete(() async {
     await reference.getDownloadURL().then((value) {
       file.imageUrl = value;
-      return (true);
+      return (value);
     });
   });
 }

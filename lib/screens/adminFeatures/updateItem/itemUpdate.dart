@@ -1,145 +1,38 @@
-// import 'package:flutter/material.dart';
-// import 'package:sazashopping/models/mainItem.dart';
-// import 'package:sazashopping/shared/constant.dart';
+import 'package:sazashopping/models/imageUploadImage.dart';
+import 'package:sazashopping/models/mainItem.dart';
+import 'package:sazashopping/services/database.dart';
+import 'package:sazashopping/services/uploadImage.dart';
 
-// class ItemUpdate extends StatefulWidget {
-//   final MainItems mainItems;
-//   ItemUpdate({this.mainItems});
+class ItemUpdate {
+  MainItems mainItems;
+  final List<Object> images;
+  ItemUpdate({this.mainItems, this.images});
 
-//   @override
-//   _ItemUpdateState createState() => _ItemUpdateState();
-// }
+  List<String> imgurl = new List();
 
-// class _ItemUpdateState extends State<ItemUpdate> {
-//   final _formKey = GlobalKey<FormState>();
-//   MainItems changeMiainItems;
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: Scaffold(
-//         appBar: AppBar(
-//           actions: [],
-//         ),
-//         body: SingleChildScrollView(
-//           physics: BouncingScrollPhysics(),
-//           padding: EdgeInsets.all(15),
-//           child: Form(
-//             key: _formKey,
-//             child: Column(
-//               children: <Widget>[
-//                 TextFormField(
-//                   initialValue: widget.mainItems.name,
-//                   decoration:
-//                       textinputDecoration.copyWith(labelText: 'Item name'),
-//                   onChanged: (val) {
-//                     setState(() {
-//                       changeMiainItems.name = val.trim();
-//                     });
-//                   },
-//                   validator: (val) {
-//                     if (val.trim().isEmpty) {
-//                       return "can't be null";
-//                     } else {
-//                       return null;
-//                     }
-//                   },
-//                   obscureText: true,
-//                 ),
-//                 SizedBox(
-//                   height: 10,
-//                 ),
-//                 TextFormField(
-//                   initialValue: widget.mainItems.price,
-//                   keyboardType: TextInputType.number,
-//                   decoration: textinputDecoration.copyWith(labelText: 'Price'),
-//                   onChanged: (val) {
-//                     setState(() {
-//                       changeMiainItems.price = val.trim();
-//                     });
-//                   },
-//                   validator: (val) {
-//                     if (val.trim().isEmpty) {
-//                       return "can't be null";
-//                     } else {
-//                       return null;
-//                     }
-//                   },
-//                   obscureText: true,
-//                 ),
-//                 SizedBox(
-//                   height: 10,
-//                 ),
-//                 TextFormField(
-//                   initialValue: widget.mainItems.price,
-//                   keyboardType: TextInputType.number,
-//                   decoration: textinputDecoration.copyWith(labelText: 'Price'),
-//                   onChanged: (val) {
-//                     setState(() {
-//                       changeMiainItems.price = val.trim();
-//                     });
-//                   },
-//                   validator: (val) {
-//                     if (val.trim().isEmpty) {
-//                       return "can't be null";
-//                     } else {
-//                       return null;
-//                     }
-//                   },
-//                   obscureText: true,
-//                 ),
-//                 SizedBox(
-//                   height: 10,
-//                 ),
-//                 TextFormField(
-//                   initialValue: widget.mainItems.offer.toString() ?? null,
-//                   keyboardType: TextInputType.number,
-//                   decoration: textinputDecoration.copyWith(
-//                       labelText: 'Offer',
-//                       hintText: 'add offer precentage \'%\''),
-//                   onChanged: (val) {
-//                     setState(() {
-//                       changeMiainItems.offer = double.parse(val.trim());
-//                     });
-//                   },
-//                   validator: (val) {
-//                     if (val.trim().isEmpty) {
-//                       return "can't be null";
-//                     } else {
-//                       return null;
-//                     }
-//                   },
-//                   obscureText: true,
-//                 ),
-//                 SizedBox(
-//                   height: 10,
-//                 ),
-//                 TextFormField(
-//                   initialValue: widget.mainItems.material ?? '',
-//                   decoration: textinputDecoration.copyWith(
-//                     labelText: 'Material',
-//                   ),
-//                   onChanged: (val) {
-//                     setState(() {
-//                       changeMiainItems.offer = double.parse(val.trim());
-//                     });
-//                   },
-//                   validator: (val) {
-//                     if (val.trim().isEmpty) {
-//                       return "can't be null";
-//                     } else {
-//                       return null;
-//                     }
-//                   },
-//                   obscureText: true,
-//                 ),
-//                 SizedBox(
-//                   height: 10,
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  Future imageUpload() async {
+    for (var image in images) {
+      if (image is ImageUploadModel) {
+        ImageUploadModel ium = image;
+        if (image.imageUrl == '') {
+          await uploadImage(
+            category: mainItems.subCat,
+            mainCat: mainItems.subCat,
+            file: ium,
+          );
+        }
+        imgurl.add(
+            image.imageUrl == '' ? ium.imageUrl.toString() : image.imageUrl);
+      }
+    }
+  }
+
+  Future updatingUserInputs() async {
+    mainItems.images = [];
+    mainItems.images.addAll(imgurl);
+    dynamic result = await DataBaseService(uid: this.mainItems.itemId)
+        .updateItem(mainItems, mainItems.subCat, mainItems.mainCat);
+    print(result.toString());
+    return true;
+  }
+}

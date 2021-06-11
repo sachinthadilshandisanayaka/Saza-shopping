@@ -10,6 +10,7 @@ import 'package:sazashopping/screens/adminFeatures/additems/formValidator/multiV
 import 'package:sazashopping/screens/adminFeatures/additems/formValidator/stringValidator.dart';
 import 'package:sazashopping/screens/adminFeatures/additems/formValidator/swithValidator.dart';
 import 'package:sazashopping/screens/adminFeatures/additems/funtions/addModelValue.dart';
+import 'package:sazashopping/screens/adminFeatures/updateItem/itemUpdate.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/uploadLoading.dart';
 import 'package:sazashopping/shared/widget/bottomRightAlignButton.dart';
@@ -40,6 +41,8 @@ class _ItemAddingState extends State<ItemAdding> {
   final genderSelected = TextEditingController();
   final formkey = GlobalKey<FormFieldState>();
   final sizeFormkey = GlobalKey<FormFieldState>();
+
+  MainItems updatedMainItem;
 
   List<Object> images = List<Object>();
   Future<PickedFile> imageFile;
@@ -92,7 +95,6 @@ class _ItemAddingState extends State<ItemAdding> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       images.add("Add Image");
@@ -103,6 +105,9 @@ class _ItemAddingState extends State<ItemAdding> {
       images.add("Add Image");
     });
     if (widget.mainItems != null) {
+      setState(() {
+        updatedMainItem = widget.mainItems;
+      });
       _updateItem();
     } else {
       setState(() {
@@ -138,6 +143,7 @@ class _ItemAddingState extends State<ItemAdding> {
           ImageUploadModel imageUpload = new ImageUploadModel();
           imageUpload.isUploaded = false;
           imageUpload.uploading = false;
+          imageUpload.imageFile = PickedFile('');
           imageUpload.imageUrl = widget.mainItems.images[i];
           images.replaceRange(i, i + 1, [imageUpload]);
         }
@@ -164,9 +170,10 @@ class _ItemAddingState extends State<ItemAdding> {
                     initialValue:
                         ismainItemAvalible ? widget.mainItems.name : '',
                     decoration: textinputDecoration,
-                    onChanged: (val) => (val) {
+                    onChanged: (val) {
                       setState(() {
                         productname = val.trim();
+                        updatedMainItem.name = val.trim();
                       });
                     },
                     validator: (val) => checkValue(val),
@@ -183,6 +190,7 @@ class _ItemAddingState extends State<ItemAdding> {
                     onValueChanged: (value) => {
                       setState(() {
                         selectedCategory = value;
+                        updatedMainItem.subCat = value;
                       })
                     },
                   ),
@@ -196,10 +204,11 @@ class _ItemAddingState extends State<ItemAdding> {
                     decoration: textinputDecoration,
                     initialValue:
                         ismainItemAvalible ? widget.mainItems.price : '',
-                    onChanged: (val) => {
+                    onChanged: (val) {
                       setState(() {
                         price = double.parse(val.trim());
-                      })
+                        updatedMainItem.price = val.trim();
+                      });
                     },
                     validator: (val) => checkValue(val),
                   ),
@@ -226,10 +235,11 @@ class _ItemAddingState extends State<ItemAdding> {
                           keyboardType: TextInputType.number,
                           decoration: textinputDecoration.copyWith(
                               hintText: 'add offer precentage \'%\''),
-                          onChanged: (val) => {
+                          onChanged: (val) {
                             setState(() {
                               offer = double.parse(val);
-                            })
+                              updatedMainItem.offer = double.parse(val);
+                            });
                           },
                           validator: (val) =>
                               checkValueSwith(val, offerVisibility),
@@ -242,10 +252,11 @@ class _ItemAddingState extends State<ItemAdding> {
                     initialValue:
                         ismainItemAvalible ? widget.mainItems.material : '',
                     decoration: textinputDecoration,
-                    onChanged: (val) => {
+                    onChanged: (val) {
                       setState(() {
                         productMaterial = val.trim();
-                      })
+                        updatedMainItem.material = val.trim();
+                      });
                     },
                     validator: (val) => checkValue(val),
                   ),
@@ -256,10 +267,11 @@ class _ItemAddingState extends State<ItemAdding> {
                     initialValue:
                         ismainItemAvalible ? widget.mainItems.brand : '',
                     decoration: textinputDecoration,
-                    onChanged: (val) => {
+                    onChanged: (val) {
                       setState(() {
                         brandName = val.trim();
-                      })
+                        updatedMainItem.brand = val.trim();
+                      });
                     },
                     validator: (val) => checkValue(val),
                   ),
@@ -270,10 +282,11 @@ class _ItemAddingState extends State<ItemAdding> {
                     initialValue:
                         ismainItemAvalible ? widget.mainItems.country : '',
                     decoration: textinputDecoration,
-                    onChanged: (val) => {
+                    onChanged: (val) {
                       setState(() {
                         madeCountry = val.trim();
-                      })
+                        updatedMainItem.country = val.trim();
+                      });
                     },
                     validator: (val) => checkValue(val),
                   ),
@@ -286,10 +299,11 @@ class _ItemAddingState extends State<ItemAdding> {
                         : '',
                     decoration: textinputDecoration,
                     keyboardType: TextInputType.number,
-                    onChanged: (val) => {
+                    onChanged: (val) {
                       setState(() {
                         quantity = int.parse(val.trim());
-                      })
+                        updatedMainItem.quantity = int.parse(val.trim());
+                      });
                     },
                     validator: (val) => checkValue(val),
                   ),
@@ -312,6 +326,7 @@ class _ItemAddingState extends State<ItemAdding> {
                           funtion: (value) {
                             setState(() {
                               maleOrFemale = value;
+                              updatedMainItem.gender = value;
                             });
                           })
                       : SizedBox(),
@@ -341,6 +356,7 @@ class _ItemAddingState extends State<ItemAdding> {
                           setState(() {
                             colorAllreadyAvilable = false;
                             productColors.add(tempColor);
+                            updatedMainItem.color.add(tempColor);
                             tempColor = '';
                           });
                         }
@@ -384,6 +400,7 @@ class _ItemAddingState extends State<ItemAdding> {
                           setState(() {
                             sizeAllreadyAvilable = false;
                             productSize.add(tempSize);
+                            updatedMainItem.size.add(tempSize);
                             tempSize = '';
                           });
                         }
@@ -441,7 +458,12 @@ class _ItemAddingState extends State<ItemAdding> {
                         ismainItemAvalible ? widget.mainItems.description : '',
                     maxLines: 8,
                     decoration: textinputDecoration,
-                    onChanged: (val) => {description = val.trim()},
+                    onChanged: (val) {
+                      setState(() {
+                        description = val.trim();
+                        updatedMainItem.description = val.trim();
+                      });
+                    },
                     validator: (val) => checkValue(val),
                   ),
                   sizedBox,
@@ -449,7 +471,26 @@ class _ItemAddingState extends State<ItemAdding> {
                   ismainItemAvalible
                       ? RaiseButtonCenter(
                           buttonLable: 'UPDATE ITEM',
-                          pressBottonFuntion: () {},
+                          pressBottonFuntion: () async {
+                            setLoaing(true);
+                            if (_formKeyAddItem.currentState.validate()) {
+                              try {
+                                ItemUpdate itemUpdate = ItemUpdate(
+                                    mainItems: updatedMainItem, images: images);
+                                await itemUpdate.imageUpload();
+                                dynamic result =
+                                    await itemUpdate.updatingUserInputs();
+                                if (result) {
+                                  setLoaing(false);
+                                  Navigator.of(context).pop();
+                                }
+                              } catch (e) {
+                                var _error = e.message;
+                                print(_error);
+                                setLoaing(false);
+                              }
+                            }
+                          },
                         )
                       : RaiseButtonCenter(
                           buttonLable: 'ADD ITEM',

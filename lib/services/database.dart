@@ -18,7 +18,7 @@ class DataBaseService {
         .doc(mainCategory)
         .collection(subCategory)
         .doc(uid)
-        .update({
+        .set({
       'name': mainItems.name,
       'material': mainItems.material,
       'gender': mainItems.gender,
