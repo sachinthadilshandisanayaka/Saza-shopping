@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/adminFeatures/shared/popUpMenuButton.dart';
+import 'package:sazashopping/screens/basket/basketMainFrame.dart';
 import 'package:sazashopping/screens/secondPage/itemFrame.dart';
 import 'package:sazashopping/shared/colors.dart';
 
@@ -23,10 +24,17 @@ class SelectedItemDisplay extends StatelessWidget {
               margin: EdgeInsets.only(right: 1),
               child: IconButton(
                 icon: Icon(
-                  FontAwesomeIcons.shoppingBasket,
+                  FontAwesomeIcons.shoppingCart,
                   size: 20,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BasketFrame(),
+                    ),
+                  );
+                },
               ),
             ),
             AdminPopupMenu(

@@ -3,24 +3,25 @@ import 'package:sazashopping/shared/testStyles.dart';
 
 Widget subItemRow({String tabname, String value}) {
   return Container(
-    color: Colors.teal[50],
-    padding: EdgeInsets.all(3),
+    decoration: BoxDecoration(
+      border: Border.all(
+        width: 1,
+        color: Colors.teal[100],
+      ),
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+      color: Colors.white,
+    ),
+    padding: EdgeInsets.all(5),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Flexible(
-          flex: 1,
-          child: Text(
-            tabname,
-            style: tabValueStyle,
-          ),
+        Text(
+          tabname,
+          style: tabValueStyle,
         ),
-        Flexible(
-          flex: 1,
-          child: Text(
-            value,
-            style: tagStyle,
-          ),
+        Text(
+          value,
+          style: tagStyle,
         )
       ],
     ),

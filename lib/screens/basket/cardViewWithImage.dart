@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:sazashopping/models/basket.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/thirdPage/shared/subDetailShow_Row.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/string.dart';
 import 'package:sazashopping/shared/testStyles.dart';
 
-class SubCardWidget extends StatelessWidget {
+class SubCardDisplay extends StatelessWidget {
   final MainItems mainItems;
-  SubCardWidget({@required this.mainItems});
+  final Basket basket;
+  SubCardDisplay({@required this.mainItems, @required this.basket});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class SubCardWidget extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     mainItems.name,
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: nameStyle,
                     softWrap: false,
@@ -88,15 +90,22 @@ class SubCardWidget extends StatelessWidget {
                     height: 5,
                   ),
                   subItemRow(
-                    tabname: 'Material :',
-                    value: mainItems.material,
+                    tabname: 'Colors',
+                    value: this.basket.color,
                   ),
                   SizedBox(
                     height: 5,
                   ),
                   subItemRow(
-                    tabname: 'Brand :',
-                    value: mainItems.brand,
+                    tabname: 'Size',
+                    value: this.basket.size,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  subItemRow(
+                    tabname: 'Quantity',
+                    value: this.basket.quantity,
                   ),
                 ],
               ),

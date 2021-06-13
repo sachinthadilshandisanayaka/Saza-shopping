@@ -9,8 +9,17 @@ class ItemDetailDisplaty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.teal[50],
-      padding: EdgeInsets.only(top: 3, bottom: 3),
+      padding: EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 1,
+          color: Colors.teal[200],
+        ),
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

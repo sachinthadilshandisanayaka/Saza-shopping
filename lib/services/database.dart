@@ -88,6 +88,35 @@ class DataBaseService {
     }).toList();
   }
 
+  MainItems getSelectedItem(DocumentSnapshot snapshot) {
+    return MainItems(
+      itemId: uid ?? '',
+      mainCat: mainCategoryName ?? '',
+      subCat: subCategeoryName ?? '',
+      name: snapshot.data()['name'] ?? '',
+      material: snapshot.data()['material'] ?? '',
+      gender: snapshot.data()['gender'] ?? '',
+      description: snapshot.data()['description'] ?? '',
+      country: snapshot.data()['country'] ?? '',
+      brand: snapshot.data()['brand'] ?? '',
+      size: List.from(snapshot.data()['size']) ?? [],
+      color: List.from(snapshot.data()['color']) ?? [],
+      images: List.from(snapshot.data()['images']) ?? [],
+      quantity: snapshot.data()['quantity'] ?? 0,
+      offer: snapshot.data()['offer'] ?? 0.0,
+      price: snapshot.data()['price'] ?? '',
+    );
+  }
+
+  Stream<MainItems> get databaseSeletecteItem {
+    return sazaCollection
+        .doc(mainCategoryName)
+        .collection(subCategeoryName)
+        .doc(uid)
+        .snapshots()
+        .map((i) => getSelectedItem(i));
+  }
+
   // new
   Stream<List<MainItems>> get databaseStoreAllItems {
     return sazaCollection
@@ -107,13 +136,13 @@ class DataBaseService {
         .map((i) => itemListFromSnapShot(i));
   }
 
-  List<String> _category(QuerySnapshot snapshot) {
-    return snapshot.docs.map((val) {
-      return val.id.toString();
-    }).toList();
-  }
+  // List<String> _category(QuerySnapshot snapshot) {
+  //   return snapshot.docs.map((val) {
+  //     return val.id.toString();
+  //   }).toList();
+  // }
 
-  Stream<List<String>> get shopItems {
-    return sazaCollection.snapshots().map((i) => _category(i));
-  }
+  // Stream<List<String>> get shopItems {
+  //   return sazaCollection.snapshots().map((i) => _category(i));
+  // }
 }

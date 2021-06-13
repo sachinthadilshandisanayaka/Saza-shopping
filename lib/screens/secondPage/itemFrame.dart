@@ -54,6 +54,12 @@ class _ItemCardState extends State<ItemCard> {
     return (price - (price * (offer / 100)));
   }
 
+  _fishedLoadig() {
+    setState(() {
+      count = 0;
+    });
+  }
+
   _loading(bool val) {
     setState(() {
       loading = val;
@@ -121,8 +127,8 @@ class _ItemCardState extends State<ItemCard> {
                           padding: EdgeInsets.only(
                             top: 20,
                             bottom: 20.0,
-                            left: 14.0,
-                            right: 10.0,
+                            left: 15.0,
+                            right: 15.0,
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -287,8 +293,17 @@ class _ItemCardState extends State<ItemCard> {
                                 height: 10,
                               ),
                               Container(
-                                color: Colors.teal[50],
-                                padding: EdgeInsets.all(10),
+                                padding: EdgeInsets.all(5),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Colors.teal[200],
+                                  ),
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10),
+                                  ),
+                                ),
                                 child: Text(
                                   widget.mainItems.description,
                                   style: itemdefaultStyle,
@@ -306,31 +321,39 @@ class _ItemCardState extends State<ItemCard> {
                                 buttonLable: addtobasket,
                                 pressBottonFuntion: () async {
                                   _loading(true);
-                                  if (this.count == 0) {
-                                    Scaffold.of(context)
-                                        .showSnackBar(snackBarCount);
-                                  } else if (this.selecteColor.isEmpty &&
-                                      widget.mainItems.color.length == 0) {
-                                    Scaffold.of(context)
-                                        .showSnackBar(snackBarColor);
-                                  } else if (this.selecteSize.isEmpty &&
-                                      widget.mainItems.size.length == 0) {
-                                    Scaffold.of(context)
-                                        .showSnackBar(snackBarSize);
-                                  } else {
-                                    Map<String, String> basket = {
-                                      'itemid': widget.mainItems.itemId,
-                                      'userid': userid.uid,
-                                      'size': selecteSize,
-                                      'quantity': count.toString(),
-                                      'color': selecteColor,
-                                    };
-                                    await BasketDataBaseService(
-                                            userid: userid.uid, basket: basket)
-                                        .updateItem();
+                                  try {
+                                    if (this.count == 0) {
+                                      Scaffold.of(context)
+                                          .showSnackBar(snackBarCount);
+                                    } else if (this.selecteColor.isEmpty &&
+                                        widget.mainItems.color.length != 0) {
+                                      Scaffold.of(context)
+                                          .showSnackBar(snackBarColor);
+                                    } else if (this.selecteSize.isEmpty &&
+                                        widget.mainItems.size.length != 0) {
+                                      Scaffold.of(context)
+                                          .showSnackBar(snackBarSize);
+                                    } else {
+                                      Map<String, String> basket = {
+                                        'itemid': widget.mainItems.itemId,
+                                        'userid': userid.uid,
+                                        'subcat': widget.mainItems.subCat,
+                                        'mainCat': widget.mainItems.mainCat,
+                                        'size': selecteSize,
+                                        'quantity': count.toString(),
+                                        'color': selecteColor,
+                                      };
+                                      await BasketDataBaseService(
+                                              userid: userid.uid,
+                                              basket: basket)
+                                          .updateItem();
+                                      _fishedLoadig();
+                                    }
+                                    _loading(false);
+                                  } catch (e) {
+                                    _loading(false);
+                                    print(e.message);
                                   }
-                                  _loading(false);
-                                  print('done');
                                 },
                               ),
                         SizedBox(
