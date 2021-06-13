@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
+import 'package:sazashopping/screens/secondPage/shared/dropDownBotton.dart';
+import 'package:sazashopping/screens/secondPage/shared/itemCountSelection.dart';
 import 'package:sazashopping/shared/clipPath/messageClipPath.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
@@ -20,15 +22,20 @@ class _ItemCardState extends State<ItemCard> {
   double actualPrice = 0.0;
   String selecteSize;
   String selecteColor;
+  bool stockNotAvilabe = false;
+  int count;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
+      count = 0;
       if (widget.mainItems.offer != 0.0) {
         actualPrice = _priceCalculate(
             double.parse(widget.mainItems.price), widget.mainItems.offer);
+      }
+      if (widget.mainItems.quantity == 0) {
+        stockNotAvilabe = true;
       }
     });
   }
@@ -56,22 +63,54 @@ class _ItemCardState extends State<ItemCard> {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.40,
-                    child: FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Hero(
-                        tag: widget.mainItems,
-                        child: Image.network(
-                          widget.mainItems.images[0],
-                          fit: BoxFit.contain,
-                          loadingBuilder: (context, child, progress) {
-                            return progress == null
-                                ? child
-                                : Center(
-                                    child: LinearProgressIndicator(),
-                                  );
-                          },
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: <Widget>[
+                        FittedBox(
+                          fit: BoxFit.fitHeight,
+                          child: Hero(
+                            tag: widget.mainItems,
+                            child: Image.network(
+                              widget.mainItems.images[0],
+                              fit: BoxFit.contain,
+                              loadingBuilder: (context, child, progress) {
+                                return progress == null
+                                    ? child
+                                    : Center(
+                                        child: LinearProgressIndicator(),
+                                      );
+                              },
+                            ),
+                          ),
                         ),
-                      ),
+                        stockNotAvilabe
+                            ? Positioned(
+                                top: 100,
+                                left: 18,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: 50,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                    width: 4,
+                                    color: Colors.red,
+                                  )),
+                                  child: Text(
+                                    'SOLD',
+                                    style: itemdefaultStyle.copyWith(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      wordSpacing: 2,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : SizedBox(),
+                      ],
                     ),
                   ),
                   Container(
@@ -160,135 +199,48 @@ class _ItemCardState extends State<ItemCard> {
                         SizedBox(
                           height: 10,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Text(
-                                'Color',
-                                style: itemdefaultStyle,
-                              ),
-                            ),
-                            widget.mainItems.color.length != 0
-                                ? Flexible(
-                                    flex: 1,
-                                    child: DropdownButtonFormField(
-                                      value: selecteColor,
-                                      hint: Text(
-                                        'choose one',
-                                        style: itemdefaultStyle,
-                                      ),
-                                      isExpanded: true,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          selecteColor = value;
-                                        });
-                                      },
-                                      onSaved: (value) {
-                                        setState(() {
-                                          selecteColor = value;
-                                        });
-                                      },
-                                      validator: (String value) {
-                                        if (value.isEmpty) {
-                                          return "can't empty";
-                                        } else {
-                                          return null;
-                                        }
-                                      },
-                                      items: widget.mainItems.color
-                                          .map((String getcolor) {
-                                        return DropdownMenuItem(
-                                          value: getcolor,
-                                          child: Text(
-                                            getcolor,
-                                            style: inputFormTextStyle,
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                    // child: DropDownFormField(
-                                    //   titleText: 'Color',
-                                    //   hintText: 'choose one',
-                                    //   value: color,
-                                    //   onSaved: (value) {
-                                    //     setState(() {
-                                    //       color = value;
-                                    //     });
-                                    //   },
-                                    //   onChanged: (value) {
-                                    //     setState(() {
-                                    //       color = value;
-                                    //     });
-                                    //   },
-                                    //   dataSource: widget.mainItems.color
-                                    //       .map((String getcolor) {
-                                    //     return ({
-                                    //       "display": getcolor,
-                                    //       "value": getcolor,
-                                    //     });
-                                    //   }).toList(),
-                                    //   textField: 'display',
-                                    //   valueField: 'value',
-                                    // ),
-                                  )
-                                : SizedBox(),
-                          ],
+                        SelectionDropDown(
+                          name: 'Color',
+                          items: widget.mainItems.color,
+                          function: (val) {
+                            setState(() {
+                              selecteColor = val;
+                            });
+                          },
                         ),
                         SizedBox(
-                          height: 7,
+                          height: 10,
+                        ),
+                        SelectionDropDown(
+                          name: 'Size',
+                          items: widget.mainItems.size,
+                          function: (val) {
+                            setState(() {
+                              selecteSize = val;
+                            });
+                            print(selecteSize.toString());
+                          },
+                        ),
+                        SizedBox(
+                          height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Text(
-                                'Size',
-                                style: itemdefaultStyle,
-                              ),
+                          children: <Widget>[
+                            Text(
+                              'Quantity',
+                              style: itemdefaultStyle,
                             ),
-                            widget.mainItems.size.length != 0
-                                ? Flexible(
-                                    flex: 1,
-                                    child: DropdownButtonFormField(
-                                      value: selecteSize,
-                                      hint: Text(
-                                        'choose one',
-                                        style: itemdefaultStyle,
-                                      ),
-                                      isExpanded: true,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          selecteSize = value;
-                                        });
-                                      },
-                                      onSaved: (value) {
-                                        setState(() {
-                                          selecteSize = value;
-                                        });
-                                      },
-                                      validator: (String value) {
-                                        if (value.isEmpty) {
-                                          return "can't empty";
-                                        } else {
-                                          return null;
-                                        }
-                                      },
-                                      items: widget.mainItems.size
-                                          .map((String getsize) {
-                                        return DropdownMenuItem(
-                                          value: getsize,
-                                          child: Text(
-                                            getsize,
-                                            style: inputFormTextStyle,
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  )
-                                : SizedBox(),
+                            ItemContselect(
+                              size: widget.mainItems.quantity,
+                              count: count,
+                              incress: () => setState(() {
+                                count++;
+                              }),
+                              descrise: () => setState(() {
+                                count--;
+                              }),
+                            ),
                           ],
                         ),
                         SizedBox(
@@ -396,15 +348,17 @@ class _ItemCardState extends State<ItemCard> {
                   SizedBox(
                     height: 15,
                   ),
-                  outlineButtonCenter(
-                      context: context,
-                      buttonLable: addtobasket,
-                      pressBottonFuntion: () {}),
+                  stockNotAvilabe
+                      ? SizedBox()
+                      : OutLineButtonCenter(
+                          buttonLable: addtobasket, pressBottonFuntion: () {}),
                   SizedBox(
                     height: 5,
                   ),
-                  RaiseButtonCenter(
-                      buttonLable: buy, pressBottonFuntion: () {}),
+                  stockNotAvilabe
+                      ? SizedBox()
+                      : RaiseButtonCenter(
+                          buttonLable: buy, pressBottonFuntion: () {}),
                   SizedBox(
                     height: 30,
                   ),

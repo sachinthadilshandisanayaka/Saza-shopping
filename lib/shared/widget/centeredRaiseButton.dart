@@ -5,7 +5,8 @@ import 'package:sazashopping/shared/constant.dart';
 class RaiseButtonCenter extends StatelessWidget {
   final Function pressBottonFuntion;
   final String buttonLable;
-  RaiseButtonCenter({@required this.pressBottonFuntion,@required this.buttonLable});
+  RaiseButtonCenter(
+      {@required this.pressBottonFuntion, @required this.buttonLable});
 
   @override
   Widget build(BuildContext context) {
