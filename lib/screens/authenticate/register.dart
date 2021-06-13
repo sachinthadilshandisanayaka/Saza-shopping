@@ -1,7 +1,9 @@
 import 'dart:ui';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/screens/authenticate/shared/clipPath.dart';
 import 'package:sazashopping/services/auth.dart';
+import 'package:sazashopping/services/backetDatabase.dart';
 import 'package:sazashopping/shared/errorMessageShow.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/loading.dart';
@@ -128,10 +130,13 @@ class _RegisterState extends State<Register> {
                                             _loading = true;
                                           });
                                           try {
-                                            dynamic result = await _auth
+                                            User result = await _auth
                                                 .registerWithEmailAndPassword(
                                                     email, password);
-                                            print('User id : ' + result);
+                                            await BasketDataBaseService(
+                                                    userid: result.uid)
+                                                .addBasketNewUser();
+                                            print('User id : ' + result.uid);
                                           } catch (e) {
                                             setState(() {
                                               _error = e.message;

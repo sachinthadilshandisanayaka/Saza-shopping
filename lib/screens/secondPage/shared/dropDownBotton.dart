@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sazashopping/shared/constant.dart';
 
 class SelectionDropDown extends StatefulWidget {
-  final List<Object> items;
+  final List<String> items;
   final String name;
   final Function function;
   SelectionDropDown(
@@ -31,7 +31,7 @@ class _SelectionDropDownState extends State<SelectionDropDown> {
             ? Flexible(
                 flex: 1,
                 child: DropdownButtonFormField(
-                  elevation: 0,
+                  elevation: 8,
                   value: selecteSize,
                   hint: Text(
                     'choose one',
@@ -40,14 +40,7 @@ class _SelectionDropDownState extends State<SelectionDropDown> {
                   isExpanded: true,
                   onChanged: (value) => widget.function(value),
                   onSaved: (value) => widget.function(value),
-                  validator: (Object value) {
-                    if (value.toString().isEmpty) {
-                      return "can't empty";
-                    } else {
-                      return null;
-                    }
-                  },
-                  items: widget.items.map((Object getsize) {
+                  items: widget.items.map((String getsize) {
                     return DropdownMenuItem(
                       value: getsize,
                       child: Text(

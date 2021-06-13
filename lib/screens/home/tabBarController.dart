@@ -25,7 +25,10 @@ class TabBarController extends StatelessWidget {
           centerTitle: true,
           // title: HomeTitle(),
           leading: IconButton(
-            icon: Icon(FontAwesomeIcons.alignLeft, size: 20,),
+            icon: Icon(
+              FontAwesomeIcons.alignLeft,
+              size: 20,
+            ),
             onPressed: () {
               scaffoled.currentState.openDrawer();
             },

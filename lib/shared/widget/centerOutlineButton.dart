@@ -22,7 +22,7 @@ class OutLineButtonCenter extends StatelessWidget {
             buttonLable,
             style: cartButtonStyle,
           ),
-          onPressed: () => pressBottonFuntion,
+          onPressed: () async => await pressBottonFuntion(),
           style: carElevatedStryle,
         ),
       ),
