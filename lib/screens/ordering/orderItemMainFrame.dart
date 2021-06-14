@@ -16,11 +16,8 @@ class OrderItemMainFrame extends StatelessWidget {
       body: Container(
         color: Colors.teal[50],
         padding: EdgeInsets.all(15),
-        child: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: ShppingForm(
-            basket: this.basket,
-          ),
+        child: ShppingForm(
+          basket: this.basket,
         ),
       ),
     );

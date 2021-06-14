@@ -15,7 +15,7 @@ const textinputDecoration = InputDecoration(
     ),
   ),
 );
-const textinputDecoration2 = InputDecoration(
+var textinputDecoration2 = InputDecoration(
   labelStyle: TextStyle(
     fontFamily: 'Baloo2',
     fontWeight: FontWeight.normal,
@@ -30,7 +30,7 @@ const textinputDecoration2 = InputDecoration(
   filled: true,
   enabledBorder: OutlineInputBorder(
     borderSide: BorderSide(
-      color: Colors.teal,
+      color: appBarColor,
       width: 2.0,
     ),
   ),

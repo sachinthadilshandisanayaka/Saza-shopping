@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sazashopping/screens/adminFeatures/additems/itemAddMainFrame.dart';
+import 'package:sazashopping/screens/adminFeatures/adminHome/AdminHome.dart';
 import 'package:sazashopping/screens/home/menus/constants.dart';
 import 'package:sazashopping/screens/home/showDialog/customDialog.dart';
 // import 'package:sazashopping/screens/home/showDialog/newDialog.dart';
@@ -26,6 +27,9 @@ Widget popUpMenuButton(BuildContext context) {
       } else if (action == Constants.additem) {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => ItemAddMainFrame()));
+      } else if (action == Constants.orders) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => AdminHome()));
       }
     },
     itemBuilder: (BuildContext context) {
