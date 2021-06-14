@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/models/user.dart';
+import 'package:sazashopping/screens/ordering/orderItemMainFrame.dart';
 import 'package:sazashopping/screens/secondPage/shared/detailDisplay.dart';
 import 'package:sazashopping/screens/secondPage/shared/dropDownBotton.dart';
 import 'package:sazashopping/screens/secondPage/shared/imageDisplay.dart';
@@ -363,7 +364,46 @@ class _ItemCardState extends State<ItemCard> {
                             ? SizedBox()
                             : RaiseButtonCenter(
                                 buttonLable: buy,
-                                pressBottonFuntion: () {},
+                                pressBottonFuntion: () async {
+                                  _loading(true);
+                                  try {
+                                    if (this.count == 0) {
+                                      Scaffold.of(context)
+                                          .showSnackBar(snackBarCount);
+                                    } else if (this.selecteColor.isEmpty &&
+                                        widget.mainItems.color.length != 0) {
+                                      Scaffold.of(context)
+                                          .showSnackBar(snackBarColor);
+                                    } else if (this.selecteSize.isEmpty &&
+                                        widget.mainItems.size.length != 0) {
+                                      Scaffold.of(context)
+                                          .showSnackBar(snackBarSize);
+                                    } else {
+                                      Map<String, String> basket = {
+                                        'itemid': widget.mainItems.itemId,
+                                        'userid': userid.uid,
+                                        'subcat': widget.mainItems.subCat,
+                                        'mainCat': widget.mainItems.mainCat,
+                                        'size': selecteSize,
+                                        'quantity': count.toString(),
+                                        'color': selecteColor,
+                                      };
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              OrderItemMainFrame(
+                                            basket: basket,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    _loading(false);
+                                  } catch (e) {
+                                    _loading(false);
+                                    print(e.message);
+                                  }
+                                },
                               ),
                         SizedBox(
                           height: 30,

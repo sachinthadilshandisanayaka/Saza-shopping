@@ -15,6 +15,26 @@ const textinputDecoration = InputDecoration(
     ),
   ),
 );
+const textinputDecoration2 = InputDecoration(
+  labelStyle: TextStyle(
+    fontFamily: 'Baloo2',
+    fontWeight: FontWeight.normal,
+  ),
+  hintStyle: TextStyle(
+    fontFamily: 'Baloo2',
+    fontWeight: FontWeight.normal,
+  ),
+  border: OutlineInputBorder(),
+  isDense: true,
+  fillColor: Colors.white,
+  filled: true,
+  enabledBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.teal,
+      width: 2.0,
+    ),
+  ),
+);
 
 var formBoxDecoration = BoxDecoration(
   color: Colors.teal[50],

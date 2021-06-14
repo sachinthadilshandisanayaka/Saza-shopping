@@ -20,19 +20,24 @@ class BasketDataBaseService {
 
   List<Basket> basketSnapshot(DocumentSnapshot snapshot) {
     List<Basket> basket = [];
-    List result = List.from(snapshot.data()['basketArray']);
-    for (var i in result) {
-      Basket val = new Basket(
-        itemid: i['itemid'] ?? '',
-        userid: i['userid'] ?? '',
-        subcat: i['subcat'] ?? '',
-        mainCat: i['mainCat'] ?? '',
-        quantity: i['quantity'] ?? '',
-        color: i['color'] ?? '',
-        size: i['size'] ?? '',
-      );
-      basket.add(val);
+    try {
+      List result = List.from(snapshot.data()['basketArray']);
+      for (var i in result) {
+        Basket val = new Basket(
+          itemid: i['itemid'] ?? '',
+          userid: i['userid'] ?? '',
+          subcat: i['subcat'] ?? '',
+          mainCat: i['mainCat'] ?? '',
+          quantity: i['quantity'] ?? '',
+          color: i['color'] ?? '',
+          size: i['size'] ?? '',
+        );
+        basket.add(val);
+      }
+    } catch (e) {
+      print('error');
     }
+
     return basket;
   }
 

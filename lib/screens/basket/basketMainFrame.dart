@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sazashopping/models/basket.dart';
 import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/basket/listView.dart';
 import 'package:sazashopping/screens/home/share/loadingWidget.dart';
@@ -16,16 +17,25 @@ class BasketFrame extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: appBarColor,
       ),
-      body: StreamBuilder<Object>(
+      body: StreamBuilder<List<Basket>>(
           stream: BasketDataBaseService(userid: userid.uid).basketStorage,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return BasketListView(
-                basketList: snapshot.data,
-              );
+              print('hasd data');
+              if (snapshot.data.length > 0) {
+                return BasketListView(
+                  basketList: snapshot.data,
+                );
+              } else {
+                return Center(
+                  child: Text('no item in basket'),
+                );
+              }
             } else if (snapshot.error) {
+              print('--------');
               return LoadingBegin();
             }
+            print('======');
             return LoadingBegin();
           }),
     );
