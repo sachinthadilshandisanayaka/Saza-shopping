@@ -7,16 +7,20 @@ import 'package:sazashopping/services/orderDatabase.dart';
 import 'package:sazashopping/services/userDetailDatabase.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/orderLoading.dart';
+import 'package:sazashopping/shared/orderState.dart';
 import 'package:sazashopping/shared/widget/centeredRaiseButton.dart';
 
 class OderForm extends StatefulWidget {
   final UserShppingDetail userShppingDetail;
   final Map basket;
   final String id;
-  OderForm(
-      {@required this.userShppingDetail,
-      @required this.basket,
-      @required this.id});
+  final List<String> images;
+  OderForm({
+    @required this.userShppingDetail,
+    @required this.basket,
+    @required this.id,
+    @required this.images,
+  });
 
   @override
   _OderFormState createState() => _OderFormState();
@@ -223,6 +227,8 @@ class _OderFormState extends State<OderForm> {
                             quantity: widget.basket['quantity'],
                             color: widget.basket['color'],
                             dataAndTime: timestamp,
+                            orderState: OrderState.notShipped,
+                            images: widget.images,
                           );
                           await OrderDatabaseService(
                                   orderDetailModel: oderModel)

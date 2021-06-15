@@ -4,6 +4,7 @@ import 'package:sazashopping/screens/adminFeatures/additems/itemAddMainFrame.dar
 import 'package:sazashopping/screens/adminFeatures/adminHome/AdminHome.dart';
 import 'package:sazashopping/screens/home/menus/constants.dart';
 import 'package:sazashopping/screens/home/showDialog/customDialog.dart';
+import 'package:sazashopping/screens/purchase/purchaseOrders.dart';
 // import 'package:sazashopping/screens/home/showDialog/newDialog.dart';
 
 Widget popUpMenuButton(BuildContext context) {
@@ -30,6 +31,9 @@ Widget popUpMenuButton(BuildContext context) {
       } else if (action == Constants.orders) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => AdminHome()));
+      } else if (action == Constants.purchase) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => PurchaseItems()));
       }
     },
     itemBuilder: (BuildContext context) {

@@ -1,25 +1,18 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/models/orderModel.dart';
 import 'package:sazashopping/screens/adminFeatures/adminHome/orderCard.dart';
+import 'package:sazashopping/shared/loading.dart';
 
 class OrdersList extends StatelessWidget {
+  final String oState;
+  OrdersList({@required this.oState});
+
   @override
   Widget build(BuildContext context) {
     final ordersList = Provider.of<List<OrderDetailModel>>(context) ?? [];
     return ordersList.length == 0
-        ? Container(
-            child: Center(
-              child: Text(
-                'No Orders',
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          )
+        ? Loading()
         : Container(
             padding: EdgeInsets.all(15),
             child: SingleChildScrollView(
@@ -28,9 +21,12 @@ class OrdersList extends StatelessWidget {
                 shrinkWrap: true,
                 itemCount: ordersList.length,
                 itemBuilder: (context, index) {
-                  return OrderCard(
-                    oders: ordersList[index],
-                  );
+                  return ordersList[index].orderState == oState
+                      ? OrderCard(
+                          oders: ordersList[index],
+                          oState: oState,
+                        )
+                      : SizedBox();
                 },
               ),
             ),

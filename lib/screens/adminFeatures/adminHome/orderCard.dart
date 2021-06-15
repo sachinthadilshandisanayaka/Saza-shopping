@@ -6,7 +6,8 @@ import 'package:sazashopping/shared/constant.dart';
 
 class OrderCard extends StatelessWidget {
   final OrderDetailModel oders;
-  OrderCard({@required this.oders});
+  final String oState;
+  OrderCard({@required this.oders, this.oState});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,7 @@ class OrderCard extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => OrderReview(
                       orderDetailModel: this.oders,
+                      oState: oState,
                     )));
       },
       child: Container(

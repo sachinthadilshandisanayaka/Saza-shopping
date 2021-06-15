@@ -18,6 +18,8 @@ class OrderDetailModel {
   String quantity;
   String color;
   Timestamp dataAndTime;
+  String orderState;
+  List<String> images;
 
   OrderDetailModel({
     this.orderId,
@@ -37,5 +39,7 @@ class OrderDetailModel {
     this.subcat,
     this.mainCat,
     this.dataAndTime,
+    this.orderState,
+    this.images,
   });
 }

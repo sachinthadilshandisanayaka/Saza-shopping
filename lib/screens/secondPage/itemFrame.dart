@@ -394,6 +394,7 @@ class _ItemCardState extends State<ItemCard> {
                                           builder: (context) =>
                                               OrderItemMainFrame(
                                             basket: basket,
+                                            images: widget.mainItems.images,
                                           ),
                                         ),
                                       );

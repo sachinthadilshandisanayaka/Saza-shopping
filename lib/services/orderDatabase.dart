@@ -3,7 +3,9 @@ import 'package:sazashopping/models/orderModel.dart';
 
 class OrderDatabaseService {
   final OrderDetailModel orderDetailModel;
-  OrderDatabaseService({this.orderDetailModel});
+  final String itemId;
+  final String userid;
+  OrderDatabaseService({this.orderDetailModel, this.itemId, this.userid});
   final CollectionReference orderCollection =
       FirebaseFirestore.instance.collection('newOrders');
 
@@ -25,7 +27,48 @@ class OrderDatabaseService {
       'quantity': orderDetailModel.quantity,
       'color': orderDetailModel.color,
       'dataAndTime': orderDetailModel.dataAndTime,
+      'orderState': orderDetailModel.orderState,
+      'images': FieldValue.arrayUnion(orderDetailModel.images),
     });
+  }
+
+  Future orderStateUpdate(String state) async {
+    return await orderCollection.doc(itemId).update({
+      'orderState': state,
+    });
+  }
+
+  List<OrderDetailModel> _getUserOrder(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return OrderDetailModel(
+        orderId: doc.id ?? '',
+        name: doc.data()['name'] ?? '',
+        streetAddress1: doc.data()['streetAddress1'] ?? '',
+        streetAddress2: doc.data()['streetAddress2'] ?? '',
+        city: doc.data()['city'] ?? '',
+        province: doc.data()['province'] ?? '',
+        postalcode: doc.data()['postalcode'] ?? '',
+        country: doc.data()['country'] ?? '',
+        telephone: doc.data()['telephone'] ?? '',
+        itemid: doc.data()['itemid'] ?? '',
+        userid: doc.data()['userid'] ?? '',
+        subcat: doc.data()['subcat'] ?? '',
+        mainCat: doc.data()['mainCat'] ?? '',
+        size: doc.data()['size'] ?? '',
+        quantity: doc.data()['quantity'] ?? '',
+        color: doc.data()['color'] ?? '',
+        dataAndTime: doc.data()['dataAndTime'] ?? '',
+        orderState: doc.data()['orderState'] ?? '',
+        images: List.from(doc.data()['images']) ?? [],
+      );
+    }).toList();
+  }
+
+  Stream<List<OrderDetailModel>> get userOrderStream {
+    return orderCollection
+        .where('userid', isEqualTo: userid)
+        .snapshots()
+        .map((val) => _getUserOrder(val));
   }
 
   List<OrderDetailModel> _getDataFromSnaphot(QuerySnapshot snapshot) {
@@ -48,6 +91,8 @@ class OrderDatabaseService {
         quantity: doc.data()['quantity'] ?? '',
         color: doc.data()['color'] ?? '',
         dataAndTime: doc.data()['dataAndTime'] ?? '',
+        orderState: doc.data()['orderState'] ?? '',
+        images: List.from(doc.data()['images']) ?? [],
       );
     }).toList();
   }

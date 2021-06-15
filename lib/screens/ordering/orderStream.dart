@@ -8,7 +8,8 @@ import 'package:sazashopping/shared/loading.dart';
 
 class ShppingForm extends StatelessWidget {
   final Map basket;
-  ShppingForm({@required this.basket});
+  final List<String> images;
+  ShppingForm({@required this.basket, @required this.images});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +19,11 @@ class ShppingForm extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return OderForm(
-                userShppingDetail: snapshot.data,
-                basket: this.basket,
-                id: userid.uid);
+              userShppingDetail: snapshot.data,
+              basket: this.basket,
+              id: userid.uid,
+              images: this.images,
+            );
           } else if (snapshot.hasError) {
             return Center(
               child: Text('error is occure'),

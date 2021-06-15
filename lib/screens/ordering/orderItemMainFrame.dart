@@ -4,7 +4,8 @@ import 'package:sazashopping/shared/colors.dart';
 
 class OrderItemMainFrame extends StatelessWidget {
   final Map basket;
-  OrderItemMainFrame({@required this.basket});
+  final List<String> images;
+  OrderItemMainFrame({@required this.basket, @required this.images});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +19,7 @@ class OrderItemMainFrame extends StatelessWidget {
         padding: EdgeInsets.all(15),
         child: ShppingForm(
           basket: this.basket,
+          images: this.images,
         ),
       ),
     );
