@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/orderModel.dart';
+import 'package:sazashopping/screens/adminFeatures/adminHome/orderMaintaining.dart';
 import 'package:sazashopping/shared/colors.dart';
+import 'package:sazashopping/shared/constant.dart';
 
 class OrderCard extends StatelessWidget {
   final OrderDetailModel oders;
@@ -8,42 +10,78 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: appBarColor, width: 1),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Column(
-        children: <Widget>[
-          Text(this.oders.name),
-          SizedBox(
-            height: 5,
-          ),
-          Text(this.oders.streetAddress1),
-          SizedBox(
-            height: 5,
-          ),
-          Text(this.oders.streetAddress2),
-          SizedBox(
-            height: 5,
-          ),
-          Text(this.oders.telephone),
-          SizedBox(
-            height: 5,
-          ),
-          Text(this.oders.country),
-          SizedBox(
-            height: 5,
-          ),
-          Text(this.oders.itemid),
-          SizedBox(
-            height: 5,
-          ),
-          Text(this.oders.subcat),
-          SizedBox(
-            height: 5,
-          ),
-        ],
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => OrderReview(
+                      orderDetailModel: this.oders,
+                    )));
+      },
+      child: Container(
+        margin: EdgeInsets.only(bottom: 15),
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          border: Border.all(color: appBarColor, width: 1),
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Item id'),
+                Text(
+                  this.oders.itemid,
+                  style: itemdefaultStyle.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Item name'),
+                Text(
+                  this.oders.subcat,
+                  style: itemdefaultStyle.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Buyer'),
+                Text(
+                  this.oders.name,
+                  style: itemdefaultStyle.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Text(
+              this.oders.dataAndTime.toDate().toString(),
+              style: itemdefaultStyle.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

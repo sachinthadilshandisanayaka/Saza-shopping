@@ -71,7 +71,6 @@ const itemnameStyle = TextStyle(
 );
 
 const itemdefaultStyle = TextStyle(
-  fontWeight: FontWeight.w200,
   fontFamily: 'OpenSans',
 );
 

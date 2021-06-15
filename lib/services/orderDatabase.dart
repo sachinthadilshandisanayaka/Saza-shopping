@@ -24,12 +24,14 @@ class OrderDatabaseService {
       'size': orderDetailModel.size,
       'quantity': orderDetailModel.quantity,
       'color': orderDetailModel.color,
+      'dataAndTime': orderDetailModel.dataAndTime,
     });
   }
 
   List<OrderDetailModel> _getDataFromSnaphot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return OrderDetailModel(
+        orderId: doc.id ?? '',
         name: doc.data()['name'] ?? '',
         streetAddress1: doc.data()['streetAddress1'] ?? '',
         streetAddress2: doc.data()['streetAddress2'] ?? '',
@@ -45,6 +47,7 @@ class OrderDatabaseService {
         size: doc.data()['size'] ?? '',
         quantity: doc.data()['quantity'] ?? '',
         color: doc.data()['color'] ?? '',
+        dataAndTime: doc.data()['dataAndTime'] ?? '',
       );
     }).toList();
   }

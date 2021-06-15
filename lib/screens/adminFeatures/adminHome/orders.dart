@@ -9,7 +9,6 @@ class OrdersList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ordersList = Provider.of<List<OrderDetailModel>>(context) ?? [];
-    print('-------------' + ordersList.length.toString());
     return ordersList.length == 0
         ? Container(
             child: Center(
@@ -25,16 +24,14 @@ class OrdersList extends StatelessWidget {
             padding: EdgeInsets.all(15),
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
-              child: Container(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: ordersList.length,
-                  itemBuilder: (context, index) {
-                    return OrderCard(
-                      oders: ordersList[index],
-                    );
-                  },
-                ),
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: ordersList.length,
+                itemBuilder: (context, index) {
+                  return OrderCard(
+                    oders: ordersList[index],
+                  );
+                },
               ),
             ),
           );

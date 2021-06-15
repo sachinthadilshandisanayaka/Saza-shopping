@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/orderModel.dart';
 import 'package:sazashopping/models/userShippingDetails.dart';
@@ -200,6 +201,9 @@ class _OderFormState extends State<OderForm> {
                             userDetail: _userShppingDetail,
                           ).updateUserDetail();
 
+                          DateTime now = new DateTime.now();
+                          Timestamp timestamp = new Timestamp.fromDate(now);
+
                           OrderDetailModel oderModel = OrderDetailModel(
                             name: _userShppingDetail.name ?? '',
                             streetAddress1:
@@ -218,6 +222,7 @@ class _OderFormState extends State<OderForm> {
                             size: widget.basket['size'],
                             quantity: widget.basket['quantity'],
                             color: widget.basket['color'],
+                            dataAndTime: timestamp,
                           );
                           await OrderDatabaseService(
                                   orderDetailModel: oderModel)
