@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:dropdownfield/dropdownfield.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/imageUploadImage.dart';
@@ -114,6 +115,17 @@ class _ItemAddingState extends State<ItemAdding> {
         ismainItemAvalible = false;
       });
     }
+  }
+
+  _reset() {
+    setState(() {
+      images.add("Add Image");
+      images.add("Add Image");
+      images.add("Add Image");
+      images.add("Add Image");
+      images.add("Add Image");
+      images.add("Add Image");
+    });
   }
 
   _updateItem() {
@@ -526,9 +538,27 @@ class _ItemAddingState extends State<ItemAdding> {
                                 quantity,
                               );
                               if (result) {
-                                print('------------------ok');
                                 setLoaing(false);
-                                Navigator.of(context).pop();
+                                _reset();
+                                showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) =>
+                                      CupertinoAlertDialog(
+                                    title: Text('Success'),
+                                    content: Text('item added successfully'),
+                                    insetAnimationCurve: Curves.elasticIn,
+                                    actions: <Widget>[
+                                      CupertinoDialogAction(
+                                        isDefaultAction: false,
+                                        child: Text('Ok'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                );
                               }
                             } catch (e) {
                               var _error = e.message;

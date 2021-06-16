@@ -28,27 +28,26 @@ class SubCardDisplay extends StatelessWidget {
                 basketFromNav: this.basket,
               ),
             ));
-        // if (navResult == "deletebasket") {
-
-        //   showDialog(
-        //     context: context,
-        //     barrierDismissible: false,
-        //     builder: (BuildContext context) => CupertinoAlertDialog(
-        //       title: Text('Deleted'),
-        //       content: Text('item remove from busket'),
-        //       insetAnimationCurve: Curves.elasticIn,
-        //       actions: <Widget>[
-        //         CupertinoDialogAction(
-        //           isDefaultAction: false,
-        //           child: Text('Ok'),
-        //           onPressed: () {
-        //             Navigator.of(context).pop();
-        //           },
-        //         ),
-        //       ],
-        //     ),
-        //   );
-        // }
+        if (navResult == 'deletebasket') {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) => CupertinoAlertDialog(
+              title: Text('Deleted'),
+              content: Text('item remove from busket'),
+              insetAnimationCurve: Curves.elasticIn,
+              actions: <Widget>[
+                CupertinoDialogAction(
+                  isDefaultAction: false,
+                  child: Text('Ok'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          );
+        }
       },
       child: Container(
         margin: EdgeInsets.only(

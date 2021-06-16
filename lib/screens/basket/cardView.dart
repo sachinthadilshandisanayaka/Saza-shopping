@@ -7,7 +7,9 @@ import 'package:sazashopping/shared/loading.dart';
 
 class BacketCardView extends StatelessWidget {
   final Basket basket;
-  BacketCardView({@required this.basket});
+  BacketCardView({
+    @required this.basket,
+  });
 
   @override
   Widget build(BuildContext context) {

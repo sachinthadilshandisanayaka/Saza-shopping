@@ -8,7 +8,14 @@ import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/loading.dart';
 
-class BasketFrame extends StatelessWidget {
+class BasketFrame extends StatefulWidget {
+  @override
+  _BasketFrameState createState() => _BasketFrameState();
+}
+
+class _BasketFrameState extends State<BasketFrame> {
+  GlobalKey _scaffold = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     final userid = Provider.of<Users>(context);
@@ -18,6 +25,7 @@ class BasketFrame extends StatelessWidget {
         return false;
       },
       child: Scaffold(
+        key: _scaffold,
         backgroundColor: Colors.teal[50],
         appBar: AppBar(
           actions: [],

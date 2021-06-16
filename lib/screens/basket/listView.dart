@@ -4,6 +4,7 @@ import 'package:sazashopping/screens/basket/cardView.dart';
 
 class BasketListView extends StatelessWidget {
   final List<Basket> basketList;
+
   BasketListView({@required this.basketList});
 
   @override
