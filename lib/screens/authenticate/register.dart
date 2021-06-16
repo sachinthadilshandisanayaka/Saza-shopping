@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/screens/authenticate/shared/clipPath.dart';
 import 'package:sazashopping/services/auth.dart';
-import 'package:sazashopping/services/backetDatabase.dart';
 import 'package:sazashopping/services/userDetailDatabase.dart';
 import 'package:sazashopping/shared/errorMessageShow.dart';
 import 'package:sazashopping/shared/constant.dart';
@@ -134,9 +133,9 @@ class _RegisterState extends State<Register> {
                                             User result = await _auth
                                                 .registerWithEmailAndPassword(
                                                     email, password);
-                                            await BasketDataBaseService(
-                                                    userid: result.uid)
-                                                .addBasketNewUser();
+                                            // await BasketDataBaseService(
+                                            //         userid: result.uid)
+                                            //     .addBasketNewUser();
                                             await UserDetailDataBaseService(
                                                     useiId: result.uid)
                                                 .addDetailsNewUser();

@@ -3,48 +3,61 @@ import 'package:sazashopping/models/basket.dart';
 
 class BasketDataBaseService {
   final String userid;
-  final Map<String, String> basket;
-  BasketDataBaseService({this.userid, this.basket});
+  final String basketId;
+  final Basket basketModel;
+  BasketDataBaseService({this.userid, this.basketModel, this.basketId});
   final CollectionReference basketCollection =
       FirebaseFirestore.instance.collection('basketItems');
 
-  Future addBasketNewUser() async {
-    return await basketCollection.doc(userid).set({});
-  }
-
   Future updateItem() async {
-    return await basketCollection.doc(userid).update({
-      'basketArray': FieldValue.arrayUnion([basket])
+    return await basketCollection.doc(basketId).update({
+      'userid': basketModel.userid,
+      'itemid': basketModel.itemid,
+      'itemName': basketModel.itemName,
+      'mainCat': basketModel.mainCat,
+      'subcat': basketModel.subcat,
+      'quantity': basketModel.quantity,
+      'color': basketModel.color,
+      'size': basketModel.size,
     });
   }
 
-  List<Basket> basketSnapshot(DocumentSnapshot snapshot) {
-    List<Basket> basket = [];
-    try {
-      List result = List.from(snapshot.data()['basketArray']);
-      for (var i in result) {
-        Basket val = new Basket(
-          itemName: i['itemName'] ?? '',
-          itemid: i['itemid'] ?? '',
-          userid: i['userid'] ?? '',
-          subcat: i['subcat'] ?? '',
-          mainCat: i['mainCat'] ?? '',
-          quantity: i['quantity'] ?? '',
-          color: i['color'] ?? '',
-          size: i['size'] ?? '',
-        );
-        basket.add(val);
-      }
-    } catch (e) {
-      print('error');
-    }
+  Future addBasket() async {
+    return await basketCollection.doc().set({
+      'userid': basketModel.userid,
+      'itemid': basketModel.itemid,
+      'itemName': basketModel.itemName,
+      'mainCat': basketModel.mainCat,
+      'subcat': basketModel.subcat,
+      'quantity': basketModel.quantity,
+      'color': basketModel.color,
+      'size': basketModel.size,
+    });
+  }
 
-    return basket;
+  Future deleteBasket() async {
+    return await basketCollection.doc(basketId).delete();
+  }
+
+  List<Basket> basketSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Basket(
+        basketId: doc.id ?? '',
+        userid: doc.data()['userid'] ?? '',
+        itemid: doc.data()['itemid'] ?? '',
+        itemName: doc.data()['itemName'] ?? '',
+        mainCat: doc.data()['mainCat'] ?? '',
+        subcat: doc.data()['subcat'] ?? '',
+        quantity: doc.data()['quantity'] ?? '',
+        color: doc.data()['color'] ?? '',
+        size: doc.data()['size'] ?? '',
+      );
+    }).toList();
   }
 
   Stream<List<Basket>> get basketStorage {
     return basketCollection
-        .doc(userid)
+        .where('userid', isEqualTo: userid)
         .snapshots()
         .map((i) => basketSnapshot(i));
   }

@@ -5,16 +5,19 @@ class SelectionDropDown extends StatefulWidget {
   final List<String> items;
   final String name;
   final Function function;
-  SelectionDropDown(
-      {@required this.items, @required this.name, @required this.function});
+  final String selecteSize;
+  SelectionDropDown({
+    @required this.items,
+    @required this.name,
+    @required this.function,
+    this.selecteSize,
+  });
 
   @override
   _SelectionDropDownState createState() => _SelectionDropDownState();
 }
 
 class _SelectionDropDownState extends State<SelectionDropDown> {
-  String selecteSize;
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -32,7 +35,7 @@ class _SelectionDropDownState extends State<SelectionDropDown> {
                 flex: 1,
                 child: DropdownButtonFormField(
                   elevation: 8,
-                  value: selecteSize,
+                  value: widget.selecteSize,
                   hint: Text(
                     'choose one',
                     style: itemdefaultStyle,

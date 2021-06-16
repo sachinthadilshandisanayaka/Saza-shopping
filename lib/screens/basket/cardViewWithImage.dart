@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/basket.dart';
 import 'package:sazashopping/models/mainItem.dart';
+import 'package:sazashopping/screens/secondPage/selectedItemDisplay.dart';
 import 'package:sazashopping/screens/thirdPage/shared/subDetailShow_Row.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/string.dart';
@@ -14,10 +16,39 @@ class SubCardDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardHeight = MediaQuery.of(context).size.height * 0.25;
-    final cardWidth = MediaQuery.of(context).size.width * 0.90;
+    final cardWidth = MediaQuery.of(context).size.width * 0.85;
     return InkWell(
       onTap: () async {
-        Navigator.pop(context, this.mainItems);
+        var navResult = await Navigator.push(
+            context,
+            new MaterialPageRoute(
+              builder: (context) => SelectedItemDisplay(
+                mainItems: this.mainItems,
+                isNavigation: true,
+                basketFromNav: this.basket,
+              ),
+            ));
+        // if (navResult == "deletebasket") {
+
+        //   showDialog(
+        //     context: context,
+        //     barrierDismissible: false,
+        //     builder: (BuildContext context) => CupertinoAlertDialog(
+        //       title: Text('Deleted'),
+        //       content: Text('item remove from busket'),
+        //       insetAnimationCurve: Curves.elasticIn,
+        //       actions: <Widget>[
+        //         CupertinoDialogAction(
+        //           isDefaultAction: false,
+        //           child: Text('Ok'),
+        //           onPressed: () {
+        //             Navigator.of(context).pop();
+        //           },
+        //         ),
+        //       ],
+        //     ),
+        //   );
+        // }
       },
       child: Container(
         margin: EdgeInsets.only(

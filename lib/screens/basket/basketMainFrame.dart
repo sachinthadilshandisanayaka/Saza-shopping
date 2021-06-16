@@ -9,17 +9,16 @@ import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/loading.dart';
 
 class BasketFrame extends StatelessWidget {
-  // const BasketFrame({ Key? key, @required }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    final userid = Provider.of<Users>(context).uid;
+    final userid = Provider.of<Users>(context);
     return WillPopScope(
       onWillPop: () async {
         Navigator.pop(context, true);
         return false;
       },
       child: Scaffold(
+        backgroundColor: Colors.teal[50],
         appBar: AppBar(
           actions: [],
           backgroundColor: appBarColor,
@@ -33,8 +32,9 @@ class BasketFrame extends StatelessWidget {
           ),
         ),
         body: StreamBuilder<List<Basket>>(
-            stream: BasketDataBaseService(userid: userid).basketStorage,
-            builder: (context, snapshot) {
+          stream: BasketDataBaseService(userid: userid.uid).basketStorage,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasData) {
                 if (snapshot.data.length > 0) {
                   return BasketListView(
@@ -48,8 +48,12 @@ class BasketFrame extends StatelessWidget {
               } else if (snapshot.error) {
                 return Loading();
               }
+            } else {
               return Loading();
-            }),
+            }
+            return Loading();
+          },
+        ),
       ),
     );
   }

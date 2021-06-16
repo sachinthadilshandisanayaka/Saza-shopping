@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sazashopping/models/basket.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/models/user.dart';
 import 'package:sazashopping/screens/ordering/orderItemMainFrame.dart';
@@ -21,7 +22,12 @@ import 'package:sazashopping/shared/widget/centeredRaiseButton.dart';
 class ItemCard extends StatefulWidget {
   final MainItems mainItems;
   final bool navResult;
-  ItemCard({@required this.mainItems, this.navResult});
+  final Basket basketFromNav;
+  ItemCard({
+    @required this.mainItems,
+    this.navResult,
+    this.basketFromNav,
+  });
 
   @override
   _ItemCardState createState() => _ItemCardState();
@@ -39,9 +45,15 @@ class _ItemCardState extends State<ItemCard> {
   void initState() {
     super.initState();
     setState(() {
-      count = 0;
-      this.selecteColor = '';
-      this.selecteSize = '';
+      if (widget.navResult) {
+        count = int.parse(widget.basketFromNav.quantity);
+        this.selecteColor = widget.basketFromNav.color;
+        this.selecteSize = widget.basketFromNav.size;
+      } else {
+        count = 0;
+        this.selecteColor = '';
+        this.selecteSize = '';
+      }
       this.loading = false;
       if (widget.mainItems.offer != 0.0) {
         actualPrice = _priceCalculate(
@@ -85,6 +97,17 @@ class _ItemCardState extends State<ItemCard> {
     final snackBarSize = SnackBar(
       behavior: SnackBarBehavior.floating,
       content: Text('select size'),
+      action: SnackBarAction(
+        label: 'Ok',
+        onPressed: () {
+          Scaffold.of(context).hideCurrentSnackBar();
+        },
+      ),
+      duration: Duration(seconds: 5),
+    );
+    final snackBarBuscektUploadSuccess = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      content: Text('Upload success'),
       action: SnackBarAction(
         label: 'Ok',
         onPressed: () {
@@ -223,6 +246,9 @@ class _ItemCardState extends State<ItemCard> {
                               SelectionDropDown(
                                 name: 'Color',
                                 items: widget.mainItems.color,
+                                selecteSize: widget.navResult
+                                    ? widget.basketFromNav.color
+                                    : null,
                                 function: (val) {
                                   setState(() {
                                     selecteColor = val;
@@ -235,6 +261,9 @@ class _ItemCardState extends State<ItemCard> {
                               SelectionDropDown(
                                 name: 'Size',
                                 items: widget.mainItems.size,
+                                selecteSize: widget.navResult
+                                    ? widget.basketFromNav.size
+                                    : null,
                                 function: (val) {
                                   setState(() {
                                     selecteSize = val;
@@ -329,30 +358,48 @@ class _ItemCardState extends State<ItemCard> {
                                   try {
                                     if (this.count == 0) {
                                       Scaffold.of(context)
-                                          .showSnackBar(snackBarCount);
+                                        ..removeCurrentSnackBar()
+                                        ..showSnackBar(snackBarCount);
                                     } else if (this.selecteColor.isEmpty &&
                                         widget.mainItems.color.length != 0) {
                                       Scaffold.of(context)
-                                          .showSnackBar(snackBarColor);
+                                        ..removeCurrentSnackBar()
+                                        ..showSnackBar(snackBarColor);
                                     } else if (this.selecteSize.isEmpty &&
                                         widget.mainItems.size.length != 0) {
                                       Scaffold.of(context)
-                                          .showSnackBar(snackBarSize);
+                                        ..removeCurrentSnackBar()
+                                        ..showSnackBar(snackBarSize);
                                     } else {
-                                      Map<String, String> basket = {
-                                        'itemName': widget.mainItems.name,
-                                        'itemid': widget.mainItems.itemId,
-                                        'userid': userid.uid,
-                                        'subcat': widget.mainItems.subCat,
-                                        'mainCat': widget.mainItems.mainCat,
-                                        'size': selecteSize,
-                                        'quantity': count.toString(),
-                                        'color': selecteColor,
-                                      };
-                                      await BasketDataBaseService(
-                                              userid: userid.uid,
-                                              basket: basket)
-                                          .updateItem();
+                                      Basket basketModel = new Basket(
+                                        userid: userid.uid,
+                                        itemid: widget.mainItems.itemId,
+                                        itemName: widget.mainItems.name,
+                                        size: selecteSize,
+                                        color: selecteColor,
+                                        subcat: widget.mainItems.subCat,
+                                        mainCat: widget.mainItems.mainCat,
+                                        quantity: count.toString(),
+                                      );
+                                      if (widget.navResult) {
+                                        await BasketDataBaseService(
+                                                basketModel: basketModel,
+                                                basketId: widget
+                                                    .basketFromNav.basketId)
+                                            .updateItem();
+                                        _loading(false);
+                                        Navigator.pop(context);
+                                      } else {
+                                        await BasketDataBaseService(
+                                                basketModel: basketModel)
+                                            .addBasket();
+                                        _loading(false);
+                                        Scaffold.of(context)
+                                          ..removeCurrentSnackBar()
+                                          ..showSnackBar(
+                                              snackBarBuscektUploadSuccess);
+                                      }
+
                                       _fishedLoadig();
                                     }
                                     _loading(false);

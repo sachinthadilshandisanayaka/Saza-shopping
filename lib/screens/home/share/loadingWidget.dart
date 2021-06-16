@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:sazashopping/shared/colors.dart';
 
 class LoadingBegin extends StatefulWidget {
@@ -12,14 +13,16 @@ class _LoadingBeginState extends State<LoadingBegin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: defaultColur,
+        backgroundColor: Colors.white,
         elevation: 0,
       ),
-      backgroundColor: defaultColur,
+      backgroundColor: Colors.white,
       body: Container(
         alignment: Alignment.center,
         color: defaultColur,
-        child: CupertinoActivityIndicator(),
+        child: SpinKitCircle(
+          color: defaultColur,
+        ),
       ),
     );
   }

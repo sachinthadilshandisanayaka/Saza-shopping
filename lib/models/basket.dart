@@ -1,4 +1,5 @@
 class Basket {
+  String basketId;
   String itemName;
   String itemid;
   String userid;
@@ -9,6 +10,7 @@ class Basket {
   String color;
 
   Basket({
+    this.basketId,
     this.itemName,
     this.color,
     this.itemid,
