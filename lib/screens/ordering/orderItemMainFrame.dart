@@ -9,17 +9,27 @@ class OrderItemMainFrame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [],
-        backgroundColor: appBarColor,
-      ),
-      body: Container(
-        color: Colors.teal[50],
-        padding: EdgeInsets.all(15),
-        child: ShppingForm(
-          basket: this.basket,
-          images: this.images,
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context);
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [],
+          backgroundColor: appBarColor,
+        ),
+        body: Container(
+          color: Colors.teal[50],
+          padding: EdgeInsets.only(
+            left: 15,
+            right: 15,
+            bottom: 15,
+          ),
+          child: ShppingForm(
+            basket: this.basket,
+            images: this.images,
+          ),
         ),
       ),
     );

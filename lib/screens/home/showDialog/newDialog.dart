@@ -22,7 +22,7 @@ Future<T> showNewDialog<T>({
     barrierDismissible: barrierDismissible,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     barrierColor: Colors.black54,
-    transitionDuration: const Duration(milliseconds: 100),
+    transitionDuration: const Duration(milliseconds: 300),
     transitionBuilder: _buildNewTransition,
   );
 }
@@ -37,7 +37,7 @@ Widget _buildNewTransition(
     scale: CurvedAnimation(
       parent: animation,
       curve: Curves.easeIn,
-      reverseCurve: Curves.easeInOut,
+      reverseCurve: Curves.easeIn,
     ),
     child: child,
   );

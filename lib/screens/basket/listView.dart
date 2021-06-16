@@ -9,7 +9,6 @@ class BasketListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
       child: Column(
         children: <Widget>[
           ListView.builder(

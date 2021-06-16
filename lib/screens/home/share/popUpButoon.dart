@@ -9,6 +9,7 @@ import 'package:sazashopping/screens/purchase/purchaseOrders.dart';
 
 Widget popUpMenuButton(BuildContext context) {
   return PopupMenuButton<String>(
+    captureInheritedThemes: false,
     icon: Icon(
       FontAwesomeIcons.ellipsisV,
       size: 20,
@@ -26,14 +27,14 @@ Widget popUpMenuButton(BuildContext context) {
           title: 'Log out',
         );
       } else if (action == Constants.additem) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => ItemAddMainFrame()));
+        await Navigator.push(context,
+            new MaterialPageRoute(builder: (context) => ItemAddMainFrame()));
       } else if (action == Constants.orders) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => AdminHome()));
+        await Navigator.push(
+            context, new MaterialPageRoute(builder: (context) => AdminHome()));
       } else if (action == Constants.purchase) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => PurchaseItems()));
+        await Navigator.push(context,
+            new MaterialPageRoute(builder: (context) => PurchaseItems()));
       }
     },
     itemBuilder: (BuildContext context) {

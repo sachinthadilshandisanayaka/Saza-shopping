@@ -10,14 +10,20 @@ class ItemAddMainFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Scaffold(
-        backgroundColor: additemPageBackgroundColor,
-        appBar: AppBar(
-          backgroundColor: appBarColor,
-          actions: [],
-        ),
-        body: WrapperAdditem(
-          mainItems: this.mainItems,
+      child: WillPopScope(
+        onWillPop: () async {
+          Navigator.pop(context, true);
+          return false;
+        },
+        child: Scaffold(
+          backgroundColor: additemPageBackgroundColor,
+          appBar: AppBar(
+            backgroundColor: appBarColor,
+            actions: [],
+          ),
+          body: WrapperAdditem(
+            mainItems: this.mainItems,
+          ),
         ),
       ),
     );

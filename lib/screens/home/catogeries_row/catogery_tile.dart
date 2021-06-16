@@ -14,11 +14,11 @@ class ImageAdnDataDislpay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         if (connetion) {
-          Navigator.push(
+          await Navigator.push(
             context,
-            MaterialPageRoute(
+            new MaterialPageRoute(
               builder: (context) => SelectedItemDisplay(
                 mainItems: this.shopItem,
               ),

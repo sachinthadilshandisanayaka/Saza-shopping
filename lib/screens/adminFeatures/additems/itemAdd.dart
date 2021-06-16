@@ -20,7 +20,6 @@ import 'package:sazashopping/shared/widget/dropDownItemShowWithRemoveItem.dart';
 import 'package:sazashopping/shared/widget/genderSelection.dart';
 import 'package:sazashopping/shared/widget/imagePickerCardView.dart';
 import 'package:sazashopping/shared/widget/imagePickerNullView.dart';
-import 'package:sazashopping/shared/widget/listTextFormField.dart';
 import 'package:sazashopping/shared/widget/liteRollingSwitch.dart';
 import 'package:sazashopping/shared/widget/sizeBox.dart';
 
@@ -28,10 +27,11 @@ class ItemAdding extends StatefulWidget {
   final List<String> subCategory;
   final Map<String, String> mainCategories;
   final MainItems mainItems;
-  ItemAdding(
-      {@required this.subCategory,
-      @required this.mainCategories,
-      this.mainItems});
+  ItemAdding({
+    @required this.subCategory,
+    @required this.mainCategories,
+    this.mainItems,
+  });
   @override
   _ItemAddingState createState() => _ItemAddingState();
 }
@@ -42,7 +42,7 @@ class _ItemAddingState extends State<ItemAdding> {
   final formkey = GlobalKey<FormFieldState>();
   final sizeFormkey = GlobalKey<FormFieldState>();
 
-  MainItems updatedMainItem;
+  MainItems updatedMainItem = new MainItems();
 
   List<Object> images = List<Object>();
   Future<PickedFile> imageFile;
@@ -187,15 +187,17 @@ class _ItemAddingState extends State<ItemAdding> {
                     value: ismainItemAvalible ? widget.mainItems.subCat : '',
                     items: widget.subCategory,
                     itemsVisibleInDropdown: 5,
-                    onValueChanged: (value) => {
+                    onValueChanged: (value) {
                       setState(() {
                         selectedCategory = value;
                         updatedMainItem.subCat = value;
-                      })
+                      });
                     },
                   ),
                   DisplaySelectedCategory(
-                      selectedCategory ?? '', widget.mainCategories),
+                    selectedCategory ?? '',
+                    widget.mainCategories,
+                  ),
                   sizedBox,
                   displayText('Price'),
                   TextFormField(
@@ -332,17 +334,19 @@ class _ItemAddingState extends State<ItemAdding> {
                       : SizedBox(),
                   sizedBox,
                   displayText('Add color'),
-                  listedTextFormField(
-                      formkey: formkey,
-                      hint: 'you can add list of colors',
-                      funtion: (val) {
-                        setState(() {
-                          tempColor = val.trim();
-                        });
-                      },
-                      validFunction: (val) {
-                        return swicthValidate(colorAllreadyAvilable);
-                      }),
+                  TextFormField(
+                    key: formkey,
+                    decoration: textinputDecoration.copyWith(
+                        hintText: 'you can add list of sizes'),
+                    onChanged: (val) {
+                      return setState(() {
+                        tempColor = val.trim();
+                      });
+                    },
+                    validator: (val) {
+                      return swicthValidate(colorAllreadyAvilable);
+                    },
+                  ),
                   bottomRightAlignButton(
                     context: context,
                     text: 'Add',
@@ -356,7 +360,9 @@ class _ItemAddingState extends State<ItemAdding> {
                           setState(() {
                             colorAllreadyAvilable = false;
                             productColors.add(tempColor);
-                            updatedMainItem.color.add(tempColor);
+                            if (ismainItemAvalible) {
+                              updatedMainItem.color.add(tempColor);
+                            }
                             tempColor = '';
                           });
                         }
@@ -375,15 +381,16 @@ class _ItemAddingState extends State<ItemAdding> {
                       : SizedBox(),
                   sizedBox,
                   displayText('Add Size'),
-                  listedTextFormField(
-                    formkey: sizeFormkey,
-                    hint: 'you can add list of sizes',
-                    funtion: (val) {
-                      setState(() {
+                  TextFormField(
+                    key: sizeFormkey,
+                    decoration: textinputDecoration.copyWith(
+                        hintText: 'you can add list of sizes'),
+                    onChanged: (val) {
+                      return setState(() {
                         tempSize = val.trim();
                       });
                     },
-                    validFunction: (val) {
+                    validator: (val) {
                       return swicthValidate(sizeAllreadyAvilable);
                     },
                   ),
@@ -400,7 +407,9 @@ class _ItemAddingState extends State<ItemAdding> {
                           setState(() {
                             sizeAllreadyAvilable = false;
                             productSize.add(tempSize);
-                            updatedMainItem.size.add(tempSize);
+                            if (ismainItemAvalible) {
+                              updatedMainItem.size.add(tempSize);
+                            }
                             tempSize = '';
                           });
                         }

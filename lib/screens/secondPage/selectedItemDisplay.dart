@@ -6,44 +6,65 @@ import 'package:sazashopping/screens/basket/basketMainFrame.dart';
 import 'package:sazashopping/screens/secondPage/itemFrame.dart';
 import 'package:sazashopping/shared/colors.dart';
 
-class SelectedItemDisplay extends StatelessWidget {
+class SelectedItemDisplay extends StatefulWidget {
   final MainItems mainItems;
   SelectedItemDisplay({@required this.mainItems});
+
+  @override
+  _SelectedItemDisplayState createState() => _SelectedItemDisplayState();
+}
+
+class _SelectedItemDisplayState extends State<SelectedItemDisplay> {
+  bool navboolresult = false;
+  MainItems defualtMainItems;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       top: false,
-      child: Scaffold(
-        backgroundColor: appBarColor,
-        appBar: AppBar(
-          elevation: 0.0,
+      child: WillPopScope(
+        onWillPop: () async {
+          Navigator.pop(context, true);
+          return false;
+        },
+        child: Scaffold(
           backgroundColor: appBarColor,
-          actions: <Widget>[
-            Container(
-              margin: EdgeInsets.only(right: 1),
-              child: IconButton(
-                icon: Icon(
-                  FontAwesomeIcons.shoppingCart,
-                  size: 20,
+          appBar: AppBar(
+            elevation: 0.0,
+            backgroundColor: appBarColor,
+            actions: <Widget>[
+              Container(
+                margin: EdgeInsets.only(right: 1),
+                child: IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.shoppingCart,
+                    size: 20,
+                  ),
+                  onPressed: () async {
+                    MainItems navResult = await Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                        builder: (context) => BasketFrame(),
+                      ),
+                    );
+                    if (navResult != null) {
+                      setState(() {
+                        defualtMainItems = navResult;
+                        navboolresult = true;
+                      });
+                    }
+                  },
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => BasketFrame(),
-                    ),
-                  );
-                },
               ),
-            ),
-            AdminPopupMenu(
-              mainItems: this.mainItems,
-            ),
-          ],
-        ),
-        body: ItemCard(
-          mainItems: this.mainItems,
+              AdminPopupMenu(
+                mainItems: this.widget.mainItems,
+              ),
+            ],
+          ),
+          body: ItemCard(
+            mainItems: defualtMainItems ?? this.widget.mainItems,
+            navResult: this.navboolresult,
+          ),
         ),
       ),
     );

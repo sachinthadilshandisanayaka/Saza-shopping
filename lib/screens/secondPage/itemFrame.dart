@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sazashopping/models/mainItem.dart';
@@ -19,7 +20,8 @@ import 'package:sazashopping/shared/widget/centeredRaiseButton.dart';
 
 class ItemCard extends StatefulWidget {
   final MainItems mainItems;
-  ItemCard({@required this.mainItems});
+  final bool navResult;
+  ItemCard({@required this.mainItems, this.navResult});
 
   @override
   _ItemCardState createState() => _ItemCardState();
@@ -319,7 +321,9 @@ class _ItemCardState extends State<ItemCard> {
                         stockNotAvilabe
                             ? SizedBox()
                             : OutLineButtonCenter(
-                                buttonLable: addtobasket,
+                                buttonLable: widget.navResult
+                                    ? updatebasket
+                                    : addtobasket,
                                 pressBottonFuntion: () async {
                                   _loading(true);
                                   try {
@@ -390,9 +394,10 @@ class _ItemCardState extends State<ItemCard> {
                                         'quantity': count.toString(),
                                         'color': selecteColor,
                                       };
-                                      Navigator.push(
+                                      var navigationResult =
+                                          await Navigator.push(
                                         context,
-                                        MaterialPageRoute(
+                                        new MaterialPageRoute(
                                           builder: (context) =>
                                               OrderItemMainFrame(
                                             basket: basket,
@@ -400,8 +405,31 @@ class _ItemCardState extends State<ItemCard> {
                                           ),
                                         ),
                                       );
+                                      if (navigationResult == 'success') {
+                                        showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) =>
+                                              CupertinoAlertDialog(
+                                            title: Text('Success'),
+                                            content: Text('See your orders'),
+                                            insetAnimationCurve:
+                                                Curves.elasticIn,
+                                            actions: <Widget>[
+                                              CupertinoDialogAction(
+                                                isDefaultAction: false,
+                                                child: Text('Ok'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
                                     }
                                     _loading(false);
+                                    _fishedLoadig();
                                   } catch (e) {
                                     _loading(false);
                                     print(e.message);

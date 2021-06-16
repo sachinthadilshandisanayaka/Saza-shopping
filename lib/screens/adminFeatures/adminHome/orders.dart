@@ -16,8 +16,8 @@ class OrdersList extends StatelessWidget {
         : Container(
             padding: EdgeInsets.all(15),
             child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
               child: ListView.builder(
+                physics: BouncingScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: ordersList.length,
                 itemBuilder: (context, index) {

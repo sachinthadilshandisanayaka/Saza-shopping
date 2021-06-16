@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/orderModel.dart';
 import 'package:sazashopping/models/userShippingDetails.dart';
@@ -6,7 +7,7 @@ import 'package:sazashopping/screens/adminFeatures/additems/formValidator/string
 import 'package:sazashopping/services/orderDatabase.dart';
 import 'package:sazashopping/services/userDetailDatabase.dart';
 import 'package:sazashopping/shared/constant.dart';
-import 'package:sazashopping/shared/orderLoading.dart';
+import 'package:sazashopping/shared/loading.dart';
 import 'package:sazashopping/shared/orderState.dart';
 import 'package:sazashopping/shared/widget/centeredRaiseButton.dart';
 
@@ -48,7 +49,7 @@ class _OderFormState extends State<OderForm> {
   @override
   Widget build(BuildContext context) {
     return _loaging
-        ? UploadLoading()
+        ? Loading()
         : SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Form(
@@ -236,7 +237,8 @@ class _OderFormState extends State<OderForm> {
                                   orderDetailModel: oderModel)
                               .uploadOrder();
                           _setLaod(false);
-                          Navigator.of(context).pop();
+
+                          Navigator.pop(context, 'success');
                           _formKey.currentState.reset();
                         } catch (e) {
                           print(e.toString());
