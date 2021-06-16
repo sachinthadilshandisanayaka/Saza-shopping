@@ -3,6 +3,7 @@ import 'package:sazashopping/models/orderModel.dart';
 import 'package:sazashopping/screens/adminFeatures/adminHome/orderMaintaining.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
+import 'package:sazashopping/shared/orderState.dart';
 
 class OrderCard extends StatelessWidget {
   final OrderDetailModel oders;
@@ -51,7 +52,7 @@ class OrderCard extends StatelessWidget {
               children: [
                 Text('Item name'),
                 Text(
-                  this.oders.subcat,
+                  this.oders.itemName,
                   style: itemdefaultStyle.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -76,12 +77,35 @@ class OrderCard extends StatelessWidget {
             SizedBox(
               height: 5,
             ),
-            Text(
-              this.oders.dataAndTime.toDate().toString(),
-              style: itemdefaultStyle.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Order date'),
+                Text(
+                  this.oders.dataAndTime.toDate().toString(),
+                  style: itemdefaultStyle.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
+            SizedBox(
+              height: 5,
+            ),
+            this.oState == OrderState.notShipped
+                ? SizedBox()
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Shipped date'),
+                      Text(
+                        this.oders.shippedDateAndTime.toDate().toString(),
+                        style: itemdefaultStyle.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
           ],
         ),
       ),

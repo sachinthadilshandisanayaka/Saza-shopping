@@ -209,6 +209,7 @@ class _OderFormState extends State<OderForm> {
                           Timestamp timestamp = new Timestamp.fromDate(now);
 
                           OrderDetailModel oderModel = OrderDetailModel(
+                            itemName: widget.basket['itemName'],
                             name: _userShppingDetail.name ?? '',
                             streetAddress1:
                                 _userShppingDetail.streetAddress1 ?? '',
@@ -227,6 +228,7 @@ class _OderFormState extends State<OderForm> {
                             quantity: widget.basket['quantity'],
                             color: widget.basket['color'],
                             dataAndTime: timestamp,
+                            shippedDateAndTime: timestamp,
                             orderState: OrderState.notShipped,
                             images: widget.images,
                           );

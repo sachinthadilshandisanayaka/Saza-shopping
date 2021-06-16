@@ -24,6 +24,7 @@ class BasketDataBaseService {
       List result = List.from(snapshot.data()['basketArray']);
       for (var i in result) {
         Basket val = new Basket(
+          itemName: i['itemName'] ?? '',
           itemid: i['itemid'] ?? '',
           userid: i['userid'] ?? '',
           subcat: i['subcat'] ?? '',

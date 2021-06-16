@@ -14,21 +14,18 @@ class PurchaseListView extends StatelessWidget {
               child: Text('No Orders'),
             ),
           )
-        : Container(
+        : SingleChildScrollView(
             padding: EdgeInsets.all(10),
-            margin: EdgeInsets.only(
-              top: 10,
-            ),
-            child: SingleChildScrollView(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: orders.length,
-                itemBuilder: (context, index) {
-                  return PurchaseCard(
-                    order: this.orders[index],
-                  );
-                },
-              ),
+            child: ListView.builder(
+              physics: BouncingScrollPhysics(),
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: orders.length,
+              itemBuilder: (context, index) {
+                return PurchaseCard(
+                  order: this.orders[index],
+                );
+              },
             ),
           );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/orderModel.dart';
 import 'package:sazashopping/shared/colors.dart';
+import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/orderState.dart';
 import 'package:sazashopping/shared/testStyles.dart';
 
@@ -53,13 +54,14 @@ class PurchaseCard extends StatelessWidget {
               ),
             ),
             Container(
-              width: cardWidth * 0.55,
+              width: cardWidth * 0.53,
+              padding: EdgeInsets.all(2),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    order.subcat,
+                    order.itemName,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: nameStyle,
@@ -73,9 +75,17 @@ class PurchaseCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         'Quantity',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: itemdefaultStyle,
+                        softWrap: false,
                       ),
                       Text(
                         order.quantity,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: itemdefaultStyle,
+                        softWrap: false,
                       ),
                     ],
                   ),
@@ -87,14 +97,59 @@ class PurchaseCard extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         'Color',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: itemdefaultStyle,
+                        softWrap: false,
                       ),
                       Text(
                         order.color,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: itemdefaultStyle,
+                        softWrap: false,
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 5.0,
+                  ),
+                  OrderState.notShipped == order.orderState
+                      ? SizedBox()
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Date',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: itemdefaultStyle,
+                              softWrap: false,
+                            ),
+                            Text(
+                              order.shippedDateAndTime
+                                      .toDate()
+                                      .year
+                                      .toString() +
+                                  ' - ' +
+                                  order.shippedDateAndTime
+                                      .toDate()
+                                      .month
+                                      .toString() +
+                                  ' - ' +
+                                  order.shippedDateAndTime
+                                      .toDate()
+                                      .day
+                                      .toString(),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: itemdefaultStyle,
+                              softWrap: false,
+                            ),
+                          ],
+                        ),
+                  SizedBox(
+                    height: 15,
                   ),
                   Container(
                     height: 40,
@@ -106,6 +161,10 @@ class PurchaseCard extends StatelessWidget {
                     child: Text(
                       order.orderState,
                       textAlign: TextAlign.center,
+                      style: itemdefaultStyle.copyWith(
+                          fontWeight: FontWeight.bold,
+                          wordSpacing: 2,
+                          color: Colors.white),
                     ),
                   )
                 ],

@@ -336,6 +336,7 @@ class _ItemCardState extends State<ItemCard> {
                                           .showSnackBar(snackBarSize);
                                     } else {
                                       Map<String, String> basket = {
+                                        'itemName': widget.mainItems.name,
                                         'itemid': widget.mainItems.itemId,
                                         'userid': userid.uid,
                                         'subcat': widget.mainItems.subCat,
@@ -380,6 +381,7 @@ class _ItemCardState extends State<ItemCard> {
                                           .showSnackBar(snackBarSize);
                                     } else {
                                       Map<String, String> basket = {
+                                        'itemName': widget.mainItems.name,
                                         'itemid': widget.mainItems.itemId,
                                         'userid': userid.uid,
                                         'subcat': widget.mainItems.subCat,

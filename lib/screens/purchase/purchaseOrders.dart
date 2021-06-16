@@ -12,6 +12,7 @@ class PurchaseItems extends StatelessWidget {
   Widget build(BuildContext context) {
     final userId = Provider.of<Users>(context);
     return Scaffold(
+      backgroundColor: Colors.teal[50],
       appBar: AppBar(
         actions: [],
         backgroundColor: appBarColor,

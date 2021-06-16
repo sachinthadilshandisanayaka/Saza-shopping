@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/orderModel.dart';
 import 'package:sazashopping/services/orderDatabase.dart';
@@ -76,6 +77,21 @@ class _OrderReviewState extends State<OrderReview> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text('Item name'),
+                            Text(
+                              widget.orderDetailModel.itemName,
+                              style: itemdefaultStyle.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Item sub name'),
                             Text(
                               widget.orderDetailModel.subcat,
                               style: itemdefaultStyle.copyWith(
@@ -275,6 +291,26 @@ class _OrderReviewState extends State<OrderReview> {
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Shipped aate'),
+                            Text(
+                              this
+                                  .widget
+                                  .orderDetailModel
+                                  .shippedDateAndTime
+                                  .toDate()
+                                  .toString(),
+                              style: itemdefaultStyle.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),
@@ -287,10 +323,15 @@ class _OrderReviewState extends State<OrderReview> {
                           pressBottonFuntion: () async {
                             setLoading(true);
                             try {
+                              DateTime now = new DateTime.now();
+                              Timestamp timestamp = new Timestamp.fromDate(now);
                               await OrderDatabaseService(
                                       itemId:
                                           this.widget.orderDetailModel.orderId)
-                                  .orderStateUpdate(OrderState.shipped);
+                                  .orderStateUpdate(
+                                OrderState.shipped,
+                                timestamp,
+                              );
                               setLoading(false);
                             } catch (e) {
                               print(e.message);
@@ -300,9 +341,13 @@ class _OrderReviewState extends State<OrderReview> {
                           },
                         )
                       : Container(
+                          margin: EdgeInsets.only(
+                            left: 5,
+                            right: 5,
+                          ),
                           padding: EdgeInsets.all(10),
                           alignment: Alignment.center,
-                          color: Colors.orange[200],
+                          color: Colors.orange,
                           child: Text(
                             'Shipped',
                             style: TextStyle(

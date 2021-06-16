@@ -11,6 +11,7 @@ class OrderDatabaseService {
 
   Future uploadOrder() async {
     return await orderCollection.doc().set({
+      'itemName': orderDetailModel.itemName,
       'name': orderDetailModel.name,
       'streetAddress1': orderDetailModel.streetAddress1,
       'streetAddress2': orderDetailModel.streetAddress2,
@@ -27,14 +28,16 @@ class OrderDatabaseService {
       'quantity': orderDetailModel.quantity,
       'color': orderDetailModel.color,
       'dataAndTime': orderDetailModel.dataAndTime,
+      'shippedDateAndTime': orderDetailModel.shippedDateAndTime ?? '',
       'orderState': orderDetailModel.orderState,
       'images': FieldValue.arrayUnion(orderDetailModel.images),
     });
   }
 
-  Future orderStateUpdate(String state) async {
+  Future orderStateUpdate(String state, Timestamp time) async {
     return await orderCollection.doc(itemId).update({
       'orderState': state,
+      'shippedDateAndTime': time,
     });
   }
 
@@ -42,6 +45,7 @@ class OrderDatabaseService {
     return snapshot.docs.map((doc) {
       return OrderDetailModel(
         orderId: doc.id ?? '',
+        itemName: doc.data()['itemName'] ?? '',
         name: doc.data()['name'] ?? '',
         streetAddress1: doc.data()['streetAddress1'] ?? '',
         streetAddress2: doc.data()['streetAddress2'] ?? '',
@@ -58,6 +62,7 @@ class OrderDatabaseService {
         quantity: doc.data()['quantity'] ?? '',
         color: doc.data()['color'] ?? '',
         dataAndTime: doc.data()['dataAndTime'] ?? '',
+        shippedDateAndTime: doc.data()['shippedDateAndTime'] ?? '',
         orderState: doc.data()['orderState'] ?? '',
         images: List.from(doc.data()['images']) ?? [],
       );
@@ -75,6 +80,7 @@ class OrderDatabaseService {
     return snapshot.docs.map((doc) {
       return OrderDetailModel(
         orderId: doc.id ?? '',
+        itemName: doc.data()['itemName'] ?? '',
         name: doc.data()['name'] ?? '',
         streetAddress1: doc.data()['streetAddress1'] ?? '',
         streetAddress2: doc.data()['streetAddress2'] ?? '',
@@ -91,6 +97,7 @@ class OrderDatabaseService {
         quantity: doc.data()['quantity'] ?? '',
         color: doc.data()['color'] ?? '',
         dataAndTime: doc.data()['dataAndTime'] ?? '',
+        shippedDateAndTime: doc.data()['shippedDateAndTime'] ?? '',
         orderState: doc.data()['orderState'] ?? '',
         images: List.from(doc.data()['images']) ?? [],
       );

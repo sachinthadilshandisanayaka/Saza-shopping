@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderDetailModel {
+  String itemName;
   String orderId;
   String name;
   String streetAddress1;
@@ -18,10 +19,12 @@ class OrderDetailModel {
   String quantity;
   String color;
   Timestamp dataAndTime;
+  Timestamp shippedDateAndTime;
   String orderState;
   List<String> images;
 
   OrderDetailModel({
+    this.itemName,
     this.orderId,
     this.name,
     this.streetAddress1,
@@ -39,6 +42,7 @@ class OrderDetailModel {
     this.subcat,
     this.mainCat,
     this.dataAndTime,
+    this.shippedDateAndTime,
     this.orderState,
     this.images,
   });
