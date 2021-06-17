@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/screens/home/home.dart';
 import 'package:sazashopping/screens/home/searchBar/searchDelegate.dart';
+import 'package:sazashopping/screens/home/share/drawer.dart';
 import 'package:sazashopping/screens/home/share/popUpButoon.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/testStyles.dart';
@@ -60,7 +61,7 @@ class TabBarController extends StatelessWidget {
             }).toList(),
           ),
         ),
-        drawer: Drawer(),
+        drawer: DrawerShowing(),
         body: TabBarView(
           children: productMainCategories.map((String mainCategory) {
             return Home(

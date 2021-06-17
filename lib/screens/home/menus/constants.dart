@@ -4,12 +4,14 @@ class Constants {
   static const String additem = "Add item";
   static const String orders = "Orders";
   static const String purchase = "Purchase";
+  static const String basket = "Basket";
 
   static const List<String> choices = <String>[
     additem,
-    setting,
-    logout,
     orders,
+    setting,
     purchase,
+    basket,
+    logout,
   ];
 }
