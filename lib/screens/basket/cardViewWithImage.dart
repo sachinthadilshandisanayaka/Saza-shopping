@@ -11,7 +11,12 @@ import 'package:sazashopping/shared/testStyles.dart';
 class SubCardDisplay extends StatelessWidget {
   final MainItems mainItems;
   final Basket basket;
-  SubCardDisplay({@required this.mainItems, @required this.basket});
+  final BuildContext passContext;
+  SubCardDisplay({
+    @required this.mainItems,
+    @required this.basket,
+    this.passContext,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +35,7 @@ class SubCardDisplay extends StatelessWidget {
             ));
         if (navResult == 'deletebasket') {
           showDialog(
-            context: context,
+            context: passContext,
             barrierDismissible: false,
             builder: (BuildContext context) => CupertinoAlertDialog(
               title: Text('Deleted'),

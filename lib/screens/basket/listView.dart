@@ -4,8 +4,12 @@ import 'package:sazashopping/screens/basket/cardView.dart';
 
 class BasketListView extends StatelessWidget {
   final List<Basket> basketList;
+  final BuildContext passContext;
 
-  BasketListView({@required this.basketList});
+  BasketListView({
+    @required this.basketList,
+    this.passContext,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +24,7 @@ class BasketListView extends StatelessWidget {
               itemBuilder: (context, index) {
                 return BacketCardView(
                   basket: basketList[index],
+                  passContext: passContext,
                 );
               })
         ],

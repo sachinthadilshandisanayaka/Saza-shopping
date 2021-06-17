@@ -82,6 +82,15 @@ class _ItemCardState extends State<ItemCard> {
   }
 
   @override
+  void dispose() {
+    setState(() {
+      loading = false;
+      _fishedLoadig();
+    });
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final snackBarColor = SnackBar(
       behavior: SnackBarBehavior.floating,
@@ -452,6 +461,7 @@ class _ItemCardState extends State<ItemCard> {
                                           ),
                                         ),
                                       );
+                                      _loading(false);
                                       if (navigationResult == 'success') {
                                         showDialog(
                                           context: context,
@@ -475,7 +485,7 @@ class _ItemCardState extends State<ItemCard> {
                                         );
                                       }
                                     }
-                                    _loading(false);
+                                    _loading(true);
                                     _fishedLoadig();
                                   } catch (e) {
                                     _loading(false);

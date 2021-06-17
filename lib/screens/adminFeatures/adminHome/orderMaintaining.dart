@@ -294,23 +294,26 @@ class _OrderReviewState extends State<OrderReview> {
                         SizedBox(
                           height: 8,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Shipped aate'),
-                            Text(
-                              this
-                                  .widget
-                                  .orderDetailModel
-                                  .shippedDateAndTime
-                                  .toDate()
-                                  .toString(),
-                              style: itemdefaultStyle.copyWith(
-                                fontWeight: FontWeight.bold,
+                        widget.oState == OrderState.notShipped
+                            ? SizedBox()
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Shipped date'),
+                                  Text(
+                                    this
+                                        .widget
+                                        .orderDetailModel
+                                        .shippedDateAndTime
+                                        .toDate()
+                                        .toString(),
+                                    style: itemdefaultStyle.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),

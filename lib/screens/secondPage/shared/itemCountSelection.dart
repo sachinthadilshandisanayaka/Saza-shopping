@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/shared/colors.dart';
 
-class ItemContselect extends StatefulWidget {
+class ItemContselect extends StatelessWidget {
   final int size;
   final int count;
   final Function incress;
@@ -9,11 +9,6 @@ class ItemContselect extends StatefulWidget {
   ItemContselect(
       {@required this.size, this.incress, this.descrise, this.count});
 
-  @override
-  _ItemContselectState createState() => _ItemContselectState();
-}
-
-class _ItemContselectState extends State<ItemContselect> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,9 +21,9 @@ class _ItemContselectState extends State<ItemContselect> {
       ),
       child: Row(
         children: [
-          widget.count != 0
+          count != 0
               ? InkWell(
-                  onTap: () => widget.descrise(),
+                  onTap: () => descrise(),
                   child: Icon(
                     Icons.remove,
                     color: appBarColor,
@@ -47,16 +42,16 @@ class _ItemContselectState extends State<ItemContselect> {
               color: Colors.white,
             ),
             child: Text(
-              widget.count.toString(),
+              count.toString(),
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
           ),
           SizedBox(
             width: 3,
           ),
-          widget.size != widget.count
+          size != count
               ? InkWell(
-                  onTap: () => widget.incress(),
+                  onTap: () => incress(),
                   child: Icon(
                     Icons.add,
                     color: appBarColor,

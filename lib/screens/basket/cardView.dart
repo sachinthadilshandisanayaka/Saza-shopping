@@ -7,8 +7,10 @@ import 'package:sazashopping/shared/loading.dart';
 
 class BacketCardView extends StatelessWidget {
   final Basket basket;
+  final BuildContext passContext;
   BacketCardView({
     @required this.basket,
+    this.passContext,
   });
 
   @override
@@ -24,6 +26,7 @@ class BacketCardView extends StatelessWidget {
             return SubCardDisplay(
               mainItems: snapshot.data,
               basket: this.basket,
+              passContext: this.passContext,
             );
           }
           return Loading();
