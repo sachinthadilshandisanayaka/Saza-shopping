@@ -24,7 +24,7 @@ class _SelectionDropDownState extends State<SelectionDropDown> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Flexible(
-          flex: 1,
+          flex: 3,
           child: Text(
             widget.name,
             style: itemdefaultStyle,
@@ -32,12 +32,15 @@ class _SelectionDropDownState extends State<SelectionDropDown> {
         ),
         widget.items.length != 0
             ? Flexible(
-                flex: 1,
+                flex: 2,
                 child: DropdownButtonFormField(
+                  decoration: InputDecoration(
+                    enabled: false,
+                  ),
                   elevation: 8,
                   value: widget.selecteSize,
                   hint: Text(
-                    'choose one',
+                    'select one',
                     style: itemdefaultStyle,
                   ),
                   isExpanded: true,

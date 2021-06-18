@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sazashopping/models/imageUploadImage.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/services/database.dart';
+// import 'package:sazashopping/services/itemsDatabase.dart';
 import 'package:sazashopping/services/uploadImage.dart';
 
 Future storeItemDataBase(
@@ -41,6 +42,8 @@ Future storeItemDataBase(
 
     MainItems mainItems = MainItems(
       name: productname ?? '',
+      mainCat: productCategories[selectedCategory] ?? '',
+      subCat: selectedCategory ?? '',
       brand: brand ?? '',
       material: material ?? '',
       gender: genderVisibility ? maleOrFemale : '',
@@ -56,8 +59,10 @@ Future storeItemDataBase(
 
     print("--------" + mainItems.name.toString());
 
-    dynamic result = await dataBaseService.uploadItem(mainItems,
-        selectedCategory, productCategories[selectedCategory].toString());
+    dynamic result = await
+        // ItemsDatabaseService(mainItems: mainItems).uploadItem();
+        dataBaseService.uploadItem(mainItems, selectedCategory,
+            productCategories[selectedCategory].toString());
 
     print("result :" + result.toString());
 

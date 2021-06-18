@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/category.dart';
-import 'package:sazashopping/screens/home/category_provider_builder.dart';
+import 'package:sazashopping/screens/home/tabBarController.dart';
 import 'package:sazashopping/services/categoryCollection.dart';
 import 'package:sazashopping/shared/loading.dart';
 
@@ -15,10 +15,10 @@ class _TabBarWidgetState extends State<TabBarWidget> {
     return StreamBuilder<List<CatogeryItems>>(
       stream: CategoryDataBaseService().catogories,
       builder: (context, snapshot) {
-        // if (snapshot.connectionState == ConnectionState.done) {
+        // if (snapshot.connectionState == ConnectionState.active) {
         if (snapshot.hasData) {
-          return NavigateToTabBarController(
-            snapshot: snapshot,
+          return TabBarController(
+            snapshotData: snapshot.data,
           );
         } else if (snapshot.hasError) {
           return Container(
@@ -29,9 +29,5 @@ class _TabBarWidgetState extends State<TabBarWidget> {
         return Loading();
       },
     );
-    // StreamProvider<List<CatogeryItems>>.value(
-    //   value: CategoryDataBaseService().catogories,
-    //   child: NavigateToTabBarController(),
-    // );
   }
 }

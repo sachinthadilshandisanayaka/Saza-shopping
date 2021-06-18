@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:sazashopping/models/category.dart';
+import 'package:sazashopping/screens/basket/basketMainFrame.dart';
 import 'package:sazashopping/screens/home/home.dart';
 import 'package:sazashopping/screens/home/searchBar/searchDelegate.dart';
 import 'package:sazashopping/screens/home/share/drawer.dart';
-import 'package:sazashopping/screens/home/share/popUpButoon.dart';
+// import 'package:sazashopping/screens/home/share/popUpButoon.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/testStyles.dart';
 import 'package:sazashopping/shared/widget/display_text_withStyle.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TabBarController extends StatelessWidget {
-  final Map<String, List<String>> productSubCategory;
-  final List<String> productMainCategories;
-  TabBarController(
-      {@required this.productSubCategory, this.productMainCategories});
+  final List<CatogeryItems> snapshotData;
+  TabBarController({
+    this.snapshotData,
+  });
   final scaffoled = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: productMainCategories.length,
+      length: snapshotData.length,
       child: Scaffold(
         key: scaffoled,
         appBar: AppBar(
@@ -44,17 +46,27 @@ class TabBarController extends StatelessWidget {
                 showSearch(context: context, delegate: DataSearch());
               },
             ),
-            popUpMenuButton(context),
+            IconButton(
+              icon: Icon(
+                FontAwesomeIcons.shoppingCart,
+                size: 20,
+              ),
+              onPressed: () async {
+                await Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) => BasketFrame()));
+              },
+            ),
+            // popUpMenuButton(context),
           ],
           bottom: TabBar(
             physics: BouncingScrollPhysics(),
             isScrollable: true,
             indicatorWeight: 6.0,
             indicatorColor: Colors.white,
-            tabs: productMainCategories.map<Widget>((String mainCategory) {
+            tabs: snapshotData.map<Widget>((CatogeryItems catogeryItems) {
               return Tab(
                 child: diplayTextWithStyle(
-                  text: mainCategory,
+                  text: catogeryItems.name.toString(),
                   style: tabBarHeaderNameStyle,
                 ),
               );
@@ -63,11 +75,11 @@ class TabBarController extends StatelessWidget {
         ),
         drawer: DrawerShowing(),
         body: TabBarView(
-          children: productMainCategories.map((String mainCategory) {
+          children: snapshotData.map((CatogeryItems catogeryItems) {
             return Home(
               connetion: true,
-              id: mainCategory,
-              subItems: productSubCategory[mainCategory],
+              id: catogeryItems.name.toString(),
+              subItems: catogeryItems.category,
             );
           }).toList(),
         ),

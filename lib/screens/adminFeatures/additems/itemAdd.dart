@@ -54,7 +54,7 @@ class _ItemAddingState extends State<ItemAdding> {
   String maleOrFemale;
   String madeCountry;
   String description;
-  String selectedCategory;
+  String selectedCategory = '';
   String procudeSizeType;
 
   String tempColor;

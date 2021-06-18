@@ -70,13 +70,6 @@ class _HomeState extends State<Home> {
         decoration: BoxDecoration(color: backgroudColor),
         child: Column(
           children: [
-            // Container(
-            //     width: MediaQuery.of(context).size.width,
-            //     height: MediaQuery.of(context).size.height * 0.30,
-            //     child: OfferItems()), // offer
-            // SizedBox(
-            //   height: 10.0,
-            // ),
             Container(
               child: ListView.builder(
                 itemCount: subItemList.length + 1,

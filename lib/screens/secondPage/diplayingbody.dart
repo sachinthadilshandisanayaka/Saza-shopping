@@ -426,20 +426,23 @@ class _ItemCardState extends State<ItemCard> {
                             : RaiseButtonCenter(
                                 buttonLable: buy,
                                 pressBottonFuntion: () async {
-                                  _loading(true);
                                   try {
                                     if (this.count == 0) {
                                       Scaffold.of(context)
-                                          .showSnackBar(snackBarCount);
+                                        ..removeCurrentSnackBar()
+                                        ..showSnackBar(snackBarCount);
                                     } else if (this.selecteColor.isEmpty &&
                                         widget.mainItems.color.length != 0) {
                                       Scaffold.of(context)
-                                          .showSnackBar(snackBarColor);
+                                        ..removeCurrentSnackBar()
+                                        ..showSnackBar(snackBarColor);
                                     } else if (this.selecteSize.isEmpty &&
                                         widget.mainItems.size.length != 0) {
                                       Scaffold.of(context)
-                                          .showSnackBar(snackBarSize);
+                                        ..removeCurrentSnackBar()
+                                        ..showSnackBar(snackBarSize);
                                     } else {
+                                      _loading(true);
                                       Map<String, String> basket = {
                                         'itemName': widget.mainItems.name,
                                         'itemid': widget.mainItems.itemId,
@@ -484,9 +487,9 @@ class _ItemCardState extends State<ItemCard> {
                                           ),
                                         );
                                       }
+                                      _fishedLoadig();
                                     }
-                                    _loading(true);
-                                    _fishedLoadig();
+                                    _loading(false);
                                   } catch (e) {
                                     _loading(false);
                                     print(e.message);
