@@ -4,7 +4,7 @@ import 'package:sazashopping/models/basket.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/adminFeatures/shared/popUpMenuButton.dart';
 import 'package:sazashopping/screens/basket/basketMainFrame.dart';
-import 'package:sazashopping/screens/secondPage/itemFrame.dart';
+import 'package:sazashopping/screens/secondPage/diplayingbody.dart';
 import 'package:sazashopping/services/backetDatabase.dart';
 import 'package:sazashopping/shared/colors.dart';
 

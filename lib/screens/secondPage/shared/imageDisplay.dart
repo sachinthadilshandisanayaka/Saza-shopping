@@ -2,16 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/shared/constant.dart';
 
-class ItemImageDisplay extends StatefulWidget {
+class ItemImageDisplay extends StatelessWidget {
   final MainItems mainItems;
   final bool stockNotAvilabe;
-  ItemImageDisplay({@required this.mainItems, @required this.stockNotAvilabe});
+  const ItemImageDisplay(
+      {@required this.mainItems, @required this.stockNotAvilabe});
 
-  @override
-  _ItemImageDisplayState createState() => _ItemImageDisplayState();
-}
-
-class _ItemImageDisplayState extends State<ItemImageDisplay> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,9 +19,9 @@ class _ItemImageDisplayState extends State<ItemImageDisplay> {
           FittedBox(
             fit: BoxFit.fitHeight,
             child: Hero(
-              tag: widget.mainItems,
+              tag: mainItems,
               child: Image.network(
-                widget.mainItems.images[0],
+                mainItems.images[0],
                 fit: BoxFit.contain,
                 loadingBuilder: (context, child, progress) {
                   return progress == null
@@ -37,7 +33,7 @@ class _ItemImageDisplayState extends State<ItemImageDisplay> {
               ),
             ),
           ),
-          widget.stockNotAvilabe
+          stockNotAvilabe
               ? Positioned(
                   top: 100,
                   left: 18,

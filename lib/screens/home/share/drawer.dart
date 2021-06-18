@@ -4,8 +4,6 @@ import 'package:sazashopping/screens/home/menus/constants.dart';
 import 'package:sazashopping/shared/colors.dart';
 
 class DrawerShowing extends StatelessWidget {
-  // DrawerShowing({ });
-
   @override
   Widget build(BuildContext context) {
     return Drawer(

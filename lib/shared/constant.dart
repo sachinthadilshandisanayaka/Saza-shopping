@@ -71,7 +71,7 @@ const itemnameStyle = TextStyle(
 );
 
 const itemdefaultStyle = TextStyle(
-  fontFamily: 'OpenSans',
+  fontFamily: 'Montserrat',
 );
 
 var cartButtonStyle = TextStyle(
