@@ -56,7 +56,6 @@ class _HomeState extends State<Home> {
       }
       setState(() {
         _length = _length + incrementValue;
-        print('--------------------' + _length.toString());
       });
     }
   }

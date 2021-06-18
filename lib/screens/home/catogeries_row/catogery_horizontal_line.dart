@@ -1,23 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
-import 'package:sazashopping/screens/home/catogeries_row/cuperationActivityIndicator.dart';
 import 'package:sazashopping/screens/home/catogeries_row/imageContainer.dart';
 import 'package:sazashopping/screens/home/share/loading.dart';
-import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/shared/colors.dart';
-import 'package:sazashopping/shared/double.dart';
 
 class CatogeriesHorizontalTile extends StatefulWidget {
   final String type;
   final String id;
-  final int allShopItems;
   final bool connection;
-  CatogeriesHorizontalTile(
-      {@required this.type,
-      @required this.connection,
-      @required this.id,
-      @required this.allShopItems});
+  final List<MainItems> mainitems;
+  CatogeriesHorizontalTile({
+    @required this.type,
+    @required this.mainitems,
+    @required this.connection,
+    @required this.id,
+  });
   @override
   _CatogeriesHorizontalTileState createState() =>
       _CatogeriesHorizontalTileState();
@@ -25,21 +23,24 @@ class CatogeriesHorizontalTile extends StatefulWidget {
 
 class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
   ScrollController _scrollController = ScrollController();
-  List<MainItems> getListItems;
-  int loadedDataLenght = 3;
-  bool moreDataAvalible = true;
-
-  final double itemMaxLength = homeScrollItemMaxCount;
-
+  int maxlength;
+  int paginationLenght;
+  bool ispagination = false;
   @override
   void initState() {
     super.initState();
+    paginationLenght = 5;
+    maxlength = widget.mainitems.length;
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        if (moreDataAvalible) {
+        if (paginationLenght <= widget.mainitems.length) {
           _getMoreData();
+        } else {
+          setState(() {
+            ispagination = true;
+          });
         }
       }
     });
@@ -53,53 +54,35 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
 
   _getMoreData() {
     setState(() {
-      loadedDataLenght += 3;
+      paginationLenght = paginationLenght + 5;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final itemDisplayMaxLenght = widget.allShopItems < itemMaxLength
-        ? widget.allShopItems
-        : itemMaxLength;
-
-    return StreamBuilder<List<MainItems>>(
-      stream: DataBaseService(
-                  mainCategoryName: widget.id,
-                  subCategeoryName: widget.type,
-                  limit: loadedDataLenght)
-              .databaseStoreItemsPagination ??
-          [],
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          getListItems = snapshot.data.reversed.toList();
-          return Container(
-            height: 280.0,
-            color: backgroudColor, // here
-            child: ListView.builder(
-              controller: _scrollController,
-              itemCount: getListItems.length + 1,
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                if (index == itemDisplayMaxLenght) {
-                  moreDataAvalible = false;
-                  return SizedBox(
-                    width: 2,
-                  );
-                } else if (index == getListItems.length) {
-                  moreDataAvalible = true;
-                  return horisantalLoading();
-                }
-                return ImageTile(
-                    connection: true, mainItems: getListItems[index]);
-              },
-            ),
+    return Container(
+      height: 280.0,
+      color: backgroudColor,
+      child: ListView.builder(
+        controller: _scrollController,
+        itemCount: paginationLenght + 1,
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        physics: BouncingScrollPhysics(),
+        itemBuilder: (context, index) {
+          if (ispagination) {
+            return SizedBox(
+              width: 2,
+            );
+          } else if (index == paginationLenght) {
+            return horisantalLoading();
+          }
+          return ImageTile(
+            connection: true,
+            mainItems: widget.mainitems[index],
           );
-        }
-        return cuperationActivityIndicator(context: context);
-      },
+        },
+      ),
     );
   }
 }

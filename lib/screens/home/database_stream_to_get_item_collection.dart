@@ -15,8 +15,10 @@ class ItemTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<List<MainItems>>(
       stream: DataBaseService(
-                  mainCategoryName: this.id, subCategeoryName: this.itemname)
-              .databaseStoreAllItems ??
+            mainCategoryName: this.id,
+            subCategeoryName: this.itemname,
+            limit: 15,
+          ).databaseStoreItemsPagination ??
           [],
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -25,7 +27,7 @@ class ItemTile extends StatelessWidget {
               connection: this.connection,
               id: this.id,
               itemname: this.itemname,
-              allShopItems: snapshot.data.length,
+              mainItems: snapshot.data,
             );
           } else if (snapshot.data.length == 0) {
             return SizedBox();

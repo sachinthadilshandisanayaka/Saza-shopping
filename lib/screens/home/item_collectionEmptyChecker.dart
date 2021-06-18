@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/thirdPage/showItems.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/constant.dart';
@@ -8,12 +9,15 @@ class DisplayHorizontolItemBar extends StatelessWidget {
   final String id;
   final String itemname;
   final bool connection;
-  final int allShopItems;
-  DisplayHorizontolItemBar(
-      {@required this.itemname,
-      @required this.connection,
-      @required this.id,
-      @required this.allShopItems});
+  // final int allShopItems;
+  final List<MainItems> mainItems;
+  DisplayHorizontolItemBar({
+    @required this.itemname,
+    @required this.connection,
+    @required this.id,
+    // @required this.allShopItems,
+    this.mainItems,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +89,7 @@ class DisplayHorizontolItemBar extends StatelessWidget {
               id: id,
               type: itemname,
               connection: connection,
-              allShopItems: allShopItems,
+              mainitems: mainItems,
             ),
           ),
         ],
