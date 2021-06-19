@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:dropdownfield/dropdownfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,6 +10,7 @@ import 'package:sazashopping/screens/adminFeatures/additems/formValidator/multiV
 import 'package:sazashopping/screens/adminFeatures/additems/formValidator/stringValidator.dart';
 import 'package:sazashopping/screens/adminFeatures/additems/formValidator/swithValidator.dart';
 import 'package:sazashopping/screens/adminFeatures/additems/funtions/addModelValue.dart';
+import 'package:sazashopping/screens/adminFeatures/additems/funtions/dialodShow.dart';
 import 'package:sazashopping/screens/adminFeatures/updateItem/itemUpdate.dart';
 import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/uploadLoading.dart';
@@ -517,53 +517,51 @@ class _ItemAddingState extends State<ItemAdding> {
                           buttonLable: 'ADD ITEM',
                           pressBottonFuntion: () async {
                             setLoaing(true);
-                            try {
-                              dynamic result = await storeItemDataBase(
-                                productname,
-                                productMaterial,
-                                _formKeyAddItem,
-                                selectedCategory,
-                                widget.mainCategories,
-                                genderVisibility,
-                                maleOrFemale,
-                                productColors,
-                                productSize,
-                                images,
-                                offerVisibility,
-                                offer,
-                                price,
-                                description,
-                                madeCountry,
-                                brandName,
-                                quantity,
-                              );
-                              if (result) {
-                                setLoaing(false);
-                                _reset();
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (BuildContext context) =>
-                                      CupertinoAlertDialog(
-                                    title: Text('Success'),
-                                    content: Text('item added successfully'),
-                                    insetAnimationCurve: Curves.elasticIn,
-                                    actions: <Widget>[
-                                      CupertinoDialogAction(
-                                        isDefaultAction: false,
-                                        child: Text('Ok'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
-                                  ),
+                            if (_formKeyAddItem.currentState.validate()) {
+                              try {
+                                MainItems uMainItems = new MainItems(
+                                  name: productname ?? '',
+                                  mainCat:
+                                      widget.mainCategories[selectedCategory] ??
+                                          '',
+                                  subCat: selectedCategory ?? '',
+                                  brand: brandName ?? '',
+                                  material: productMaterial ?? '',
+                                  gender: genderVisibility ? maleOrFemale : '',
+                                  description: description ?? '',
+                                  country: madeCountry ?? '',
+                                  quantity: quantity ?? 0,
+                                  offer: offerVisibility ? offer : 0.0,
+                                  price: price.toString() ?? '',
+                                  size: productSize.length != 0
+                                      ? productSize
+                                      : [],
+                                  images: [],
+                                  color: productColors.length != 0
+                                      ? productColors
+                                      : [],
                                 );
+                                StroreItemDatabase stroreItemDatabase =
+                                    StroreItemDatabase(
+                                  mainItems: uMainItems,
+                                  images: images,
+                                );
+                                await stroreItemDatabase.imageUpload();
+                                bool result =
+                                    await stroreItemDatabase.uploadUserData();
+                                if (result) {
+                                  setLoaing(false);
+                                  _reset();
+                                  ShowingDialog(
+                                      context: context,
+                                      header: 'Success',
+                                      message: 'Uploaded seccessfully!');
+                                }
+                              } catch (e) {
+                                var _error = e.message;
+                                print(_error);
+                                setLoaing(false);
                               }
-                            } catch (e) {
-                              var _error = e.message;
-                              print(_error);
-                              setLoaing(false);
                             }
                           },
                         ),

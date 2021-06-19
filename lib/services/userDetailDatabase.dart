@@ -14,6 +14,7 @@ class UserDetailDataBaseService {
 
   Future updateUserDetail() async {
     return await detailCollection.doc(useiId).set({
+      'uid': useiId,
       'name': userDetail.name,
       'streetAddress1': userDetail.streetAddress1,
       'streetAddress2': userDetail.streetAddress2,
@@ -29,6 +30,7 @@ class UserDetailDataBaseService {
     try {
       return UserShppingDetail(
         name: snapshot.data()['name'] ?? '',
+        uid: snapshot.data()['uid'] ?? '',
         streetAddress1: snapshot.data()['streetAddress1'] ?? '',
         streetAddress2: snapshot.data()['streetAddress2'] ?? '',
         city: snapshot.data()['city'] ?? '',

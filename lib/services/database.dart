@@ -6,8 +6,14 @@ class DataBaseService {
   final String subCategeoryName;
   final String mainCategoryName;
   int limit;
-  DataBaseService(
-      {this.uid, this.limit = 0, this.mainCategoryName, this.subCategeoryName});
+  final MainItems mainItems;
+  DataBaseService({
+    this.uid,
+    this.limit = 0,
+    this.mainCategoryName,
+    this.subCategeoryName,
+    this.mainItems,
+  });
 
   final CollectionReference sazaCollection =
       FirebaseFirestore.instance.collection('mainItems');
@@ -21,6 +27,8 @@ class DataBaseService {
         .set({
       'name': mainItems.name,
       'material': mainItems.material,
+      'mainCat': mainItems.mainCat,
+      'subCat': mainItems.subCat,
       'gender': mainItems.gender,
       'description': mainItems.description,
       'country': mainItems.country,
@@ -34,16 +42,17 @@ class DataBaseService {
     });
   }
 
-  Future uploadItem(
-      MainItems mainItems, String subCategory, String mainCategory) async {
-    await sazaCollection.doc(mainCategory).set({});
+  Future uploadItem() async {
+    await sazaCollection.doc(this.mainItems.mainCat).set({});
     return await sazaCollection
-        .doc(mainCategory)
-        .collection(subCategory)
+        .doc(this.mainItems.mainCat)
+        .collection(this.mainItems.subCat)
         .doc()
         .set({
       'name': mainItems.name,
       'material': mainItems.material,
+      'mainCat': mainItems.mainCat,
+      'subCat': mainItems.subCat,
       'gender': mainItems.gender,
       'description': mainItems.description,
       'country': mainItems.country,

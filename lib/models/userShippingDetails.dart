@@ -1,4 +1,5 @@
 class UserShppingDetail {
+  String uid;
   String name;
   String streetAddress1;
   String streetAddress2;
@@ -9,6 +10,7 @@ class UserShppingDetail {
   String telephone;
 
   UserShppingDetail({
+    this.uid,
     this.name,
     this.streetAddress1,
     this.streetAddress2,

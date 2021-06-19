@@ -4,7 +4,7 @@ import 'package:sazashopping/services/database.dart';
 import 'package:sazashopping/services/uploadImage.dart';
 
 class ItemUpdate {
-  MainItems mainItems;
+  final MainItems mainItems;
   final List<Object> images;
   ItemUpdate({this.mainItems, this.images});
 
