@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sazashopping/screens/userSetting/options/userDetail.dart';
 import 'package:sazashopping/screens/userSetting/shared/shared.dart';
 import 'package:sazashopping/shared/colors.dart';
 
 class SettingOptionDisplay extends StatelessWidget {
   final String userId;
-  SettingOptionDisplay({this.userId});
+  SettingOptionDisplay({@required this.userId});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,19 @@ class SettingOptionDisplay extends StatelessWidget {
           itemCount: SettingConstant.settingOptions.length,
           itemBuilder: (context, index) {
             return ListTile(
-              onTap: () {},
+              onTap: () async {
+                if (SettingConstant.userdetail ==
+                    SettingConstant.settingOptions[index]) {
+                  await Navigator.push(
+                    context,
+                    new MaterialPageRoute(
+                      builder: (context) => UserDetails(
+                        uid: userId,
+                      ),
+                    ),
+                  );
+                }
+              },
               title: Text(
                 SettingConstant.settingOptions[index],
                 style: TextStyle(

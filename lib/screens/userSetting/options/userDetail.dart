@@ -4,7 +4,7 @@ import 'package:sazashopping/shared/colors.dart';
 
 class UserDetails extends StatelessWidget {
   final String uid;
-  const UserDetails({this.uid});
+  const UserDetails({@required this.uid});
 
   @override
   Widget build(BuildContext context) {

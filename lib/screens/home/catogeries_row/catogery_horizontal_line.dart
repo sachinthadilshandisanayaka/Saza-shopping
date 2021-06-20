@@ -26,11 +26,18 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
   int maxlength;
   int paginationLenght;
   bool ispagination = false;
+  bool isminimumvale = false;
   @override
   void initState() {
     super.initState();
     paginationLenght = 5;
     maxlength = widget.mainitems.length;
+    if (maxlength <= paginationLenght) {
+      setState(() {
+        paginationLenght = maxlength;
+        isminimumvale = true;
+      });
+    }
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -65,7 +72,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
       color: backgroudColor,
       child: ListView.builder(
         controller: _scrollController,
-        itemCount: paginationLenght + 1,
+        itemCount: isminimumvale ? paginationLenght : paginationLenght + 1,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         physics: BouncingScrollPhysics(),

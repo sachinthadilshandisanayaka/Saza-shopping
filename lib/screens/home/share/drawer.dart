@@ -8,6 +8,7 @@ import 'package:sazashopping/screens/adminFeatures/adminHome/AdminHome.dart';
 import 'package:sazashopping/screens/basket/basketMainFrame.dart';
 import 'package:sazashopping/screens/home/menus/constants.dart';
 import 'package:sazashopping/screens/purchase/purchaseOrders.dart';
+import 'package:sazashopping/screens/userSetting/settingController.dart';
 import 'package:sazashopping/services/userDetailDatabase.dart';
 import 'package:sazashopping/shared/colors.dart';
 
@@ -30,17 +31,36 @@ class DrawerShowing extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: appBarColor,
                   ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      snapshot.hasData ? snapshot.data.name : username,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        wordSpacing: 1,
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: <Widget>[
+                      Container(
+                        color: appBarColor,
                       ),
-                    ),
+                      Positioned(
+                        top: 3,
+                        left: 80,
+                        child: CircleAvatar(
+                          backgroundImage: AssetImage('assets/splash.png'),
+                          backgroundColor: Colors.white,
+                          radius: 50,
+                        ),
+                      ),
+                      Positioned(
+                        child: Container(
+                          alignment: Alignment.bottomCenter,
+                          child: Text(
+                            snapshot.hasData ? snapshot.data.name : username,
+                            style: TextStyle(
+                              fontFamily: 'Baloo2',
+                              fontSize: 19,
+                              wordSpacing: 1,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
                 ListView.builder(
@@ -75,6 +95,14 @@ class DrawerShowing extends StatelessWidget {
                                   builder: (context) => ItemAddMainFrame()));
                         } else if (Constants.choices[index] ==
                             Constants.setting) {
+                          await Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                              builder: (context) => SettingOptionDisplay(
+                                userId: user.uid,
+                              ),
+                            ),
+                          );
                         } else if (Constants.choices[index] ==
                             Constants.orders) {
                           await Navigator.push(
