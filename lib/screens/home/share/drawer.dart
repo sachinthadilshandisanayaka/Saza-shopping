@@ -34,12 +34,9 @@ class DrawerShowing extends StatelessWidget {
                   child: Stack(
                     fit: StackFit.expand,
                     children: <Widget>[
-                      Container(
-                        color: appBarColor,
-                      ),
                       Positioned(
                         top: 3,
-                        left: 80,
+                        left: 85,
                         child: CircleAvatar(
                           backgroundImage: AssetImage('assets/splash.png'),
                           backgroundColor: Colors.white,
@@ -89,40 +86,144 @@ class DrawerShowing extends StatelessWidget {
                       leading: Icon(icon),
                       onTap: () async {
                         if (Constants.choices[index] == Constants.additem) {
+                          //
                           await Navigator.push(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => ItemAddMainFrame()));
+                            context,
+                            new PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        ItemAddMainFrame(),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  var begin = Offset(1.0, 0.0);
+                                  var end = Offset(0.0, 0.0);
+                                  var curve = Curves.ease;
+
+                                  var tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
+                                  return SlideTransition(
+                                    position: animation.drive(tween),
+                                    child: child,
+                                  );
+                                }),
+                          );
+                          //
+                          // await Navigator.push(
+                          //     context,
+                          //     new MaterialPageRoute(
+                          //         builder: (context) => ItemAddMainFrame()));
                         } else if (Constants.choices[index] ==
                             Constants.setting) {
                           await Navigator.push(
                             context,
-                            new MaterialPageRoute(
-                              builder: (context) => SettingOptionDisplay(
-                                userId: user.uid,
-                              ),
-                            ),
+                            new PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        SettingOptionDisplay(
+                                          userId: user.uid,
+                                        ),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  var begin = Offset(1.0, 0.0);
+                                  var end = Offset(0.0, 0.0);
+                                  var curve = Curves.ease;
+
+                                  var tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
+                                  return SlideTransition(
+                                    position: animation.drive(tween),
+                                    child: child,
+                                  );
+                                }),
                           );
+                          // await Navigator.push(
+                          //   context,
+                          //   new MaterialPageRoute(
+                          //     builder: (context) => SettingOptionDisplay(
+                          //       userId: user.uid,
+                          //     ),
+                          //   ),
+                          // );
                         } else if (Constants.choices[index] ==
                             Constants.orders) {
                           await Navigator.push(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => AdminHome()));
+                            context,
+                            new PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        AdminHome(),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  var begin = Offset(1.0, 0.0);
+                                  var end = Offset(0.0, 0.0);
+                                  var curve = Curves.ease;
+
+                                  var tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
+                                  return SlideTransition(
+                                    position: animation.drive(tween),
+                                    child: child,
+                                  );
+                                }),
+                          );
+                          // await Navigator.push(
+                          //     context,
+                          //     new MaterialPageRoute(
+                          //         builder: (context) => AdminHome()));
                         } else if (Constants.choices[index] ==
                             Constants.purchase) {
                           await Navigator.push(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => PurchaseItems()));
+                            context,
+                            new PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        PurchaseItems(),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  var begin = Offset(1.0, 0.0);
+                                  var end = Offset(0.0, 0.0);
+                                  var curve = Curves.ease;
+
+                                  var tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
+                                  return SlideTransition(
+                                    position: animation.drive(tween),
+                                    child: child,
+                                  );
+                                }),
+                          );
+                          // await Navigator.push(
+                          //     context,
+                          //     new MaterialPageRoute(
+                          //         builder: (context) => PurchaseItems()));
                         } else if (Constants.choices[index] ==
                             Constants.logout) {
                         } else if (Constants.choices[index] ==
                             Constants.basket) {
                           await Navigator.push(
-                              context,
-                              new MaterialPageRoute(
-                                  builder: (context) => BasketFrame()));
+                            context,
+                            new PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) =>
+                                        BasketFrame(),
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  var begin = Offset(1.0, 0.0);
+                                  var end = Offset(0.0, 0.0);
+                                  var curve = Curves.ease;
+
+                                  var tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
+                                  return SlideTransition(
+                                    position: animation.drive(tween),
+                                    child: child,
+                                  );
+                                }),
+                          );
+                          // await Navigator.push(
+                          //     context,
+                          //     new MaterialPageRoute(
+                          //         builder: (context) => BasketFrame()));
                         }
                       },
                       title: Text(
