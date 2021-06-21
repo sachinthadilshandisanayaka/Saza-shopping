@@ -8,6 +8,7 @@ class Basket {
   String size;
   String quantity;
   String color;
+  String totalPrice;
 
   Basket({
     this.basketId,
@@ -19,5 +20,6 @@ class Basket {
     this.userid,
     this.subcat,
     this.mainCat,
+    this.totalPrice,
   });
 }

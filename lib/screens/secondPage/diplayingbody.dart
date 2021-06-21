@@ -34,7 +34,8 @@ class ItemCard extends StatefulWidget {
 }
 
 class _ItemCardState extends State<ItemCard> {
-  double actualPrice = 0.0;
+  double actualPrice;
+  double totalPrice;
   String selecteSize;
   String selecteColor;
   bool stockNotAvilabe = false;
@@ -45,6 +46,8 @@ class _ItemCardState extends State<ItemCard> {
   void initState() {
     super.initState();
     setState(() {
+      this.totalPrice = 0;
+      this.actualPrice = 0;
       if (widget.navResult) {
         count = int.parse(widget.basketFromNav.quantity);
         this.selecteColor = widget.basketFromNav.color;
@@ -63,6 +66,22 @@ class _ItemCardState extends State<ItemCard> {
         stockNotAvilabe = true;
       }
     });
+  }
+
+  _totalPriceCalculate() {
+    if (widget.mainItems.offer != 0.0) {
+      if (this.count != 0) {
+        setState(() {
+          this.totalPrice = this.actualPrice * this.count;
+        });
+      }
+    } else {
+      if (this.count != 0) {
+        setState(() {
+          this.totalPrice = double.parse(widget.mainItems.price) * this.count;
+        });
+      }
+    }
   }
 
   _priceCalculate(double price, double offer) {
@@ -295,9 +314,11 @@ class _ItemCardState extends State<ItemCard> {
                                     count: count,
                                     incress: () => setState(() {
                                       count++;
+                                      _totalPriceCalculate();
                                     }),
                                     descrise: () => setState(() {
                                       count--;
+                                      _totalPriceCalculate();
                                     }),
                                   ),
                                 ],
@@ -354,7 +375,39 @@ class _ItemCardState extends State<ItemCard> {
                           ),
                         ),
                         SizedBox(
-                          height: 15,
+                          height: 10,
+                        ),
+                        this.count != 0
+                            ? Container(
+                                padding: EdgeInsets.only(
+                                  left: 15,
+                                  right: 15,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Text(
+                                      'Total Price',
+                                      style: itemdefaultStyle.copyWith(
+                                        color: appBarColor,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Text(
+                                      this.totalPrice.toString(),
+                                      style: itemdefaultStyle.copyWith(
+                                        color: appBarColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : SizedBox(),
+                        SizedBox(
+                          height: 20,
                         ),
                         stockNotAvilabe
                             ? SizedBox()
@@ -389,6 +442,7 @@ class _ItemCardState extends State<ItemCard> {
                                         subcat: widget.mainItems.subCat,
                                         mainCat: widget.mainItems.mainCat,
                                         quantity: count.toString(),
+                                        totalPrice: this.totalPrice.toString(),
                                       );
                                       if (widget.navResult) {
                                         await BasketDataBaseService(
@@ -452,6 +506,8 @@ class _ItemCardState extends State<ItemCard> {
                                         'size': selecteSize,
                                         'quantity': count.toString(),
                                         'color': selecteColor,
+                                        'totalPrice':
+                                            this.totalPrice.toString(),
                                       };
                                       var navigationResult =
                                           await Navigator.push(

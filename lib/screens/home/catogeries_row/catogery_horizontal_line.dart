@@ -25,12 +25,14 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
   ScrollController _scrollController = ScrollController();
   int maxlength;
   int paginationLenght;
+  int incresingvalue;
   bool ispagination = false;
   bool isminimumvale = false;
   @override
   void initState() {
     super.initState();
     paginationLenght = 5;
+    incresingvalue = 5;
     maxlength = widget.mainitems.length;
     if (maxlength <= paginationLenght) {
       setState(() {
@@ -42,7 +44,7 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        if (paginationLenght <= widget.mainitems.length) {
+        if (paginationLenght < widget.mainitems.length && !ispagination) {
           _getMoreData();
         } else {
           setState(() {
@@ -60,8 +62,13 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
   }
 
   _getMoreData() {
+    if (this.maxlength - this.paginationLenght < incresingvalue) {
+      setState(() {
+        this.incresingvalue = this.maxlength - this.paginationLenght;
+      });
+    }
     setState(() {
-      paginationLenght = paginationLenght + 5;
+      paginationLenght = paginationLenght + incresingvalue;
     });
   }
 
@@ -78,11 +85,11 @@ class _CatogeriesHorizontalTileState extends State<CatogeriesHorizontalTile> {
         physics: BouncingScrollPhysics(),
         itemBuilder: (context, index) {
           if (ispagination) {
-            return SizedBox(
+            SizedBox(
               width: 2,
             );
           } else if (index == paginationLenght) {
-            return horisantalLoading();
+            horisantalLoading();
           }
           return ImageTile(
             connection: true,

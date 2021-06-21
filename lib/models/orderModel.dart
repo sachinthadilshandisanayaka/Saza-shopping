@@ -18,6 +18,7 @@ class OrderDetailModel {
   String size;
   String quantity;
   String color;
+  String totalPrice;
   Timestamp dataAndTime;
   Timestamp shippedDateAndTime;
   String orderState;
@@ -41,6 +42,7 @@ class OrderDetailModel {
     this.userid,
     this.subcat,
     this.mainCat,
+    this.totalPrice,
     this.dataAndTime,
     this.shippedDateAndTime,
     this.orderState,

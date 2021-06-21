@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sazashopping/models/orderModel.dart';
 import 'package:sazashopping/models/userShippingDetails.dart';
 import 'package:sazashopping/screens/adminFeatures/additems/formValidator/stringValidator.dart';
+import 'package:sazashopping/screens/secondPage/shared/detailDisplay.dart';
 import 'package:sazashopping/services/orderDatabase.dart';
 import 'package:sazashopping/services/userDetailDatabase.dart';
 import 'package:sazashopping/shared/constant.dart';
@@ -193,6 +194,42 @@ class _OderFormState extends State<OderForm> {
                     validator: (val) => checkValue(val),
                   ),
                   SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    color: Colors.teal[50],
+                    child: Column(
+                      children: <Widget>[
+                        ItemDetailDisplaty(
+                          tag: "Color",
+                          value: widget.basket['color'],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        ItemDetailDisplaty(
+                          tag: "Size",
+                          value: widget.basket['size'],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        ItemDetailDisplaty(
+                          tag: "Quantity",
+                          value: widget.basket['quantity'],
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        ItemDetailDisplaty(
+                          tag: "Total Price",
+                          value: widget.basket['totalPrice'],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
                     height: 35,
                   ),
                   RaiseButtonCenter(
@@ -232,6 +269,7 @@ class _OderFormState extends State<OderForm> {
                             shippedDateAndTime: timestamp,
                             orderState: OrderState.notShipped,
                             images: widget.images,
+                            totalPrice: widget.basket['totalPrice'],
                           );
                           await OrderDatabaseService(
                                   orderDetailModel: oderModel)
