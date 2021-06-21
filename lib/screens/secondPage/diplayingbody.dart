@@ -45,6 +45,7 @@ class _ItemCardState extends State<ItemCard> {
   @override
   void initState() {
     super.initState();
+
     setState(() {
       this.totalPrice = 0;
       this.actualPrice = 0;
