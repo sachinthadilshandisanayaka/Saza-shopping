@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   stripe_payment:
+  http:
   cached_network_image: ^2.0.0-rc
   
   # The following adds the Cupertino Icons font to your application.

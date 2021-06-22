@@ -11,6 +11,7 @@ import 'package:sazashopping/shared/constant.dart';
 import 'package:sazashopping/shared/loading.dart';
 import 'package:sazashopping/shared/orderState.dart';
 import 'package:sazashopping/shared/widget/centeredRaiseButton.dart';
+import 'package:stripe_payment/stripe_payment.dart';
 
 class OderForm extends StatefulWidget {
   final UserShppingDetail userShppingDetail;
@@ -35,6 +36,11 @@ class _OderFormState extends State<OderForm> {
   @override
   void initState() {
     super.initState();
+
+    StripePayment.setOptions(StripeOptions(
+        publishableKey:
+            'pk_test_51J4psoImpEAKTCWgp7MzARHalAt7ykYWHdENa0XavLMV1rQ1glxlcljKQcUQrw4z32iv1JgeelY9cGfp2Ii6h5bk00dKIUp2SF'));
+
     setState(() {
       _loaging = false;
       _userShppingDetail = widget.userShppingDetail;
