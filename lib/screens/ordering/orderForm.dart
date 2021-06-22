@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,7 @@ import 'package:sazashopping/shared/loading.dart';
 import 'package:sazashopping/shared/orderState.dart';
 import 'package:sazashopping/shared/widget/centeredRaiseButton.dart';
 import 'package:stripe_payment/stripe_payment.dart';
+import 'package:http/http.dart' as http;
 
 class OderForm extends StatefulWidget {
   final UserShppingDetail userShppingDetail;
@@ -277,6 +280,7 @@ class _OderFormState extends State<OderForm> {
                             images: widget.images,
                             totalPrice: widget.basket['totalPrice'],
                           );
+
                           await OrderDatabaseService(
                                   orderDetailModel: oderModel)
                               .uploadOrder();
@@ -295,5 +299,46 @@ class _OderFormState extends State<OderForm> {
               ),
             ),
           );
+  }
+
+  Future<void> startPayment() async {
+    StripePayment.setStripeAccount(null);
+
+    PaymentMethod paymentMethod = PaymentMethod();
+    paymentMethod = await StripePayment.paymentRequestWithCardForm(
+      CardFormPaymentRequest(),
+    ).then((PaymentMethod method) {
+      return method;
+    }).catchError((e) {
+      print(e);
+    });
+    startDirectionChange(paymentMethod);
+  }
+
+  Future<void> startDirectionChange(PaymentMethod paymentMethod) async {
+    print('payement change start');
+
+    final http.Response response = await http.post(Uri.parse);
+
+    if (response.body != null) {
+      final paymentIntent = jsonDecode(response.body);
+      final status = paymentIntent['paymentIntent']['status'];
+      final acct = paymentIntent['stripeAccount'];
+
+      if (status == 'succeeded') {
+        print('payment done');
+      } else {
+        StripePayment.setStripeAccount(acct);
+        await StripePayment.confirmPaymentIntent(PaymentIntent(
+                paymentMethodId: paymentIntent['paymentIntent'],
+                clientSecret: paymentIntent['paymentIntent']['client_secret']))
+            .then((PaymentIntentResult paymentIntentResult) async {
+          final paymentStatus = paymentIntentResult.status;
+          if (paymentStatus == 'succeeded') {
+            print('payment done');
+          }
+        });
+      }
+    }
   }
 }
