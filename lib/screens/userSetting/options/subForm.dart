@@ -9,6 +9,7 @@ import 'package:sazashopping/shared/widget/centeredRaiseButton.dart';
 class ShowingForm extends StatefulWidget {
   final UserShppingDetail userShppingDetail;
   final String uid;
+
   ShowingForm({
     this.userShppingDetail,
     this.uid,
@@ -20,15 +21,26 @@ class ShowingForm extends StatefulWidget {
 
 class _ShowingFormState extends State<ShowingForm> {
   final _formKey = GlobalKey<FormState>();
-  UserShppingDetail _userShppingDetail;
+  UserShppingDetail _userShppingDetail = new UserShppingDetail();
+  String username;
   bool _loaging;
+  bool isDataAvilible;
   @override
   void initState() {
     super.initState();
     setState(() {
       _loaging = false;
-      _userShppingDetail = widget.userShppingDetail;
     });
+    if (widget.userShppingDetail == null) {
+      setState(() {
+        isDataAvilible = false;
+      });
+    } else {
+      setState(() {
+        isDataAvilible = true;
+        _userShppingDetail = widget.userShppingDetail;
+      });
+    }
   }
 
   _setLaod(bool val) {
@@ -64,27 +76,36 @@ class _ShowingFormState extends State<ShowingForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.name,
+                    initialValue:
+                        isDataAvilible ? widget.userShppingDetail.name : '',
                     decoration: textinputDecoration2.copyWith(
                         labelText: 'Contact name'),
                     onChanged: (val) {
-                      setState(() {
+                      return setState(() {
                         _userShppingDetail.name = val.trim();
                       });
                     },
-                    validator: (val) => checkValue(val),
+                    validator: (val) {
+                      if (val.trim() == '' || val.trim().isEmpty) {
+                        return "Value can not be empty";
+                      } else {
+                        return null;
+                      }
+                      // return checkValue(val);
+                    },
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.country,
+                    initialValue:
+                        isDataAvilible ? widget.userShppingDetail.country : '',
                     decoration:
                         textinputDecoration2.copyWith(labelText: 'Country'),
                     onChanged: (val) {
                       setState(() {
-                        _userShppingDetail.country = val.trim();
+                        return _userShppingDetail.country = val.trim();
                       });
                     },
                     validator: (val) => checkValue(val),
@@ -94,13 +115,15 @@ class _ShowingFormState extends State<ShowingForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.streetAddress1,
+                    initialValue: isDataAvilible
+                        ? widget.userShppingDetail.streetAddress1
+                        : '',
                     decoration: textinputDecoration2.copyWith(
                         labelText: 'Street address 1'),
                     keyboardType: TextInputType.streetAddress,
                     onChanged: (val) {
                       setState(() {
-                        _userShppingDetail.streetAddress1 = val.trim();
+                        return _userShppingDetail.streetAddress1 = val.trim();
                       });
                     },
                     validator: (val) => checkValue(val),
@@ -110,13 +133,15 @@ class _ShowingFormState extends State<ShowingForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.streetAddress2,
+                    initialValue: isDataAvilible
+                        ? widget.userShppingDetail.streetAddress2
+                        : '',
                     decoration: textinputDecoration2.copyWith(
                         labelText: 'Street Address 2'),
                     keyboardType: TextInputType.streetAddress,
                     onChanged: (val) {
                       setState(() {
-                        _userShppingDetail.streetAddress2 = val.trim();
+                        return _userShppingDetail.streetAddress2 = val.trim();
                       });
                     },
                     validator: (val) => checkValue(val),
@@ -126,12 +151,13 @@ class _ShowingFormState extends State<ShowingForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.province,
+                    initialValue:
+                        isDataAvilible ? widget.userShppingDetail.province : '',
                     decoration:
                         textinputDecoration2.copyWith(labelText: 'Province'),
                     onChanged: (val) {
                       setState(() {
-                        _userShppingDetail.province = val.trim();
+                        return _userShppingDetail.province = val.trim();
                       });
                     },
                     validator: (val) => checkValue(val),
@@ -141,13 +167,15 @@ class _ShowingFormState extends State<ShowingForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.postalcode,
+                    initialValue: isDataAvilible
+                        ? widget.userShppingDetail.postalcode
+                        : '',
                     decoration:
                         textinputDecoration2.copyWith(labelText: 'Postal code'),
                     keyboardType: TextInputType.number,
                     onChanged: (val) {
                       setState(() {
-                        _userShppingDetail.postalcode = val.trim();
+                        return _userShppingDetail.postalcode = val.trim();
                       });
                     },
                     validator: (val) => checkValue(val),
@@ -157,12 +185,13 @@ class _ShowingFormState extends State<ShowingForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.city,
+                    initialValue:
+                        isDataAvilible ? widget.userShppingDetail.city : '',
                     decoration:
                         textinputDecoration2.copyWith(labelText: 'City'),
                     onChanged: (val) {
                       setState(() {
-                        _userShppingDetail.city = val.trim();
+                        return _userShppingDetail.city = val.trim();
                       });
                     },
                     validator: (val) => checkValue(val),
@@ -172,13 +201,15 @@ class _ShowingFormState extends State<ShowingForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.telephone,
+                    initialValue: isDataAvilible
+                        ? widget.userShppingDetail.telephone
+                        : '',
                     decoration:
                         textinputDecoration2.copyWith(labelText: 'Telephone'),
                     keyboardType: TextInputType.phone,
                     onChanged: (val) {
                       setState(() {
-                        _userShppingDetail.telephone = val.trim();
+                        return _userShppingDetail.telephone = val.trim();
                       });
                     },
                     validator: (val) => checkValue(val),

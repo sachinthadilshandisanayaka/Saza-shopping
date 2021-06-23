@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sazashopping/screens/userSetting/options/userDetail.dart';
 import 'package:sazashopping/screens/userSetting/shared/shared.dart';
@@ -26,7 +27,7 @@ class SettingOptionDisplay extends StatelessWidget {
               onTap: () async {
                 if (SettingConstant.userdetail ==
                     SettingConstant.settingOptions[index]) {
-                  await Navigator.push(
+                  dynamic result = await Navigator.push(
                     context,
                     new MaterialPageRoute(
                       builder: (context) => UserDetails(
@@ -34,6 +35,26 @@ class SettingOptionDisplay extends StatelessWidget {
                       ),
                     ),
                   );
+                  if (result == 'success') {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) => CupertinoAlertDialog(
+                        title: Text('Updated'),
+                        content: Text('update success'),
+                        insetAnimationCurve: Curves.elasticIn,
+                        actions: <Widget>[
+                          CupertinoDialogAction(
+                            isDefaultAction: false,
+                            child: Text('Ok'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  }
                 }
               },
               title: Text(

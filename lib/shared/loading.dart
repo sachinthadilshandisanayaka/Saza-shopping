@@ -7,26 +7,28 @@ class Loading extends StatelessWidget {
   Loading({this.text = ''});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      color: Colors.white,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            text != ''
-                ? Text(
-                    text,
-                    style: itemdefaultStyle,
-                  )
-                : SizedBox(),
-            SpinKitRing(
-              size: 60.0,
-              color: Colors.teal[300],
-            ),
-          ],
+    return SafeArea(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: Colors.white,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              text != ''
+                  ? Text(
+                      text,
+                      style: itemdefaultStyle,
+                    )
+                  : SizedBox(),
+              SpinKitRing(
+                size: 60.0,
+                color: Colors.teal[300],
+              ),
+            ],
+          ),
         ),
       ),
     );

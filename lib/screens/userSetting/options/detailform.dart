@@ -13,16 +13,19 @@ class DetailForm extends StatelessWidget {
     return StreamBuilder<UserShppingDetail>(
         stream: UserDetailDataBaseService(useiId: this.uid).userdetailStream,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ShowingForm(
-              userShppingDetail: snapshot.data,
-              uid: this.uid,
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('error is occure'),
-            );
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              return ShowingForm(
+                userShppingDetail: snapshot.data,
+                uid: this.uid,
+              );
+            } else if (!snapshot.hasData) {
+              return ShowingForm(
+                uid: this.uid,
+              );
+            }
           }
+
           return Loading();
         });
   }

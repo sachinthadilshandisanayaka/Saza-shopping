@@ -523,26 +523,7 @@ class _ItemCardState extends State<ItemCard> {
                                       );
                                       _loading(false);
                                       if (navigationResult == 'success') {
-                                        showDialog(
-                                          context: context,
-                                          barrierDismissible: false,
-                                          builder: (BuildContext context) =>
-                                              CupertinoAlertDialog(
-                                            title: Text('Success'),
-                                            content: Text('See your orders'),
-                                            insetAnimationCurve:
-                                                Curves.elasticIn,
-                                            actions: <Widget>[
-                                              CupertinoDialogAction(
-                                                isDefaultAction: false,
-                                                child: Text('Ok'),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        );
+                                        
                                       }
                                       _fishedLoadig();
                                     }

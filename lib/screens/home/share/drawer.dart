@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:sazashopping/screens/basket/basketMainFrame.dart';
 import 'package:sazashopping/screens/home/menus/constants.dart';
 import 'package:sazashopping/screens/purchase/purchaseOrders.dart';
 import 'package:sazashopping/screens/userSetting/settingController.dart';
+import 'package:sazashopping/services/auth.dart';
 import 'package:sazashopping/services/userDetailDatabase.dart';
 import 'package:sazashopping/shared/colors.dart';
 
@@ -47,13 +49,16 @@ class DrawerShowing extends StatelessWidget {
                         child: Container(
                           alignment: Alignment.bottomCenter,
                           child: Text(
-                            snapshot.hasData ? snapshot.data.name : username,
+                            snapshot.hasData && snapshot.data.name != ''
+                                ? snapshot.data.name
+                                : username,
                             style: TextStyle(
-                              fontFamily: 'Baloo2',
-                              fontSize: 19,
+                              fontFamily: 'Montserrat',
+                              fontSize: 14,
                               wordSpacing: 1,
                               color: Colors.white,
                             ),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       )
@@ -107,11 +112,6 @@ class DrawerShowing extends StatelessWidget {
                                   );
                                 }),
                           );
-                          //
-                          // await Navigator.push(
-                          //     context,
-                          //     new MaterialPageRoute(
-                          //         builder: (context) => ItemAddMainFrame()));
                         } else if (Constants.choices[index] ==
                             Constants.setting) {
                           await Navigator.push(
@@ -136,14 +136,6 @@ class DrawerShowing extends StatelessWidget {
                                   );
                                 }),
                           );
-                          // await Navigator.push(
-                          //   context,
-                          //   new MaterialPageRoute(
-                          //     builder: (context) => SettingOptionDisplay(
-                          //       userId: user.uid,
-                          //     ),
-                          //   ),
-                          // );
                         } else if (Constants.choices[index] ==
                             Constants.orders) {
                           await Navigator.push(
@@ -166,10 +158,6 @@ class DrawerShowing extends StatelessWidget {
                                   );
                                 }),
                           );
-                          // await Navigator.push(
-                          //     context,
-                          //     new MaterialPageRoute(
-                          //         builder: (context) => AdminHome()));
                         } else if (Constants.choices[index] ==
                             Constants.purchase) {
                           await Navigator.push(
@@ -192,12 +180,35 @@ class DrawerShowing extends StatelessWidget {
                                   );
                                 }),
                           );
-                          // await Navigator.push(
-                          //     context,
-                          //     new MaterialPageRoute(
-                          //         builder: (context) => PurchaseItems()));
                         } else if (Constants.choices[index] ==
                             Constants.logout) {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) =>
+                                CupertinoAlertDialog(
+                              title: Text('Sign Out'),
+                              content: Text('Do you want to sign out'),
+                              insetAnimationCurve: Curves.elasticIn,
+                              actions: <Widget>[
+                                CupertinoDialogAction(
+                                  isDefaultAction: false,
+                                  child: Text('No'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                CupertinoDialogAction(
+                                  isDefaultAction: false,
+                                  child: Text('Yes'),
+                                  onPressed: () async {
+                                    await AuthService().signOut();
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
                         } else if (Constants.choices[index] ==
                             Constants.basket) {
                           await Navigator.push(
@@ -220,10 +231,6 @@ class DrawerShowing extends StatelessWidget {
                                   );
                                 }),
                           );
-                          // await Navigator.push(
-                          //     context,
-                          //     new MaterialPageRoute(
-                          //         builder: (context) => BasketFrame()));
                         }
                       },
                       title: Text(

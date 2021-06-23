@@ -13,7 +13,7 @@ class UserDetailDataBaseService {
   }
 
   Future updateUserDetail() async {
-    return await detailCollection.doc(useiId).set({
+    return await detailCollection.doc(useiId).update({
       'uid': useiId,
       'name': userDetail.name,
       'streetAddress1': userDetail.streetAddress1,
@@ -27,22 +27,17 @@ class UserDetailDataBaseService {
   }
 
   UserShppingDetail detailSnapshot(DocumentSnapshot snapshot) {
-    try {
-      return UserShppingDetail(
-        name: snapshot.data()['name'] ?? '',
-        uid: snapshot.data()['uid'] ?? '',
-        streetAddress1: snapshot.data()['streetAddress1'] ?? '',
-        streetAddress2: snapshot.data()['streetAddress2'] ?? '',
-        city: snapshot.data()['city'] ?? '',
-        province: snapshot.data()['province'] ?? '',
-        postalcode: snapshot.data()['postalcode'] ?? '',
-        country: snapshot.data()['country'] ?? '',
-        telephone: snapshot.data()['telephone'] ?? '',
-      );
-    } catch (e) {
-      print(e.message);
-      return new UserShppingDetail();
-    }
+    return UserShppingDetail(
+      name: snapshot.data()['name'] ?? '',
+      uid: snapshot.data()['uid'] ?? '',
+      streetAddress1: snapshot.data()['streetAddress1'] ?? '',
+      streetAddress2: snapshot.data()['streetAddress2'] ?? '',
+      city: snapshot.data()['city'] ?? '',
+      province: snapshot.data()['province'] ?? '',
+      postalcode: snapshot.data()['postalcode'] ?? '',
+      country: snapshot.data()['country'] ?? '',
+      telephone: snapshot.data()['telephone'] ?? '',
+    );
   }
 
   Stream<UserShppingDetail> get userdetailStream {
