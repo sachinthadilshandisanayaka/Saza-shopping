@@ -17,17 +17,21 @@ class ShppingForm extends StatelessWidget {
     return StreamBuilder<UserShppingDetail>(
         stream: UserDetailDataBaseService(useiId: userid.uid).userdetailStream,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return OderForm(
-              userShppingDetail: snapshot.data,
-              basket: this.basket,
-              id: userid.uid,
-              images: this.images,
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('error is occure'),
-            );
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              return OderForm(
+                userShppingDetail: snapshot.data,
+                basket: this.basket,
+                id: userid.uid,
+                images: this.images,
+              );
+            } else if (!snapshot.hasData) {
+              return OderForm(
+                basket: this.basket,
+                id: userid.uid,
+                images: this.images,
+              );
+            }
           }
           return Loading();
         });

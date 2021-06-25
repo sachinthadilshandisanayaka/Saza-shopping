@@ -20,7 +20,7 @@ class OderForm extends StatefulWidget {
   final String id;
   final List<String> images;
   OderForm({
-    @required this.userShppingDetail,
+    this.userShppingDetail,
     @required this.basket,
     @required this.id,
     @required this.images,
@@ -32,12 +32,22 @@ class OderForm extends StatefulWidget {
 
 class _OderFormState extends State<OderForm> {
   final _formKey = GlobalKey<FormState>();
-  UserShppingDetail _userShppingDetail;
+  UserShppingDetail _userShppingDetail = new UserShppingDetail();
+  bool isUserdataAvilable;
   bool _loaging;
   @override
   void initState() {
     super.initState();
-
+    if (widget.userShppingDetail == null) {
+      setState(() {
+        isUserdataAvilable = false;
+      });
+    } else {
+      setState(() {
+        isUserdataAvilable = true;
+        _userShppingDetail = widget.userShppingDetail;
+      });
+    }
     //   StripePayment.setOptions(StripeOptions(
     //       publishableKey:
     //           'pk_test_51J4psoImpEAKTCWgp7MzARHalAt7ykYWHdENa0XavLMV1rQ1glxlcljKQcUQrw4z32iv1JgeelY9cGfp2Ii6h5bk00dKIUp2SF'));
@@ -81,11 +91,12 @@ class _OderFormState extends State<OderForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.name,
+                    initialValue:
+                        isUserdataAvilable ? widget.userShppingDetail.name : '',
                     decoration: textinputDecoration2.copyWith(
                         labelText: 'Contact name'),
                     onChanged: (val) {
-                      setState(() {
+                      return setState(() {
                         _userShppingDetail.name = val.trim();
                       });
                     },
@@ -96,11 +107,13 @@ class _OderFormState extends State<OderForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.country,
+                    initialValue: isUserdataAvilable
+                        ? widget.userShppingDetail.country
+                        : '',
                     decoration:
                         textinputDecoration2.copyWith(labelText: 'Country'),
                     onChanged: (val) {
-                      setState(() {
+                      return setState(() {
                         _userShppingDetail.country = val.trim();
                       });
                     },
@@ -111,12 +124,14 @@ class _OderFormState extends State<OderForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.streetAddress1,
+                    initialValue: isUserdataAvilable
+                        ? widget.userShppingDetail.streetAddress1
+                        : '',
                     decoration: textinputDecoration2.copyWith(
                         labelText: 'Street address 1'),
                     keyboardType: TextInputType.streetAddress,
                     onChanged: (val) {
-                      setState(() {
+                      return setState(() {
                         _userShppingDetail.streetAddress1 = val.trim();
                       });
                     },
@@ -127,12 +142,14 @@ class _OderFormState extends State<OderForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.streetAddress2,
+                    initialValue: isUserdataAvilable
+                        ? widget.userShppingDetail.streetAddress2
+                        : '',
                     decoration: textinputDecoration2.copyWith(
                         labelText: 'Street Address 2'),
                     keyboardType: TextInputType.streetAddress,
                     onChanged: (val) {
-                      setState(() {
+                      return setState(() {
                         _userShppingDetail.streetAddress2 = val.trim();
                       });
                     },
@@ -143,11 +160,13 @@ class _OderFormState extends State<OderForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.province,
+                    initialValue: isUserdataAvilable
+                        ? widget.userShppingDetail.province
+                        : '',
                     decoration:
                         textinputDecoration2.copyWith(labelText: 'Province'),
                     onChanged: (val) {
-                      setState(() {
+                      return setState(() {
                         _userShppingDetail.province = val.trim();
                       });
                     },
@@ -158,12 +177,14 @@ class _OderFormState extends State<OderForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.postalcode,
+                    initialValue: isUserdataAvilable
+                        ? widget.userShppingDetail.postalcode
+                        : '',
                     decoration:
                         textinputDecoration2.copyWith(labelText: 'Postal code'),
                     keyboardType: TextInputType.number,
                     onChanged: (val) {
-                      setState(() {
+                      return setState(() {
                         _userShppingDetail.postalcode = val.trim();
                       });
                     },
@@ -174,11 +195,12 @@ class _OderFormState extends State<OderForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.city,
+                    initialValue:
+                        isUserdataAvilable ? widget.userShppingDetail.city : '',
                     decoration:
                         textinputDecoration2.copyWith(labelText: 'City'),
                     onChanged: (val) {
-                      setState(() {
+                      return setState(() {
                         _userShppingDetail.city = val.trim();
                       });
                     },
@@ -189,12 +211,14 @@ class _OderFormState extends State<OderForm> {
                   ),
                   TextFormField(
                     style: TextStyle(fontWeight: FontWeight.bold),
-                    initialValue: widget.userShppingDetail.telephone,
+                    initialValue: isUserdataAvilable
+                        ? widget.userShppingDetail.telephone
+                        : '',
                     decoration:
                         textinputDecoration2.copyWith(labelText: 'Telephone'),
                     keyboardType: TextInputType.phone,
                     onChanged: (val) {
-                      setState(() {
+                      return setState(() {
                         _userShppingDetail.telephone = val.trim();
                       });
                     },
