@@ -1,6 +1,9 @@
 # sazashopping
 
 A new Flutter project.
+# Logo
+![my logo](https://user-images.githubusercontent.com/57430239/123525910-cd043700-d6f1-11eb-8023-8e2adf6e37b0.jpg)
+
 
 ## Getting Started
 
