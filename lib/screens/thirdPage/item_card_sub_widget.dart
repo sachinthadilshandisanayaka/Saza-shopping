@@ -56,66 +56,70 @@ class _SubCardWidgetState extends State<SubCardWidget> {
           ),
         ],
       ),
-      child: Card(
-        elevation: 0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: cardWidth * 0.50,
-              height: cardHeight * 0.95,
-              margin: EdgeInsets.only(left: 0),
-              child: Hero(
-                tag: widget.mainItems,
-                child: Image.network(
-                  widget.mainItems.images[0],
-                  fit: BoxFit.contain,
-                  loadingBuilder: (context, child, progress) {
-                    return progress == null ? child : LinearProgressIndicator();
-                  },
-                ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            width: cardWidth * 0.50,
+            height: cardHeight * 0.95,
+            margin: EdgeInsets.only(left: 0),
+            child: Hero(
+              tag: widget.mainItems,
+              child: Image.network(
+                widget.mainItems.images[0],
+                fit: BoxFit.contain,
+                loadingBuilder: (context, child, progress) {
+                  return progress == null ? child : LinearProgressIndicator();
+                },
               ),
             ),
-            Container(
-              width: cardWidth * 0.50,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    widget.mainItems.name,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: nameStyle,
-                    softWrap: false,
+          ),
+          Container(
+            width: cardWidth * 0.48,
+            height: cardHeight * 0.95,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  widget.mainItems.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: 'Montserrat',
                   ),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        srilankaRuppes + ' ' + widget.mainItems.price,
-                        style: priceStyle,
-                      ),
-                      widget.mainItems.offer == 0.0
-                          ? SizedBox()
-                          : Text(
-                              '-' + widget.mainItems.offer.toString() + '%',
-                              style: offerTestStyle,
-                            ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      CounterButton(
+                  softWrap: false,
+                ),
+                SizedBox(
+                  height: 6.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      srilankaRuppes + ' ' + widget.mainItems.price,
+                      style: priceStyle,
+                    ),
+                    widget.mainItems.offer == 0.0
+                        ? SizedBox()
+                        : Text(
+                            '-' + widget.mainItems.offer.toString() + '%',
+                            style: offerTestStyle,
+                          ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 3,
+                      child: CounterButton(
                         size: widget.mainItems.quantity,
                         count: _counter,
                         incress: () => setState(() {
@@ -125,30 +129,35 @@ class _SubCardWidgetState extends State<SubCardWidget> {
                           _counter--;
                         }),
                       ),
-                      RaisedButton(
+                    ),
+                    Flexible(
+                      flex: 1,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.shopping_cart_rounded,
+                          color: appBarColor,
+                          size: 30,
+                        ),
                         onPressed: () {},
-                        child: Text('add'),
-                        color: Colors.green,
-                        textColor: Colors.black,
-                      )
-                    ],
-                  )
-                  // subItemRow(
-                  //   tabname: 'Material :',
-                  //   value: mainItems.material,
-                  // ),
-                  // SizedBox(
-                  //   height: 5,
-                  // ),
-                  // subItemRow(
-                  //   tabname: 'Brand :',
-                  //   value: mainItems.brand,
-                  // ),
-                ],
-              ),
+                      ),
+                    )
+                  ],
+                )
+                // subItemRow(
+                //   tabname: 'Material :',
+                //   value: mainItems.material,
+                // ),
+                // SizedBox(
+                //   height: 5,
+                // ),
+                // subItemRow(
+                //   tabname: 'Brand :',
+                //   value: mainItems.brand,
+                // ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

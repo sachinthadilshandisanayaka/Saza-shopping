@@ -6,7 +6,8 @@ class CounterButton extends StatefulWidget {
   final int count;
   final Function incress;
   final Function descrise;
-  const CounterButton({@required this.size, this.incress, this.descrise, this.count});
+  const CounterButton(
+      {@required this.size, this.incress, this.descrise, this.count});
 
   @override
   _CounterButtonState createState() => _CounterButtonState();
