@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
-import 'package:sazashopping/screens/thirdPage/shared/subDetailShow_Row.dart';
+// import 'package:sazashopping/screens/thirdPage/shared/subDetailShow_Row.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/string.dart';
 import 'package:sazashopping/shared/testStyles.dart';
@@ -87,17 +87,18 @@ class SubCardWidget extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  subItemRow(
-                    tabname: 'Material :',
-                    value: mainItems.material,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  subItemRow(
-                    tabname: 'Brand :',
-                    value: mainItems.brand,
-                  ),
+                  
+                  // subItemRow(
+                  //   tabname: 'Material :',
+                  //   value: mainItems.material,
+                  // ),
+                  // SizedBox(
+                  //   height: 5,
+                  // ),
+                  // subItemRow(
+                  //   tabname: 'Brand :',
+                  //   value: mainItems.brand,
+                  // ),
                 ],
               ),
             ),
