@@ -1,13 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
+import 'package:sazashopping/screens/thirdPage/shared/itemCounterButton.dart';
 // import 'package:sazashopping/screens/thirdPage/shared/subDetailShow_Row.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/string.dart';
 import 'package:sazashopping/shared/testStyles.dart';
 
-class SubCardWidget extends StatelessWidget {
+class SubCardWidget extends StatefulWidget {
   final MainItems mainItems;
   SubCardWidget({@required this.mainItems});
+
+  @override
+  _SubCardWidgetState createState() => _SubCardWidgetState();
+}
+
+class _SubCardWidgetState extends State<SubCardWidget> {
+  int _counter;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _counter = 0;
+    });
+  }
+
+  @override
+  void dispose() {
+    setState(() {
+      _counter = 0;
+    });
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +67,9 @@ class SubCardWidget extends StatelessWidget {
               height: cardHeight * 0.95,
               margin: EdgeInsets.only(left: 0),
               child: Hero(
-                tag: mainItems,
+                tag: widget.mainItems,
                 child: Image.network(
-                  mainItems.images[0],
+                  widget.mainItems.images[0],
                   fit: BoxFit.contain,
                   loadingBuilder: (context, child, progress) {
                     return progress == null ? child : LinearProgressIndicator();
@@ -60,7 +84,7 @@ class SubCardWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    mainItems.name,
+                    widget.mainItems.name,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: nameStyle,
@@ -73,13 +97,13 @@ class SubCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        srilankaRuppes + ' ' + mainItems.price,
+                        srilankaRuppes + ' ' + widget.mainItems.price,
                         style: priceStyle,
                       ),
-                      mainItems.offer == 0.0
+                      widget.mainItems.offer == 0.0
                           ? SizedBox()
                           : Text(
-                              '-' + mainItems.offer.toString() + '%',
+                              '-' + widget.mainItems.offer.toString() + '%',
                               style: offerTestStyle,
                             ),
                     ],
@@ -87,7 +111,28 @@ class SubCardWidget extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      CounterButton(
+                        size: widget.mainItems.quantity,
+                        count: _counter,
+                        incress: () => setState(() {
+                          _counter++;
+                        }),
+                        descrise: () => setState(() {
+                          _counter--;
+                        }),
+                      ),
+                      RaisedButton(
+                        onPressed: () {},
+                        child: Text('add'),
+                        color: Colors.green,
+                        textColor: Colors.black,
+                      )
+                    ],
+                  )
                   // subItemRow(
                   //   tabname: 'Material :',
                   //   value: mainItems.material,
