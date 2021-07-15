@@ -22,7 +22,11 @@ class _CounterButtonState extends State<CounterButton> {
       padding: EdgeInsets.all(7),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: Colors.white,
+        color: appBarColor,
+        border: Border.all(
+          color: Colors.white,
+          width: 2,
+        ),
       ),
       child: Row(
         children: [
@@ -31,7 +35,7 @@ class _CounterButtonState extends State<CounterButton> {
                   onTap: () => widget.descrise(),
                   child: Icon(
                     Icons.remove,
-                    color: appBarColor,
+                    color: Colors.white,
                     size: 30,
                   ),
                 )
@@ -59,7 +63,7 @@ class _CounterButtonState extends State<CounterButton> {
                   onTap: () => widget.incress(),
                   child: Icon(
                     Icons.add,
-                    color: appBarColor,
+                    color: Colors.white,
                     size: 30,
                   ),
                 )

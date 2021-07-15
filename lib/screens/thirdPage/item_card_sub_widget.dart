@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sazashopping/models/mainItem.dart';
 import 'package:sazashopping/screens/thirdPage/shared/itemCounterButton.dart';
-// import 'package:sazashopping/screens/thirdPage/shared/subDetailShow_Row.dart';
 import 'package:sazashopping/shared/colors.dart';
 import 'package:sazashopping/shared/string.dart';
-import 'package:sazashopping/shared/testStyles.dart';
 
 class SubCardWidget extends StatefulWidget {
   final MainItems mainItems;
@@ -21,16 +19,16 @@ class _SubCardWidgetState extends State<SubCardWidget> {
   void initState() {
     super.initState();
     setState(() {
-      _counter = 0;
+      _counter = 1;
     });
   }
 
   @override
   void dispose() {
-    setState(() {
-      _counter = 0;
-    });
     super.dispose();
+    setState(() {
+      _counter = 1;
+    });
   }
 
   @override
@@ -47,7 +45,7 @@ class _SubCardWidgetState extends State<SubCardWidget> {
       height: cardHeight,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
+        color: appBarColor,
         boxShadow: [
           BoxShadow(
             color: itemShadowColor,
@@ -61,7 +59,7 @@ class _SubCardWidgetState extends State<SubCardWidget> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: cardWidth * 0.50,
+            width: cardWidth * 0.40,
             height: cardHeight * 0.95,
             margin: EdgeInsets.only(left: 0),
             child: Hero(
@@ -76,72 +74,93 @@ class _SubCardWidgetState extends State<SubCardWidget> {
             ),
           ),
           Container(
-            width: cardWidth * 0.48,
+            width: cardWidth * 0.58,
             height: cardHeight * 0.95,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Stack(
+              alignment: Alignment.topCenter,
+              overflow: Overflow.clip,
               children: <Widget>[
-                Text(
-                  widget.mainItems.name,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontFamily: 'Montserrat',
+                Container(
+                  width: cardWidth * 0.58,
+                  height: 40,
+                  child: Text(
+                    widget.mainItems.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontFamily: 'Montserrat',
+                    ),
+                    softWrap: false,
                   ),
-                  softWrap: false,
                 ),
-                SizedBox(
-                  height: 6.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      srilankaRuppes + ' ' + widget.mainItems.price,
-                      style: priceStyle,
-                    ),
-                    widget.mainItems.offer == 0.0
-                        ? SizedBox()
-                        : Text(
-                            '-' + widget.mainItems.offer.toString() + '%',
-                            style: offerTestStyle,
+                Positioned(
+                  top: 45,
+                  left: 0,
+                  child: Container(
+                    width: cardWidth * 0.58,
+                    height: 20,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          srilankaRuppes + ' ' + widget.mainItems.price,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontFamily: 'Montserrat',
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Flexible(
-                      flex: 3,
-                      child: CounterButton(
-                        size: widget.mainItems.quantity,
-                        count: _counter,
-                        incress: () => setState(() {
-                          _counter++;
-                        }),
-                        descrise: () => setState(() {
-                          _counter--;
-                        }),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.shopping_cart_rounded,
-                          color: appBarColor,
-                          size: 30,
                         ),
-                        onPressed: () {},
-                      ),
-                    )
-                  ],
+                        widget.mainItems.offer == 0.0
+                            ? SizedBox()
+                            : Container(
+                                child: Text(
+                                  '-' + widget.mainItems.offer.toString() + '%',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.redAccent,
+                                  ),
+                                ),
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  bottom: 15,
+                  left: 0,
+                  child: Container(
+                    height: 45,
+                    width: cardWidth * 0.58,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        CounterButton(
+                          size: widget.mainItems.quantity,
+                          count: _counter,
+                          incress: () => setState(() {
+                            _counter++;
+                          }),
+                          descrise: () => setState(() {
+                            _counter--;
+                          }),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.shopping_cart_rounded,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                          onPressed: () {},
+                        )
+                      ],
+                    ),
+                  ),
                 )
                 // subItemRow(
                 //   tabname: 'Material :',
