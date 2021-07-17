@@ -162,17 +162,6 @@ class _SubCardWidgetState extends State<SubCardWidget> {
                     ),
                   ),
                 )
-                // subItemRow(
-                //   tabname: 'Material :',
-                //   value: mainItems.material,
-                // ),
-                // SizedBox(
-                //   height: 5,
-                // ),
-                // subItemRow(
-                //   tabname: 'Brand :',
-                //   value: mainItems.brand,
-                // ),
               ],
             ),
           ),
