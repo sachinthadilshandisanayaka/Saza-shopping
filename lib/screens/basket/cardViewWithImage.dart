@@ -128,14 +128,14 @@ class SubCardDisplay extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 6,
                     ),
                     subItemRow(
                       tabname: 'Colors',
                       value: this.basket.color,
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 6,
                     ),
                     subItemRow(
                       tabname: 'Size',
